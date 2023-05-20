@@ -21,6 +21,7 @@ class _MedicaldataState extends State<Medicaldata> {
       treatment: patient.treatment,
     );
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,7 +41,7 @@ class _MedicaldataState extends State<Medicaldata> {
           ),
         ],
         backgroundColor: Colors.white,
-        title:const Text(
+        title: const Text(
           "البيانات الطبية",
           style: TextStyle(color: Colors.black, fontWeight: FontWeight.w700),
         ),
@@ -51,8 +52,8 @@ class _MedicaldataState extends State<Medicaldata> {
           child: Column(
             children: [
               Container(
-                  margin:const EdgeInsets.only(left: 260, top: 23),
-                  child:const Text(
+                  margin: const EdgeInsets.only(left: 260, top: 23),
+                  child: const Text(
                     "نوع السكري",
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
                   )),
@@ -75,7 +76,7 @@ class _MedicaldataState extends State<Medicaldata> {
                         });
                       },
                     ),
-                    const   Text("النوع الأول",
+                    const Text("النوع الأول",
                         style: TextStyle(
                             fontSize: 16, fontWeight: FontWeight.w500)),
                     Radio(
@@ -92,11 +93,11 @@ class _MedicaldataState extends State<Medicaldata> {
                 ),
               ),
               Container(
-                margin:const EdgeInsets.only(left: 130),
+                margin: const EdgeInsets.only(left: 130),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const  Text("لا أعرف",
+                    const Text("لا أعرف",
                         style: TextStyle(
                             fontSize: 16, fontWeight: FontWeight.w500)),
                     Radio(
@@ -109,7 +110,7 @@ class _MedicaldataState extends State<Medicaldata> {
                         });
                       },
                     ),
-                    const  Text("سكري الحمل",
+                    const Text("سكري الحمل",
                         style: TextStyle(
                             fontSize: 16, fontWeight: FontWeight.w500)),
                     Radio(
@@ -126,9 +127,9 @@ class _MedicaldataState extends State<Medicaldata> {
                 ),
               ),
               Container(
-                margin: EdgeInsets.only(left: 220),
+                margin: EdgeInsets.only(left: 200),
                 child: const Text(
-                  "تحدث مع الطبيب",
+                  "أوصف حالتك للطبيب",
                   style: TextStyle(
                       color: Color(0xff000000),
                       fontSize: 20,
@@ -139,15 +140,17 @@ class _MedicaldataState extends State<Medicaldata> {
                 height: 10,
               ),
               Container(
-                padding:const EdgeInsets.only(right: 15),
+                padding: const EdgeInsets.only(right: 15),
                 decoration: BoxDecoration(
                     color: const Color(0xffEAEAEA),
                     borderRadius: BorderRadius.circular(12.0)),
                 width: 327,
                 height: 108,
                 child: TextFormField(
+                  textAlign: TextAlign.right,
+                  textDirection: TextDirection.rtl,
                   maxLines: 10,
-                  decoration:const InputDecoration(
+                  decoration: const InputDecoration(
                     hintText: "اشرح للطبيب حالتك أو استفسارك باختصار",
                     hintTextDirection: TextDirection.rtl,
                     border: InputBorder.none,
@@ -158,8 +161,8 @@ class _MedicaldataState extends State<Medicaldata> {
                 height: 20,
               ),
               Container(
-                margin:const EdgeInsets.only(left: 220),
-                child:const Text(
+                margin: const EdgeInsets.only(left: 220),
+                child: const Text(
                   "المرفقات",
                   style: TextStyle(
                       color: Color(0xff000000),
@@ -167,16 +170,16 @@ class _MedicaldataState extends State<Medicaldata> {
                       fontWeight: FontWeight.w500),
                 ),
               ),
-              Container(
+              /*   Container(
                 child: ListTile(
                   leading: const Icon(Icons.delete_forever_outlined),
                   title: Container(
                       margin: const EdgeInsets.only(left: 75),
-                      child:const Text('ملف حالة المريض .pdf')),
+                      child: const Text('ملف حالة المريض .pdf')),
                   subtitle: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      Container(child:const Text('تم اضافة الملف بنجاح')),
+                      Container(child: const Text('تم اضافة الملف بنجاح')),
                       const Icon(
                         Icons.done,
                         size: 12,
@@ -191,21 +194,21 @@ class _MedicaldataState extends State<Medicaldata> {
                         borderRadius: BorderRadius.circular(12.0)),
                   ),
                 ),
-              ),
-              const  SizedBox(height: 25),
+              ),*/
+              const SizedBox(height: 25),
               InkWell(
                 onTap: () {},
                 child: Container(
                   width: 327,
                   height: 48,
                   decoration: BoxDecoration(
-                      color:const Color(0xffEAEAEA),
+                      color: const Color(0xffEAEAEA),
                       border: Border.all(
                           color: const Color(0xFF000000),
                           width: 1.0,
                           style: BorderStyle.solid),
                       borderRadius: BorderRadius.circular(12.0)),
-                  child:const Center(
+                  child: const Center(
                     child: Text(
                       "اضافة ملف",
                       style:
@@ -215,7 +218,7 @@ class _MedicaldataState extends State<Medicaldata> {
                   ),
                 ),
               ),
-              const  SizedBox(height: 25),
+              const SizedBox(height: 25),
               Container(
                 margin: const EdgeInsets.only(top: 15.0),
                 padding: const EdgeInsets.only(left: 20.0, right: 20.0),
@@ -240,8 +243,10 @@ class _MedicaldataState extends State<Medicaldata> {
                           ),
                         ),
                         onPressed: () => {
-                              Navigator.push(context, MaterialPageRoute(builder: (context) =>  Biography())),
-
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Biography())),
                         },
                       ),
                     ),

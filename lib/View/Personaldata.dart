@@ -2,16 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:patientapp/Model/paitent_model.dart';
 
 class Personaldata extends StatefulWidget {
-
-
-
   @override
   State<Personaldata> createState() => _PersonaldataState();
 }
 
 class _PersonaldataState extends State<Personaldata> {
   DateTime selectedDate = DateTime.now();
-
+  TextEditingController namecontroller = TextEditingController();
+  TextEditingController emailcontroller = TextEditingController();
+  TextEditingController passwordcontroller = TextEditingController();
+  TextEditingController age = TextEditingController();
+  TextEditingController phoneNumber = TextEditingController();
 
   Future<void> selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -31,19 +32,19 @@ class _PersonaldataState extends State<Personaldata> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        actions:[
-        GestureDetector(
-          onTap: () {
-            Navigator.pop(context);
-          },
-          child: Container(
-            padding: const EdgeInsets.only(right: 5),
-            child: const Icon(
-              Icons.arrow_forward_ios,
-              color: Colors.black,
+        actions: [
+          GestureDetector(
+            onTap: () {
+              Navigator.pop(context);
+            },
+            child: Container(
+              padding: const EdgeInsets.only(right: 5),
+              child: const Icon(
+                Icons.arrow_forward_ios,
+                color: Colors.black,
+              ),
             ),
           ),
-        ),
         ],
         backgroundColor: Colors.white,
         title: const Text(
@@ -80,6 +81,9 @@ class _PersonaldataState extends State<Personaldata> {
                       width: 311,
                       height: 48,
                       child: TextFormField(
+                        controller: namecontroller,
+                        textAlign: TextAlign.right,
+                        textDirection: TextDirection.rtl,
                         keyboardType: TextInputType.text,
                         decoration: const InputDecoration(
                           hintText: "أدخل الاسم كاملا",
@@ -144,7 +148,7 @@ class _PersonaldataState extends State<Personaldata> {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     const Text(
-                      "تاريخ الميلاد",
+                      "العمر",
                       style: TextStyle(
                           color: Color(0xff000000),
                           fontSize: 16,
@@ -161,10 +165,10 @@ class _PersonaldataState extends State<Personaldata> {
                       width: 311,
                       height: 48,
                       child: TextFormField(
-                        onTap: () => selectDate(context),
-                        keyboardType: TextInputType.datetime,
+                        controller: age,
+                        keyboardType: TextInputType.number,
                         decoration: const InputDecoration(
-                          hintText: "7/11/1961",
+                          hintText: "40",
                           hintTextDirection: TextDirection.rtl,
                           border: InputBorder.none,
                         ),
@@ -196,6 +200,7 @@ class _PersonaldataState extends State<Personaldata> {
                       width: 311,
                       height: 48,
                       child: TextFormField(
+                        controller: phoneNumber,
                         keyboardType: TextInputType.phone,
                         decoration: const InputDecoration(
                           hintText: "05995621345",
@@ -230,6 +235,7 @@ class _PersonaldataState extends State<Personaldata> {
                       width: 311,
                       height: 48,
                       child: TextFormField(
+                        controller: emailcontroller,
                         keyboardType: TextInputType.emailAddress,
                         decoration: const InputDecoration(
                           hintText: "example@gmail.com",
@@ -247,11 +253,9 @@ class _PersonaldataState extends State<Personaldata> {
                   width: 311,
                   height: 48,
                   child: ElevatedButton(
-                      style:
-                          ElevatedButton.styleFrom(backgroundColor: const Color(0xff407BFF)),
-                      onPressed: () async{
-
-                      },
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color(0xff407BFF)),
+                      onPressed: () async {},
                       child: const Text(
                         "حفظ",
                         style: TextStyle(
