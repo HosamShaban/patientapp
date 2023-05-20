@@ -1,4 +1,3 @@
-import 'package:patientapp/Model/paitent_model.dart';
 import 'package:patientapp/View/Medicaldata.dart';
 import 'package:patientapp/View/Personaldata.dart';
 import 'package:patientapp/View/profile_pic.dart';
@@ -15,19 +14,10 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  late PaitentModel patient;
 
   @override
   void initState() {
     super.initState();
-    patient = PaitentModel(
-      patient.id,
-      patient.name,
-      patient.gender,
-      patient.DOB,
-      patient.phoneNom,
-      patient.gmail
-    );
   }
 
   @override
