@@ -1,25 +1,22 @@
 import 'dart:ffi';
 
 class AllDoctorsModel {
-  late int id;
+  final int id;
   late String name;
-  late String descrption;
-  late String city;
+  late String qualifications;
   late Long phoneNom;
   late String img;
-  late int noLikes;
-  late int noViewrs;
+  late String address;
+  late int rating;
 
-  AllDoctorsModel(this.id, this.name, this.descrption, this.city, this.noLikes,
-      this.noViewrs, this.phoneNom, this.img);
+  AllDoctorsModel(this.id, this.name, this.qualifications, this.address,
+      this.rating, this.phoneNom, this.img);
 
-  AllDoctorsModel.fromjson(Map<String, dynamic> map) {
-    this.id = map['*** حسب الاسم جهة api'];
-    this. name = map['***'];
-    this.img = map['***']['url'];
-    this.phoneNom = map['***'];
-    this.city = map['***'];
-    this.noViewrs = map['***'];
-    this.noLikes = map['***'];
-  }
+  AllDoctorsModel.fromjson(Map<String, dynamic> json)
+      : id = json['id'] ?? 0,
+        name = json['name'] ?? '',
+        qualifications = json['qualifications'] ?? '',
+        phoneNom = json['phone_No'] ?? '',
+        address = json['address'] ?? '',
+        rating = json['rateing'] ?? '';
 }

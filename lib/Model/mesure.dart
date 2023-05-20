@@ -6,8 +6,8 @@ class Mesures {
   Mesures(this.Fasting, this.creator, this.random);
 
   Mesures.fromjson(Map<String, dynamic> map) {
-    this.Fasting = map['*** حسب الاسم جهة api'];
-    this.creator = map['***'];
-    this.random = map['***']['url'];
+    this.Fasting = map['Fasting'];
+    this.creator = map['creator'];
+    this.random = map['random'];
   }
 }

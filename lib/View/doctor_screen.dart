@@ -1,3 +1,6 @@
+import 'package:dio/dio.dart';
+import 'package:patientapp/Model/all_doctors.dart';
+import 'package:patientapp/Model/doctors_model.dart';
 import 'package:patientapp/View/doctorprofile.dart';
 import 'package:patientapp/View/filter_view.dart';
 import 'package:patientapp/controller/doctors_controller.dart';
@@ -12,12 +15,39 @@ class DoctorScreen extends StatefulWidget {
   State<DoctorScreen> createState() => _DoctorScreenState();
 }
 
-
-
 class _DoctorScreenState extends State<DoctorScreen> {
   final doctorController = DoctorsController();
   String query = '';
   String selectedFilter = 'All';
+  List<AllDoctorsModel> doctors = [];
+  final String baseUrl = "http://127.0.0.1:8000";
+
+  void FetchDoctorsFromApi() async {
+    final Dio dio = Dio();
+
+    try {
+      var response = await dio.get("$baseUrl/api/patient/doctors");
+      print(response.statusCode);
+      print(response.data);
+      var responseDtat = response.data as List;
+
+      setState(() {
+        doctors = responseDtat.map((e) => AllDoctorsModel.fromjson(e)).toList();
+      });
+    } on DioError catch (e) {
+      print(e.toString());
+    }
+  }
+
+  Future<void> Register() async {
+    final Dio dio = Dio();
+    var response = await dio.post("$baseUrl/api/patient/register", data: {
+      "name": "Omar",
+      "email": "omar@gmail.com",
+      "password": "18383832dd"
+    });
+    print(response.data);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,20 +67,25 @@ class _DoctorScreenState extends State<DoctorScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            ElevatedButton(
+                onPressed: () {
+                  Register();
+                },
+                child: Text("Fetch")),
             Row(
               children: [
                 Material(
                   child: InkWell(
                     onTap: () {
-                showModalBottomSheet(
-                  isScrollControlled: true,
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.vertical(top: Radius.circular(30))
-                  ),
+                      showModalBottomSheet(
+                        isScrollControlled: true,
+                        shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.vertical(
+                                top: Radius.circular(30))),
                         context: context,
                         builder: (context) => const FilterView(),
-                        );
-                      },
+                      );
+                    },
                     child: Image.asset(
                       'assets/images/filter.png',
                       width: 30,
@@ -59,7 +94,6 @@ class _DoctorScreenState extends State<DoctorScreen> {
                     ),
                   ),
                 ),
-
                 Expanded(
                   child: Container(
                     decoration: BoxDecoration(
@@ -71,7 +105,7 @@ class _DoctorScreenState extends State<DoctorScreen> {
                         hintText: 'بحث',
                         hintStyle: TextStyle(
                           fontSize: 16,
-                          color:Color(0xffADAEB3),
+                          color: Color(0xffADAEB3),
                           fontWeight: FontWeight.w500,
                         ),
                         suffixIcon: Padding(
@@ -89,7 +123,6 @@ class _DoctorScreenState extends State<DoctorScreen> {
                         // Perform search
                       },
                     ),
-
                   ),
                 ),
               ],
@@ -102,7 +135,8 @@ class _DoctorScreenState extends State<DoctorScreen> {
                 scrollDirection: Axis.vertical,
                 itemBuilder: (BuildContext context, int index) {
                   final item = doctorController.doctorsList[index];
-                  if (query.isNotEmpty && !item.title.toLowerCase().contains(query.toLowerCase())) {
+                  if (query.isNotEmpty &&
+                      !item.title.toLowerCase().contains(query.toLowerCase())) {
                     return const SizedBox.shrink();
                   }
                   return Padding(
@@ -122,14 +156,12 @@ class _DoctorScreenState extends State<DoctorScreen> {
                       ),
                     ),
                   );
-
                 },
               ),
             ),
           ],
         ),
       ),
-
     );
   }
 }
