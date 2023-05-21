@@ -1,7 +1,8 @@
-import 'package:patientapp/Consts/colors.dart';
 import 'package:patientapp/Model/Personaldata_model.dart';
 import 'package:patientapp/View/Biography.dart';
 import 'package:flutter/material.dart';
+
+import '../Consts/colors.dart';
 
 class Medicaldata extends StatefulWidget {
   const Medicaldata({Key? key}) : super(key: key);
