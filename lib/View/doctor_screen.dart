@@ -1,10 +1,11 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
 import 'package:patientapp/Model/all_doctors.dart';
+import 'package:patientapp/Model/doctors_model.dart';
 import 'package:patientapp/View/doctorprofile.dart';
 import 'package:patientapp/View/filter_view.dart';
 import 'package:patientapp/controller/doctors_controller.dart';
 import 'package:patientapp/widget/doctors_card.dart';
+import 'package:flutter/material.dart';
 
 class DoctorScreen extends StatefulWidget {
   final GlobalKey<ScaffoldState>? scaffoldKey;
@@ -19,7 +20,7 @@ class _DoctorScreenState extends State<DoctorScreen> {
   String query = '';
   String selectedFilter = 'All';
   List<AllDoctorsModel> doctors = [];
-  final String baseUrl = "http://127.0.0.1:8000";
+  final String baseUrl = "http://10.0.2.2:8000";
 
   void FetchDoctorsFromApi() async {
     final Dio dio = Dio();
@@ -36,6 +37,16 @@ class _DoctorScreenState extends State<DoctorScreen> {
     } on DioError catch (e) {
       print(e.toString());
     }
+  }
+
+  Future<void> Register() async {
+    final Dio dio = Dio();
+    var response = await dio.post("$baseUrl/api/patient/register", data: {
+      "name": "Omar",
+      "email": "omar@gmail.com",
+      "password": "18383832dd"
+    });
+    print(response.data);
   }
 
   @override
@@ -58,7 +69,7 @@ class _DoctorScreenState extends State<DoctorScreen> {
           children: [
             ElevatedButton(
                 onPressed: () {
-                  FetchDoctorsFromApi();
+                  Register();
                 },
                 child: Text("Fetch")),
             Row(

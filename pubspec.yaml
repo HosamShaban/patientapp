@@ -46,6 +46,8 @@ dependencies:
   flutter_rating_bar: ^4.0.1
   firebase_core: ^2.13.0
   dio: ^5.1.2
+  http: ^0.13.6
+  like_button: ^2.0.5
 
 dev_dependencies:
   flutter_test:

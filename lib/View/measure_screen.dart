@@ -1,7 +1,29 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
-class SugarMeasurement extends StatelessWidget {
+class SugarMeasurement extends StatefulWidget {
   const SugarMeasurement({Key? key}) : super(key: key);
+
+  @override
+  State<SugarMeasurement> createState() => _SugarMeasurementState();
+}
+
+class _SugarMeasurementState extends State<SugarMeasurement> {
+  TextEditingController Fastingcontroller = TextEditingController();
+  TextEditingController creatorcontroller = TextEditingController();
+  TextEditingController randomcontroller = TextEditingController();
+  final String baseUrl = "https://diabetes-2023.000webhostapp.com";
+
+  Future<void> StoreMesurments() async {
+    final Dio dio = Dio();
+    var response =
+        await dio.post("$baseUrl/api/patient/storeMeasurement", data: {
+      "Fasting": Fastingcontroller.toString(),
+      "creator": creatorcontroller.toString(),
+      "random": randomcontroller.toString(),
+    });
+    print(response.data);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,19 +63,24 @@ class SugarMeasurement extends StatelessWidget {
                   borderRadius: BorderRadius.circular(12.0)),
               child: Column(
                 children: [
-                  const Text("املأ البيانات بشكل صحيح"),
+                  const Text(
+                    "املأ البيانات بشكل صحيح",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, color: Colors.red),
+                  ),
                   const SizedBox(height: 10),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Container(
-                        padding: const EdgeInsets.only(right: 10),
+                        padding: const EdgeInsets.all(10),
                         decoration: BoxDecoration(
                             color: const Color(0xffD9D9D9),
                             borderRadius: BorderRadius.circular(20.0)),
                         width: 172,
                         height: 32,
                         child: TextFormField(
+                          controller: Fastingcontroller,
                           keyboardType: TextInputType.number,
                           decoration: const InputDecoration(
                             suffix: Text(
@@ -71,16 +98,17 @@ class SugarMeasurement extends StatelessWidget {
                   ),
                   const SizedBox(height: 10),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Container(
-                        padding: const EdgeInsets.only(right: 10),
+                        padding: const EdgeInsets.all(10),
                         decoration: BoxDecoration(
                             color: const Color(0xffD9D9D9),
                             borderRadius: BorderRadius.circular(20.0)),
                         width: 172,
                         height: 32,
                         child: TextFormField(
+                          controller: creatorcontroller,
                           keyboardType: TextInputType.number,
                           decoration: const InputDecoration(
                             suffix: Text(
@@ -98,16 +126,17 @@ class SugarMeasurement extends StatelessWidget {
                   ),
                   const SizedBox(height: 10),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Container(
-                        padding: const EdgeInsets.only(right: 10),
+                        padding: const EdgeInsets.all(10),
                         decoration: BoxDecoration(
                             color: const Color(0xffD9D9D9),
                             borderRadius: BorderRadius.circular(20.0)),
                         width: 172,
                         height: 32,
                         child: TextFormField(
+                          controller: randomcontroller,
                           keyboardType: TextInputType.number,
                           decoration: const InputDecoration(
                             suffix: Text(
@@ -133,7 +162,9 @@ class SugarMeasurement extends StatelessWidget {
               child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xff407BFF)),
-                  onPressed: () {},
+                  onPressed: () {
+                    StoreMesurments();
+                  },
                   child: const Text(
                     "تسجيل",
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),

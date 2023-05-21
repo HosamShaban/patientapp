@@ -5,6 +5,8 @@ import 'package:patientapp/auth/ForgotPassword.dart';
 import 'package:patientapp/auth/singup_screen.dart';
 
 import '../Consts/colors.dart';
+import '../View/home_screen.dart';
+import 'Register_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({
@@ -18,20 +20,18 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  final String baseUrl = "http://127.0.0.1:8000";
+  final String baseUrl = "https://diabetes-2023.000webhostapp.com";
 
-  Future<void> login() async {
+  Future<void> Login() async {
     final Dio dio = Dio();
-    var response = await dio.post("$baseUrl/api/patient/login",
-        data: {"email": "omar@gmail.com", "password": "1234556"});
-    if (response.statusCode == 200) {
-      final token = response.data;
-      print('Token: $token');
-    } else {
-      print('Login failed');
-    }
+    var response = await dio.post("$baseUrl/api/patient/login", data: {
+      "email": emailController.text.trim(),
+      "password": passwordController.text.trim()
+    });
+    print(response.data);
   }
 
+  bool _passwordVisible = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -111,22 +111,34 @@ class _LoginScreenState extends State<LoginScreen> {
             padding: const EdgeInsets.all(15),
             child: TextFormField(
               controller: passwordController,
+              obscureText: !_passwordVisible,
               textAlign: TextAlign.right,
-              obscureText: true,
               decoration: InputDecoration(
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(width: 2, color: Colors.grey),
-                    borderRadius: BorderRadius.circular(8),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: const BorderSide(width: 2, color: Colors.grey),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                hintText: '********',
+                hintStyle: const TextStyle(
+                    fontFamily: 'Tajawal',
+                    color: Color(0xff888888),
+                    fontSize: 13),
+                fillColor: Colors.white,
+                filled: true,
+                suffixIcon: IconButton(
+                  icon: Icon(
+                    // Based on passwordVisible state choose the icon
+                    _passwordVisible ? Icons.visibility : Icons.visibility_off,
+                    color: Theme.of(context).primaryColorDark,
                   ),
-                  hintText: '********',
-                  hintStyle: const TextStyle(
-                      fontFamily: 'Tajawal',
-                      color: Color(0xff888888),
-                      fontSize: 13),
-                  fillColor: Colors.white,
-                  filled: true,
-                  suffixIcon: const Icon(Icons.lock_outline),
-                  suffixIconColor: const Color(0xfff888888)),
+                  onPressed: () {
+                    // Update the state i.e. toogle the state of passwordVisible variable
+                    setState(() {
+                      _passwordVisible = !_passwordVisible;
+                    });
+                  },
+                ),
+              ),
             ),
           ),
           InkWell(
@@ -138,6 +150,19 @@ class _LoginScreenState extends State<LoginScreen> {
               padding: EdgeInsets.only(bottom: 5, left: 18, right: 18, top: 1),
               child: Text(
                 "هل نسيت كلمة السر؟",
+                style: TextStyle(fontSize: 14, color: ConstColors.text2Color),
+              ),
+            ),
+          ),
+          InkWell(
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => PersonalPage()));
+            },
+            child: const Padding(
+              padding: EdgeInsets.only(bottom: 5, left: 18, right: 18, top: 1),
+              child: Text(
+                "اذهب للرئيسيه",
                 style: TextStyle(fontSize: 14, color: ConstColors.text2Color),
               ),
             ),
@@ -167,13 +192,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ],
                     ),
-                    onPressed: () => {
-                      login(),
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => PersonalPage()))
-                    },
+                    onPressed: () => {Login()},
                   ),
                 ),
               ],
@@ -188,7 +207,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const SignUpScreen()));
+                          builder: (context) => const RegisterScreen()));
                 },
                 child: const Text(
                   "  انشاء حساب",

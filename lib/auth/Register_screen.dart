@@ -15,17 +15,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
   TextEditingController emailcontroller = TextEditingController();
   TextEditingController passwordcontroller = TextEditingController();
   TextEditingController confirmpasswordcontroller = TextEditingController();
-  final String baseUrl = "http://127.0.0.1:8000";
+  final String baseUrl = "https://diabetes-2023.000webhostapp.com";
 
   Future<void> Register() async {
     final Dio dio = Dio();
     var response = await dio.post("$baseUrl/api/patient/register", data: {
-      "name": "Omar",
-      "email": "omar@gmail.com",
-      "password": "18383832dd"
+      "name": namecontroller.text.trim(),
+      "email": emailcontroller.text.trim(),
+      "password": passwordcontroller.text.trim()
     });
     print(response.data);
   }
+
+  bool _passwordVisible = false;
+  bool _passwordVisible2 = false;
 
   @override
   Widget build(BuildContext context) {
@@ -44,12 +47,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   height: 15,
                 ),
                 Text(
-                  "أكمل إنشاء حسابك",
+                  "انشئ حساب جديد على تطبيقنا",
                   style:
                       TextStyle(fontSize: 24.0, fontWeight: FontWeight.normal),
                 ),
                 Text(
-                  "أنشأ حسابك الجديد",
+                  "عزيزي المريض قم بتعبئة جميع البيانات",
                   style: TextStyle(fontSize: 16, color: Color(0xff414141)),
                 ),
               ],
@@ -144,22 +147,34 @@ class _RegisterScreenState extends State<RegisterScreen> {
             padding: const EdgeInsets.all(15),
             child: TextFormField(
               controller: passwordcontroller,
+              obscureText: !_passwordVisible,
               textAlign: TextAlign.right,
-              obscureText: true,
               decoration: InputDecoration(
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(width: 2, color: Colors.grey),
-                    borderRadius: BorderRadius.circular(8),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: const BorderSide(width: 2, color: Colors.grey),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                hintText: '********',
+                hintStyle: const TextStyle(
+                    fontFamily: 'Tajawal',
+                    color: Color(0xff888888),
+                    fontSize: 13),
+                fillColor: Colors.white,
+                filled: true,
+                suffixIcon: IconButton(
+                  icon: Icon(
+                    // Based on passwordVisible state choose the icon
+                    _passwordVisible ? Icons.visibility : Icons.visibility_off,
+                    color: Theme.of(context).primaryColorDark,
                   ),
-                  hintText: '********',
-                  hintStyle: const TextStyle(
-                      fontFamily: 'Tajawal',
-                      color: Color(0xff888888),
-                      fontSize: 13),
-                  fillColor: Colors.white,
-                  filled: true,
-                  suffixIcon: const Icon(Icons.lock_outline),
-                  suffixIconColor: const Color(0xfff888888)),
+                  onPressed: () {
+                    // Update the state i.e. toogle the state of passwordVisible variable
+                    setState(() {
+                      _passwordVisible = !_passwordVisible;
+                    });
+                  },
+                ),
+              ),
             ),
           ),
           Row(mainAxisAlignment: MainAxisAlignment.end, children: const [
@@ -181,22 +196,34 @@ class _RegisterScreenState extends State<RegisterScreen> {
             child: TextFormField(
               controller: confirmpasswordcontroller,
               textAlign: TextAlign.right,
-              obscureText: true,
+              obscureText: _passwordVisible2,
               decoration: InputDecoration(
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(
-                        width: 2, color: Colors.grey), //<-- SEE HERE
-                    borderRadius: BorderRadius.circular(8),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: const BorderSide(
+                      width: 2, color: Colors.grey), //<-- SEE HERE
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                hintText: '********',
+                hintStyle: const TextStyle(
+                    fontFamily: 'Tajawal',
+                    color: Color(0xff888888),
+                    fontSize: 13),
+                fillColor: Colors.white,
+                filled: true,
+                suffixIcon: IconButton(
+                  icon: Icon(
+                    // Based on passwordVisible state choose the icon
+                    _passwordVisible2 ? Icons.visibility : Icons.visibility_off,
+                    color: Theme.of(context).primaryColorDark,
                   ),
-                  hintText: '********',
-                  hintStyle: const TextStyle(
-                      fontFamily: 'Tajawal',
-                      color: Color(0xff888888),
-                      fontSize: 13),
-                  fillColor: Colors.white,
-                  filled: true,
-                  suffixIcon: const Icon(Icons.lock_outline),
-                  suffixIconColor: const Color(0xfff888888)),
+                  onPressed: () {
+                    // Update the state i.e. toogle the state of passwordVisible variable
+                    setState(() {
+                      _passwordVisible2 = !_passwordVisible2;
+                    });
+                  },
+                ),
+              ),
             ),
           ),
           Container(

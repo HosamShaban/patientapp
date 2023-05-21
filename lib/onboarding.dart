@@ -35,7 +35,7 @@ class _OnBoardingState extends State<OnBoarding> {
                       Container(
                         padding: EdgeInsets.all(10),
                         child: const Text(
-                          'النص العربي',
+                          'التشخيص أصبح أسهل',
                           style: TextStyle(
                               fontSize: 20, fontWeight: FontWeight.w700),
                         ),
@@ -43,7 +43,8 @@ class _OnBoardingState extends State<OnBoarding> {
                       Container(
                         padding: EdgeInsets.all(10),
                         child: const Text(
-                          'هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة',
+                          'يمكنك التطبيق من التشخيص بسهولة وباقل التكاليف ويمكنك اختيار الطبيب الذي تريده',
+                          textAlign: TextAlign.center,
                           style: TextStyle(
                               fontSize: 15, fontWeight: FontWeight.w700),
                         ),
@@ -60,7 +61,7 @@ class _OnBoardingState extends State<OnBoarding> {
                       Container(
                         padding: EdgeInsets.all(10),
                         child: const Text(
-                          'النص العربي',
+                          'متابعة نسبة السكر',
                           style: TextStyle(
                               fontSize: 24, fontWeight: FontWeight.w700),
                         ),
@@ -68,7 +69,8 @@ class _OnBoardingState extends State<OnBoarding> {
                       Container(
                         padding: EdgeInsets.all(10),
                         child: const Text(
-                          'هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة',
+                          ' التطبيق يتيح لك إدخال القراءات اليومية لمستوى السكر في الدم وتتبعها على مدار الوقت',
+                          textAlign: TextAlign.center,
                           style: TextStyle(
                               fontSize: 15, fontWeight: FontWeight.w700),
                         ),
@@ -85,7 +87,7 @@ class _OnBoardingState extends State<OnBoarding> {
                       Container(
                         padding: EdgeInsets.all(10),
                         child: const Text(
-                          'النص العربي',
+                          'عزيزي المريض',
                           style: TextStyle(
                               fontSize: 24, fontWeight: FontWeight.w700),
                         ),
@@ -93,7 +95,8 @@ class _OnBoardingState extends State<OnBoarding> {
                       Container(
                         padding: EdgeInsets.all(10),
                         child: const Text(
-                          'هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة',
+                          'مرض السكري هو أكثر الأمراض المزمنة التي تحتاج منك رعاية حثيثة ودورية لتجنب المضاعفات وهذا ماسنساعدك عليه',
+                          textAlign: TextAlign.center,
                           style: TextStyle(
                               fontSize: 15, fontWeight: FontWeight.w700),
                         ),

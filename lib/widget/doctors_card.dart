@@ -1,3 +1,4 @@
+import 'package:like_button/like_button.dart';
 import 'package:patientapp/Consts/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -34,11 +35,7 @@ class DoctorsCard extends StatelessWidget {
                 Row(
                   children: [
                     const SizedBox(width: 10),
-                    const Icon(
-                      Icons.favorite_border,
-                      color: Colors.black,
-                      size: 30,
-                    ),
+                    const LikeButton(),
                     const SizedBox(width: 10),
                     RatingBar.builder(
                       initialRating: 4.0,
@@ -78,7 +75,7 @@ class DoctorsCard extends StatelessWidget {
                   children: [
                     Row(
                       children: const [
-                         SizedBox(width: 170),
+                        SizedBox(width: 170),
                         Text(
                           'دكتور متخخص في مرض السكري',
                           style: TextStyle(
@@ -93,42 +90,13 @@ class DoctorsCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 20),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    const SizedBox(width: 5),
-
-                    InkWell(
-                      onTap: () {
-                        //  Navigator.push(context, MaterialPageRoute(builder: (context) => const ()));
-                      },
-                      child: const Text(
-                        "مفتوح الآن",
-                        style: TextStyle(color: ConstColors.primaryColor),
-                      ),
-                    ),
-                    const SizedBox(width: 30),
-                    const Text(
-                      "11",
-                      style: TextStyle(
-                        fontSize: 10,
-                        color: ConstColors.text2Color,
-                      ),
-                    ),
-                    const Icon(Icons.remove_red_eye_outlined,
-                        color: Color(0xff909090)),
-                    const SizedBox(width: 10),
-                    const Text(
-                      "122",
-                      style: TextStyle(
-                        fontSize: 10,
-                        color: ConstColors.text2Color,
-                      ),
-                    ),
-                    const Icon(Icons.favorite_border, color: Color(0xff909090)),
                     const SizedBox(width: 7),
                     const Text(
                       "0599999999",
                       style: TextStyle(
-                        fontSize: 10,
+                        fontSize: 15,
                         color: ConstColors.text2Color,
                       ),
                     ),
@@ -141,7 +109,7 @@ class DoctorsCard extends StatelessWidget {
                     const Text(
                       "غزة",
                       style: TextStyle(
-                        fontSize: 10,
+                        fontSize: 15,
                         color: ConstColors.text2Color,
                       ),
                     ),
@@ -150,7 +118,6 @@ class DoctorsCard extends StatelessWidget {
                       color: Color(0xff909090),
                       size: 25,
                     ),
-
                   ],
                 ),
                 const SizedBox(height: 35),
@@ -162,4 +129,3 @@ class DoctorsCard extends StatelessWidget {
     );
   }
 }
-

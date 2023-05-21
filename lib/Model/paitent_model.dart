@@ -1,28 +1,25 @@
 import 'dart:ffi';
 
 class PaitentModel {
-  final int id;
-  late String name;
-  late String email;
-  late Long phoneNom;
-  late String img;
-  late String address;
-  late String password;
-  late int age;
-  late String diabetic_type;
-  late String gender;
+  String name;
+  String email;
+  String gender;
+  String phoneNom;
+  String age;
+  PaitentModel(
+      {required this.name,
+      required this.email,
+      required this.gender,
+      required this.age,
+      required this.phoneNom});
 
-  PaitentModel(this.id, this.name, this.email, this.address, this.gender,
-      this.age, this.diabetic_type, this.password, this.phoneNom, this.img);
-
-  PaitentModel.fromjson(Map<String, dynamic> json)
-      : id = json['id'] ?? 0,
-        name = json['name'] ?? '',
-        email = json['email '] ?? '',
-        password = json[''] ?? '',
-        phoneNom = json['phone_No'] ?? '',
-        address = json['address'] ?? '',
-        age = json['age'] ?? '',
-        diabetic_type = json['diabetic_type'] ?? '',
-        gender = json['sex'] ?? '';
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data["name"] = name;
+    data["phone_No"] = phoneNom;
+    data['email'] = email;
+    data['sex'] = gender;
+    data['age'] = age;
+    return data;
+  }
 }

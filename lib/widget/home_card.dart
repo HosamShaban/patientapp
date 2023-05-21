@@ -22,102 +22,76 @@ class HomeCard extends StatelessWidget {
           ),
         ],
       ),
-      padding: const EdgeInsets.symmetric(horizontal: 5 , vertical: 2),
+      padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
-              child: Column(
-      children: [
-        const SizedBox(height: 5),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Row(
+            child: Column(
               children: [
-                const SizedBox(width: 10),
-                const Icon(
-                  Icons.favorite_border,
-                  color: Colors.black,
-                  size: 30,
+                const SizedBox(height: 5),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Row(
+                      children: [
+                        const SizedBox(width: 10),
+                        const SizedBox(width: 180),
+                        Text(
+                          title,
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w400,
+                            color: ConstColors.textColor,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(width: 5),
+                    const CircleAvatar(
+                      backgroundColor: Colors.white,
+                      backgroundImage: AssetImage("assets/images/Vector.png"),
+                    ),
+                  ],
                 ),
-                const SizedBox(width: 180),
-                Text(
-                  title,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w400,
-                    color: ConstColors.textColor,
-                  ),
+                const SizedBox(height: 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: const [
+                    SizedBox(width: 15),
+                    Text(
+                      "0599999999",
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: ConstColors.text2Color,
+                      ),
+                    ),
+                    SizedBox(width: 2),
+                    Icon(
+                      Icons.phone,
+                      color: Color(0xff909090),
+                    ),
+                    SizedBox(width: 10),
+                    Text(
+                      "غزة",
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: ConstColors.text2Color,
+                      ),
+                    ),
+                    Icon(
+                      Icons.home,
+                      color: Color(0xff909090),
+                      size: 25,
+                    ),
+                  ],
                 ),
+                const SizedBox(height: 35),
               ],
             ),
-            const SizedBox(width: 5),
-            const CircleAvatar(
-              backgroundColor: Colors.white,
-              backgroundImage: AssetImage("assets/images/Vector.png"),
-            ),
-
-          ],
-        ),
-        const SizedBox(height: 20),
-        Row(
-          children: const [
-            SizedBox(width: 5),
-            Text(
-              "11",
-              style: TextStyle(
-                fontSize: 14,
-                color: ConstColors.text2Color,
-              ),
-            ),
-            Icon(Icons.remove_red_eye_outlined, color: Color(0xff909090)),
-            SizedBox(width: 40),
-            Text(
-              "122",
-              style: TextStyle(
-                fontSize: 14,
-                color: ConstColors.text2Color,
-              ),
-            ),
-            Icon(Icons.favorite_border, color: Color(0xff909090)),
-
-            SizedBox(width: 15),
-            Text(
-              "0599999999",
-              style: TextStyle(
-                fontSize: 14,
-                color: ConstColors.text2Color,
-              ),
-            ),
-
-            SizedBox(width: 2),
-            Icon(
-              Icons.phone,
-              color: Color(0xff909090),
-            ),
-            SizedBox(width: 10),
-
-            Text(
-              "غزة",
-              style: TextStyle(
-                fontSize: 14,
-                color: ConstColors.text2Color,
-              ),
-            ),
-            Icon(
-              Icons.home,
-              color: Color(0xff909090),
-              size: 25,
-            ),
-          ],
-        ),
-        const SizedBox(height: 35),
-      ],
-    ),
-    ),
+          ),
         ],
-    ),
+      ),
     );
   }
 }
