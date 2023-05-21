@@ -1,7 +1,8 @@
-import 'package:patientapp/Consts/colors.dart';
 import 'package:patientapp/Model/Personaldata_model.dart';
 import 'package:patientapp/View/Biography.dart';
 import 'package:flutter/material.dart';
+
+import '../Consts/colors.dart';
 
 class Medicaldata extends StatefulWidget {
   const Medicaldata({Key? key}) : super(key: key);
@@ -147,8 +148,6 @@ class _MedicaldataState extends State<Medicaldata> {
                 width: 327,
                 height: 108,
                 child: TextFormField(
-                  textAlign: TextAlign.right,
-                  textDirection: TextDirection.rtl,
                   maxLines: 10,
                   decoration: const InputDecoration(
                     hintText: "اشرح للطبيب حالتك أو استفسارك باختصار",
@@ -170,7 +169,7 @@ class _MedicaldataState extends State<Medicaldata> {
                       fontWeight: FontWeight.w500),
                 ),
               ),
-              /*   Container(
+              Container(
                 child: ListTile(
                   leading: const Icon(Icons.delete_forever_outlined),
                   title: Container(
@@ -194,7 +193,7 @@ class _MedicaldataState extends State<Medicaldata> {
                         borderRadius: BorderRadius.circular(12.0)),
                   ),
                 ),
-              ),*/
+              ),
               const SizedBox(height: 25),
               InkWell(
                 onTap: () {},

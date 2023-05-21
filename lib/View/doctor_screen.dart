@@ -20,7 +20,7 @@ class _DoctorScreenState extends State<DoctorScreen> {
   String query = '';
   String selectedFilter = 'All';
   List<AllDoctorsModel> doctors = [];
-  final String baseUrl = "http://10.0.2.2:8000";
+  final String baseUrl = "http://10.:8000";
 
   void FetchDoctorsFromApi() async {
     final Dio dio = Dio();
@@ -42,8 +42,8 @@ class _DoctorScreenState extends State<DoctorScreen> {
   Future<void> Register() async {
     final Dio dio = Dio();
     var response = await dio.post("$baseUrl/api/patient/register", data: {
-      "name": "Omar",
-      "email": "omar@gmail.com",
+      "name": "mohammed",
+      "email": "moh@gmail.com",
       "password": "18383832dd"
     });
     print(response.data);
