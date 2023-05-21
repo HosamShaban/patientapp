@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:patientapp/Consts/colors.dart';
 import 'package:patientapp/auth/signin_screen.dart';
