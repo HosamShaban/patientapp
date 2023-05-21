@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:patientapp/Model/paitent_model.dart';
 
 class Personaldata extends StatefulWidget {
   @override
