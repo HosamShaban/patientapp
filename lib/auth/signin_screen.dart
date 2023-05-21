@@ -1,9 +1,10 @@
-import 'package:patientapp/View/personal_screen.dart';
-import 'package:patientapp/auth/singup_screen.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import '../Consts/Defaultimages.dart';
-import '../Consts/colors.dart';
+import 'package:patientapp/View/personal_screen.dart';
 import 'package:patientapp/auth/ForgotPassword.dart';
+import 'package:patientapp/auth/singup_screen.dart';
+
+import '../Consts/colors.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({
@@ -15,6 +16,22 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  final String baseUrl = "http://127.0.0.1:8000";
+
+  Future<void> login() async {
+    final Dio dio = Dio();
+    var response = await dio.post("$baseUrl/api/patient/login",
+        data: {"email": "omar@gmail.com", "password": "1234556"});
+    if (response.statusCode == 200) {
+      final token = response.data;
+      print('Token: $token');
+    } else {
+      print('Login failed');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,6 +75,7 @@ class _LoginScreenState extends State<LoginScreen> {
             )),
             padding: const EdgeInsets.all(15),
             child: TextFormField(
+              controller: emailController,
               textAlign: TextAlign.right,
               decoration: InputDecoration(
                   enabledBorder: OutlineInputBorder(
@@ -92,6 +110,7 @@ class _LoginScreenState extends State<LoginScreen> {
             )),
             padding: const EdgeInsets.all(15),
             child: TextFormField(
+              controller: passwordController,
               textAlign: TextAlign.right,
               obscureText: true,
               decoration: InputDecoration(
@@ -149,6 +168,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ],
                     ),
                     onPressed: () => {
+                      login(),
                       Navigator.push(
                           context,
                           MaterialPageRoute(

@@ -1,7 +1,5 @@
-import 'dart:math';
-
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:patientapp/Consts/colors.dart';
 import 'package:patientapp/auth/signin_screen.dart';
 
@@ -17,6 +15,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
   TextEditingController emailcontroller = TextEditingController();
   TextEditingController passwordcontroller = TextEditingController();
   TextEditingController confirmpasswordcontroller = TextEditingController();
+  final String baseUrl = "http://127.0.0.1:8000";
+
+  Future<void> Register() async {
+    final Dio dio = Dio();
+    var response = await dio.post("$baseUrl/api/patient/register", data: {
+      "name": "Omar",
+      "email": "omar@gmail.com",
+      "password": "18383832dd"
+    });
+    print(response.data);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -213,11 +223,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ),
                         ],
                       ),
-                      onPressed: () async => {
-
-
-                          }
-                          ),
+                      onPressed: () async => {Register()}),
                 ),
               ],
             ),

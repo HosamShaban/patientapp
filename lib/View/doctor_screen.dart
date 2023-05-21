@@ -1,11 +1,10 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:patientapp/Model/all_doctors.dart';
-import 'package:patientapp/Model/doctors_model.dart';
 import 'package:patientapp/View/doctorprofile.dart';
 import 'package:patientapp/View/filter_view.dart';
 import 'package:patientapp/controller/doctors_controller.dart';
 import 'package:patientapp/widget/doctors_card.dart';
-import 'package:flutter/material.dart';
 
 class DoctorScreen extends StatefulWidget {
   final GlobalKey<ScaffoldState>? scaffoldKey;
@@ -39,16 +38,6 @@ class _DoctorScreenState extends State<DoctorScreen> {
     }
   }
 
-  Future<void> Register() async {
-    final Dio dio = Dio();
-    var response = await dio.post("$baseUrl/api/patient/register", data: {
-      "name": "Omar",
-      "email": "omar@gmail.com",
-      "password": "18383832dd"
-    });
-    print(response.data);
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -69,7 +58,7 @@ class _DoctorScreenState extends State<DoctorScreen> {
           children: [
             ElevatedButton(
                 onPressed: () {
-                  Register();
+                  FetchDoctorsFromApi();
                 },
                 child: Text("Fetch")),
             Row(
