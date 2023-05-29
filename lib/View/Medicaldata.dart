@@ -1,6 +1,10 @@
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'package:patientapp/Model/Personaldata_model.dart';
 import 'package:patientapp/View/Biography.dart';
-import 'package:flutter/material.dart';
 
 import '../Consts/colors.dart';
 
@@ -21,6 +25,32 @@ class _MedicaldataState extends State<Medicaldata> {
       diagnosis: patient.diagnosis,
       treatment: patient.treatment,
     );
+  }
+
+  File? _pdfFile;
+  bool _fileAdded = false;
+  int _pageNumber = 1;
+  PDFViewController? _pdfViewController;
+
+  Future<void> _pickFile() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: ['pdf'],
+    );
+
+    if (result != null) {
+      setState(() {
+        _pdfFile = File(result.files.single.path!);
+        _fileAdded = true;
+      });
+    }
+  }
+
+  void _removeFile() {
+    setState(() {
+      _pdfFile = null;
+      _fileAdded = false;
+    });
   }
 
   @override
@@ -169,49 +199,84 @@ class _MedicaldataState extends State<Medicaldata> {
                       fontWeight: FontWeight.w500),
                 ),
               ),
-              Container(
-                child: ListTile(
-                  leading: const Icon(Icons.delete_forever_outlined),
-                  title: Container(
-                      margin: const EdgeInsets.only(left: 75),
-                      child: const Text('ملف حالة المريض .pdf')),
-                  subtitle: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Container(child: const Text('تم اضافة الملف بنجاح')),
+              ListTile(
+                leading: IconButton(
+                  icon: const Icon(
+                    Icons.delete_forever_outlined,
+                    size: 28,
+                  ),
+                  onPressed: () {
+                    _removeFile();
+                  },
+                ),
+                title: Container(
+                  margin: const EdgeInsets.only(left: 75),
+                  child: Text(_pdfFile != null
+                      ? _pdfFile!.path.split('/').last
+                      : 'ملف حالة المريض .pdf'),
+                ),
+                subtitle: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Text(_fileAdded ? 'تم اضافة الملف بنجاح' : ''),
+                    if (_fileAdded)
                       const Icon(
                         Icons.done,
                         size: 12,
                       ),
-                    ],
-                  ),
-                  trailing: Container(
-                    width: 72,
-                    height: 72,
-                    decoration: BoxDecoration(
-                        color: const Color(0xffEAEAEA),
-                        borderRadius: BorderRadius.circular(12.0)),
-                  ),
+                  ],
                 ),
+                trailing: _pdfFile != null
+                    ? Container(
+                        width: 72,
+                        height: 72,
+                        decoration: BoxDecoration(
+                          color: const Color(0xffEAEAEA),
+                          borderRadius: BorderRadius.circular(12.0),
+                        ),
+                        child: PDFView(
+                          filePath: _pdfFile!.path,
+                          onViewCreated: (PDFViewController viewController) {
+                            _pdfViewController = viewController;
+                          },
+                          onPageChanged: (page, total) {
+                            setState(() {
+                              _pageNumber = page!;
+                            });
+                          },
+                        ),
+                      )
+                    : Container(
+                        width: 72,
+                        height: 72,
+                        decoration: BoxDecoration(
+                          color: const Color(0xffEAEAEA),
+                          borderRadius: BorderRadius.circular(12.0),
+                        ),
+                      ),
               ),
               const SizedBox(height: 25),
               InkWell(
-                onTap: () {},
+                onTap: _pickFile,
                 child: Container(
                   width: 327,
                   height: 48,
                   decoration: BoxDecoration(
-                      color: const Color(0xffEAEAEA),
-                      border: Border.all(
-                          color: const Color(0xFF000000),
-                          width: 1.0,
-                          style: BorderStyle.solid),
-                      borderRadius: BorderRadius.circular(12.0)),
+                    color: const Color(0xffEAEAEA),
+                    border: Border.all(
+                      color: const Color(0xFF000000),
+                      width: 1.0,
+                      style: BorderStyle.solid,
+                    ),
+                    borderRadius: BorderRadius.circular(12.0),
+                  ),
                   child: const Center(
                     child: Text(
                       "اضافة ملف",
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                      ),
                       textAlign: TextAlign.center,
                     ),
                   ),
