@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:patientapp/Consts/colors.dart';
@@ -26,6 +27,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
       "name": namecontroller.text.trim(),
       "email": emailcontroller.text.trim(),
       "password": passwordcontroller.text.trim()
+    });
+    await FirebaseFirestore.instance.collection('users').add({
+      'name': namecontroller.text.trim(),
+      'email': emailcontroller.text.trim(),
+      'password': passwordcontroller.text.trim(),
+      'confirmPassword': confirmpasswordcontroller.text.trim()
     });
     print(response.data);
   }
