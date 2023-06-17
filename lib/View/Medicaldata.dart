@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'package:patientapp/Model/Personaldata_model.dart';
 import 'package:patientapp/View/Biography.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Consts/colors.dart';
 
@@ -31,6 +32,24 @@ class _MedicaldataState extends State<Medicaldata> {
   bool _fileAdded = false;
   int _pageNumber = 1;
   PDFViewController? _pdfViewController;
+  SharedPreferences? _prefs;
+
+  @override
+  void initState() {
+    super.initState();
+    _initSharedPreferences();
+  }
+
+  _initSharedPreferences() async {
+    _prefs = await SharedPreferences.getInstance();
+    String? filePath = _prefs?.getString('pdfFilePath');
+    if (filePath != null) {
+      setState(() {
+        _pdfFile = File(filePath);
+        _fileAdded = true;
+      });
+    }
+  }
 
   Future<void> _pickFile() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
@@ -42,15 +61,17 @@ class _MedicaldataState extends State<Medicaldata> {
       setState(() {
         _pdfFile = File(result.files.single.path!);
         _fileAdded = true;
+        _saveFilePath(_pdfFile!.path);
       });
     }
   }
 
-  void _removeFile() {
-    setState(() {
-      _pdfFile = null;
-      _fileAdded = false;
-    });
+  _saveFilePath(String filePath) async {
+    _prefs?.setString('pdfFilePath', filePath);
+  }
+
+  _removeFilePath() {
+    _prefs?.remove('pdfFilePath');
   }
 
   @override
@@ -83,13 +104,16 @@ class _MedicaldataState extends State<Medicaldata> {
           child: Column(
             children: [
               Container(
-                  margin: const EdgeInsets.only(left: 260, top: 23),
+                  margin: const EdgeInsets.only(left: 230, top: 25),
                   child: const Text(
                     "نوع السكري",
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
                   )),
+              const SizedBox(
+                height: 10,
+              ),
               Container(
-                margin: const EdgeInsets.only(left: 130),
+                margin: const EdgeInsets.only(left: 120),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -124,7 +148,7 @@ class _MedicaldataState extends State<Medicaldata> {
                 ),
               ),
               Container(
-                margin: const EdgeInsets.only(left: 130),
+                margin: const EdgeInsets.only(left: 120),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -157,8 +181,11 @@ class _MedicaldataState extends State<Medicaldata> {
                   ],
                 ),
               ),
+              const SizedBox(
+                height: 30,
+              ),
               Container(
-                margin: EdgeInsets.only(left: 200),
+                margin: EdgeInsets.only(left: 170),
                 child: const Text(
                   "أوصف حالتك للطبيب",
                   style: TextStyle(
@@ -187,7 +214,7 @@ class _MedicaldataState extends State<Medicaldata> {
                 ),
               ),
               const SizedBox(
-                height: 20,
+                height: 25,
               ),
               Container(
                 margin: const EdgeInsets.only(left: 220),
@@ -206,7 +233,7 @@ class _MedicaldataState extends State<Medicaldata> {
                     size: 28,
                   ),
                   onPressed: () {
-                    _removeFile();
+                    _removeFilePath();
                   },
                 ),
                 title: Container(

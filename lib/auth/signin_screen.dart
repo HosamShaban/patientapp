@@ -1,9 +1,10 @@
 import 'dart:convert';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
 import 'package:patientapp/View/personal_screen.dart';
 import 'package:patientapp/auth/ForgotPassword.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Consts/colors.dart';
 import 'Register_screen.dart';
@@ -25,21 +26,31 @@ class _LoginScreenState extends State<LoginScreen> {
   final String baseUrl = "https://diabetes-2023.000webhostapp.com";
   final _formKey = GlobalKey<FormState>();
   bool _autoValidate = false;
-  void login(String email, password) async {
-    try {
-      Response response = await post(Uri.parse('$baseUrl/api/patient/login'),
-          body: {'email': email, 'password': password});
-      if (response.statusCode == 200) {
-        var data = jsonDecode(response.body.toString());
-        if (data.containsKey('token')) {
-          print(data['token']);
-          print('Login successfully');
-        } else {
-          print('Token not found in response');
-        }
+  String token = "";
+  late SharedPreferences UserData;
+  late bool newuser;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    check_user();
+  }
+
+  void login(email, password) async {
+    final Dio dio = Dio();
+    var response = await dio.post("$baseUrl/api/patient/login", data: {
+      "email": emailController.text.trim(),
+      "password": passwordController.text.trim()
+    });
+    print(response.data);
+    if (response.statusCode == 200) {
+      var data = jsonDecode(response.toString());
+      if (data.containsKey('token')) {
+        print(data['token']);
+        print('Login successfully');
+      } else {
+        print('Token not found in response');
       }
-    } catch (e) {
-      print(e.toString());
     }
   }
 
@@ -72,6 +83,24 @@ class _LoginScreenState extends State<LoginScreen> {
         _autoValidate = true;
       });
     }
+  }
+
+  void check_user() async {
+    UserData = await SharedPreferences.getInstance();
+    newuser = (UserData.getBool('login') ?? true);
+
+    print(newuser);
+
+    if (newuser == false) {
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => PersonalPage()));
+    }
+  }
+
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
   }
 
   @override
@@ -119,6 +148,7 @@ class _LoginScreenState extends State<LoginScreen> {
               )),
               padding: const EdgeInsets.all(15),
               child: TextFormField(
+                validator: emailValidator,
                 controller: emailController,
                 textAlign: TextAlign.right,
                 decoration: InputDecoration(
@@ -155,6 +185,7 @@ class _LoginScreenState extends State<LoginScreen> {
               )),
               padding: const EdgeInsets.all(15),
               child: TextFormField(
+                validator: passwordValidator,
                 controller: passwordController,
                 obscureText: !_passwordVisible,
                 textAlign: TextAlign.right,
@@ -245,6 +276,13 @@ class _LoginScreenState extends State<LoginScreen> {
                           login(emailController.text.toString(),
                               passwordController.text.toString());
                           _signInProcess(context);
+                          UserData.setBool("login", false);
+                          UserData.setString(
+                              "email", emailController.text.toString());
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => PersonalPage()));
                         }),
                   ),
                 ],

@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfilePic extends StatefulWidget {
   const ProfilePic({
@@ -14,6 +15,23 @@ class ProfilePic extends StatefulWidget {
 
 class _ProfilePicState extends State<ProfilePic> {
   XFile? _image;
+  SharedPreferences? _prefs;
+
+  @override
+  void initState() {
+    super.initState();
+    _initSharedPreferences();
+  }
+
+  _initSharedPreferences() async {
+    _prefs = await SharedPreferences.getInstance();
+    String? imagePath = _prefs?.getString('profileImage');
+    if (imagePath != null) {
+      setState(() {
+        _image = XFile(imagePath);
+      });
+    }
+  }
 
   _imgFromCamera() async {
     final ImagePicker _picker = ImagePicker();
@@ -23,9 +41,7 @@ class _ProfilePicState extends State<ProfilePic> {
     );
 
     if (image != null) {
-      setState(() {
-        _image = image;
-      });
+      _saveImage(image);
     }
   }
 
@@ -37,10 +53,17 @@ class _ProfilePicState extends State<ProfilePic> {
     );
 
     if (image != null) {
-      setState(() {
-        _image = image;
-      });
+      _saveImage(image);
     }
+  }
+
+  _saveImage(XFile image) async {
+    setState(() {
+      _image = image;
+    });
+
+    String imagePath = image.path;
+    _prefs?.setString('profileImage', imagePath);
   }
 
   @override
@@ -67,13 +90,8 @@ class _ProfilePicState extends State<ProfilePic> {
               ),
               child: IconButton(
                 color: Colors.black,
-                onPressed: () async {
-                  final ImagePicker _picker = ImagePicker();
-                  final img =
-                      await _picker.pickImage(source: ImageSource.gallery);
-                  setState(() {
-                    _image = img;
-                  });
+                onPressed: () {
+                  _imgFromGallery();
                 },
                 icon: Icon(Icons.camera_alt, size: 22, color: Colors.black),
               ),

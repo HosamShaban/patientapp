@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
 class Personaldata extends StatefulWidget {
@@ -12,6 +13,7 @@ class _PersonaldataState extends State<Personaldata> {
   TextEditingController passwordcontroller = TextEditingController();
   TextEditingController age = TextEditingController();
   TextEditingController phoneNumber = TextEditingController();
+  final String baseUrl = "https://diabetes-2023.000webhostapp.com";
 
   Future<void> selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -23,6 +25,30 @@ class _PersonaldataState extends State<Personaldata> {
       setState(() {
         selectedDate = picked;
       });
+    }
+  }
+
+  Future<void> updateUser() async {
+    final Dio dio = Dio();
+    dio.options.followRedirects = false; // Disable automatic redirect following
+
+    try {
+      var response =
+          await dio.post("$baseUrl/api/patient/updateProfile", data: {
+        "name": namecontroller.toString(),
+        "email": emailcontroller.toString(),
+        "age": age.toString(),
+        "phone_No": phoneNumber.toString(),
+        "sex": selectedDate.toString()
+      });
+
+      if (response.statusCode == 302) {
+        var redirectUrl = response.headers['location']![0];
+      } else {
+        print(response.data);
+      }
+    } catch (e) {
+      print(e);
     }
   }
 
@@ -254,7 +280,9 @@ class _PersonaldataState extends State<Personaldata> {
                   child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xff407BFF)),
-                      onPressed: () async {},
+                      onPressed: () async {
+                        updateUser();
+                      },
                       child: const Text(
                         "حفظ",
                         style: TextStyle(

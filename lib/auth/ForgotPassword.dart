@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:patientapp/auth/signin_screen.dart';
 import 'package:patientapp/auth/newpassword.dart';
-import 'package:patientapp/auth/verify_email_screen.dart';
 
 class ForgotPassword extends StatelessWidget {
   static String id = '/ForgotPassword';
@@ -96,7 +93,7 @@ class ForgotPassword extends StatelessWidget {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => VerifyMobileScreen()));
+                              builder: (context) => const CreateNewPassword()));
                     },
                     child: const Text(
                       'استمرار',

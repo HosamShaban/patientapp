@@ -1,6 +1,6 @@
+import 'package:flutter/material.dart';
 import 'package:patientapp/Consts/Defaultimages.dart';
 import 'package:patientapp/Consts/colors.dart';
-import 'package:patientapp/Model/paitent_model.dart';
 import 'package:patientapp/View/date_screen.dart';
 import 'package:patientapp/View/doctor_screen.dart';
 import 'package:patientapp/View/home_screen.dart';
@@ -8,23 +8,24 @@ import 'package:patientapp/View/measure_screen.dart';
 import 'package:patientapp/View/profile_screen.dart';
 import 'package:patientapp/controller/screenIndexProvider.dart';
 import 'package:patientapp/widget/tab_card.dart';
-import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class PersonalPage extends StatefulWidget {
   @override
   State<PersonalPage> createState() => _PersonalPageState();
-
 }
 
 class _PersonalPageState extends State<PersonalPage> {
   late final ScaffoldState scaffoldState;
-
+  late SharedPreferences UserData;
+  late String email;
 
   @override
   void initState() {
     context.read<screenIndexProvider>().tabFlag = 0;
     super.initState();
+    initial();
   }
 
   List<dynamic> screens = [
@@ -35,14 +36,20 @@ class _PersonalPageState extends State<PersonalPage> {
     const SugarMeasurement()
   ];
 
+  void initial() async {
+    UserData = await SharedPreferences.getInstance();
+    setState(() {
+      email = UserData.getString("email")!;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final _screenindexprovider = Provider.of<screenIndexProvider>(context);
     int currentScreenIndex = _screenindexprovider.tabFlag;
     return Scaffold(
       body: screens[currentScreenIndex],
-      bottomNavigationBar:
-      Container(
+      bottomNavigationBar: Container(
         height: 60,
         width: 300,
         decoration: BoxDecoration(
@@ -61,6 +68,12 @@ class _PersonalPageState extends State<PersonalPage> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
+            Center(
+              child: Text(
+                "Hello $email",
+                style: const TextStyle(fontSize: 25),
+              ),
+            ),
             TabCard(
               color: currentScreenIndex == 4
                   ? ConstColors.whiteFontColor
@@ -72,7 +85,6 @@ class _PersonalPageState extends State<PersonalPage> {
                   _screenindexprovider.tabFlag = 4;
                 });
               },
-
             ),
             TabCard(
               color: currentScreenIndex == 1
@@ -85,9 +97,7 @@ class _PersonalPageState extends State<PersonalPage> {
                   _screenindexprovider.tabFlag = 1;
                 });
               },
-
             ),
-
             TabCard(
               color: currentScreenIndex == 0
                   ? ConstColors.whiteFontColor
@@ -100,7 +110,6 @@ class _PersonalPageState extends State<PersonalPage> {
                 });
               },
             ),
-
             TabCard(
               color: currentScreenIndex == 2
                   ? ConstColors.whiteFontColor
@@ -112,7 +121,6 @@ class _PersonalPageState extends State<PersonalPage> {
                   _screenindexprovider.tabFlag = 2;
                 });
               },
-
             ),
             TabCard(
               color: currentScreenIndex == 3
@@ -125,7 +133,6 @@ class _PersonalPageState extends State<PersonalPage> {
                   _screenindexprovider.tabFlag = 3;
                 });
               },
-
             ),
           ],
         ),
@@ -133,4 +140,3 @@ class _PersonalPageState extends State<PersonalPage> {
     );
   }
 }
-
