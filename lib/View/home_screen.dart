@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:patientapp/View/chat_screen.dart';
 import 'package:patientapp/controller/home_controller.dart';
 import 'package:patientapp/widget/home_card.dart';
 
@@ -27,7 +28,10 @@ class _HomeScreenState extends State<HomeScreen> {
         leading: InkWell(
           child: IconButton(
               onPressed: () {
-                //       Navigator.push(context,MaterialPageRoute(builder: (context) => const ()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const ChatScreen()));
               },
               icon: const Icon(
                 Icons.email_outlined,
