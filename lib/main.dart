@@ -1,9 +1,12 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:patientapp/View/personal_screen.dart';
 import 'package:patientapp/controller/screenIndexProvider.dart';
 import 'package:patientapp/onboarding.dart';
+import 'package:patientapp/widget/loading_animation_screen.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -13,6 +16,12 @@ Future<void> main() async {
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
+
+  Future<bool> _checkEmailExists() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? email = prefs.getString('email');
+    return email != null;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +35,23 @@ class MyApp extends StatelessWidget {
             ChangeNotifierProvider(create: (context) => screenIndexProvider())
           ],
           child: MaterialApp(
-            home: const OnBoarding(),
+            home: FutureBuilder<bool>(
+              future: _checkEmailExists(),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  if (snapshot.data!) {
+                    // Email exists, navigate to home screen
+                    return PersonalPage(); // Replace with your home screen widget
+                  } else {
+                    // Email does not exist, navigate to onboarding screen
+                    return const OnBoarding();
+                  }
+                } else {
+                  // Show a loading indicator while checking email existence
+                  return LoadingAnimationPage();
+                }
+              },
+            ),
             debugShowCheckedModeBanner: false,
             theme: ThemeData(primarySwatch: Colors.blue, fontFamily: 'Tajawal'),
           ),

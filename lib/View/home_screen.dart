@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:patientapp/View/chat_screen.dart';
 import 'package:patientapp/controller/home_controller.dart';
 import 'package:patientapp/widget/home_card.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  final String email;
+  const HomeScreen({Key? key, required this.email}) : super(key: key);
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -13,6 +15,22 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final homeController = HomeController();
   String query = '';
+  late SharedPreferences UserData;
+  late String email;
+
+  @override
+  void initState() {
+    super.initState();
+    initial();
+    email = widget.email;
+  }
+
+  void initial() async {
+    UserData = await SharedPreferences.getInstance();
+    setState(() {
+      email = UserData.getString("email")!;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -128,6 +146,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                   ],
+                ),
+              ),
+              Center(
+                child: Text(
+                  "Hello $email",
+                  style: const TextStyle(fontSize: 25),
                 ),
               ),
             ],

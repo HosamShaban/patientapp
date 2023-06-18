@@ -9,7 +9,6 @@ import 'package:patientapp/View/profile_screen.dart';
 import 'package:patientapp/controller/screenIndexProvider.dart';
 import 'package:patientapp/widget/tab_card.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class PersonalPage extends StatefulWidget {
   @override
@@ -18,30 +17,22 @@ class PersonalPage extends StatefulWidget {
 
 class _PersonalPageState extends State<PersonalPage> {
   late final ScaffoldState scaffoldState;
-  late SharedPreferences UserData;
-  late String email;
 
   @override
   void initState() {
     context.read<screenIndexProvider>().tabFlag = 0;
     super.initState();
-    initial();
   }
 
   List<dynamic> screens = [
-    const HomeScreen(),
+    const HomeScreen(
+      email: 'example@example.com',
+    ),
     const DateScreen(),
     const DoctorScreen(),
     const ProfileScreen(),
     const SugarMeasurement()
   ];
-
-  void initial() async {
-    UserData = await SharedPreferences.getInstance();
-    setState(() {
-      email = UserData.getString("email")!;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,12 +59,6 @@ class _PersonalPageState extends State<PersonalPage> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            Center(
-              child: Text(
-                "Hello $email",
-                style: const TextStyle(fontSize: 25),
-              ),
-            ),
             TabCard(
               color: currentScreenIndex == 4
                   ? ConstColors.whiteFontColor

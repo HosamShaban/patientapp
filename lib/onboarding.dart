@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:patientapp/auth/Register_screen.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import 'package:patientapp/auth/signin_screen.dart';
 
 class OnBoarding extends StatefulWidget {
   const OnBoarding({Key? key}) : super(key: key);
@@ -132,7 +132,7 @@ class _OnBoardingState extends State<OnBoarding> {
                 onPressed: () => Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const LoginScreen())),
+                        builder: (context) => const RegisterScreen())),
                 child: const Text(
                   'تخطي',
                   style: TextStyle(
@@ -163,7 +163,7 @@ class _OnBoardingState extends State<OnBoarding> {
                     onPressed: () => Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const LoginScreen())),
+                            builder: (context) => const RegisterScreen())),
                     child: const Text(
                       'التالي',
                       style: TextStyle(
