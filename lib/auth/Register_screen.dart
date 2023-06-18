@@ -1,6 +1,10 @@
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:patientapp/Consts/colors.dart';
 import 'package:patientapp/auth/signin_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);
@@ -18,6 +22,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
   String? passwordError;
   final _formKey = GlobalKey<FormState>();
   bool _autoValidate = false;
+  late SharedPreferences _preferences;
+
+  @override
+  void initState() {
+    super.initState();
+    initializePreferences();
+  }
+
+  Future<void> initializePreferences() async {
+    _preferences = await SharedPreferences.getInstance();
+  }
 
   Future<void> Register() async {
     final Dio dio = Dio();
@@ -26,6 +41,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
       "email": emailcontroller.text.trim(),
       "password": passwordcontroller.text.trim()
     });
+    await FirebaseFirestore.instance.collection('users').add({
+      'name': namecontroller.text.trim(),
+      'email': emailcontroller.text.trim(),
+      'password': passwordcontroller.text.trim(),
+      'confirmPassword': confirmpasswordcontroller.text.trim()
+    });
+    _preferences.setString('name', namecontroller.text.trim());
+    _preferences.setString('email', emailcontroller.text.trim());
+    _preferences.setString('password', passwordcontroller.text.trim());
+    _preferences.setString(
+        'confirmPassword', confirmpasswordcontroller.text.trim());
     print(response.data);
   }
 

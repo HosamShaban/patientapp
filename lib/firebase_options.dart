@@ -50,21 +50,20 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyBPhJi37DmpaJGlJHnu5mia3D1-sCxifzo',
-    appId: '1:192983514869:android:c26db434f32f3c87074fbc',
-    messagingSenderId: '192983514869',
-    projectId: 'graduation-project-73ced',
-    storageBucket: 'graduation-project-73ced.appspot.com',
+    apiKey: 'AIzaSyBbIsTuA6AWG-8PBmcJzUjqRa7-cyWjSNg',
+    appId: '1:433945835143:android:996593c00e04ba98086a22',
+    messagingSenderId: '433945835143',
+    projectId: 'graduationproject-81da5',
+    storageBucket: 'graduationproject-81da5.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyCgG_8H9ObHC0Pia51cyFfdjdGDYxEmXt0',
-    appId: '1:192983514869:ios:55155b892e4232d4074fbc',
-    messagingSenderId: '192983514869',
-    projectId: 'graduation-project-73ced',
-    storageBucket: 'graduation-project-73ced.appspot.com',
-    androidClientId: '192983514869-tke9292ollgktpndbfmkn4ho2msb337i.apps.googleusercontent.com',
-    iosClientId: '192983514869-4pvksbfvbb70bsodol7clt5stovicm9i.apps.googleusercontent.com',
+    apiKey: 'AIzaSyADRqX6uaRirCl4OzAgvHvM4yYFjLuDTds',
+    appId: '1:433945835143:ios:5b12c1e340d7459d086a22',
+    messagingSenderId: '433945835143',
+    projectId: 'graduationproject-81da5',
+    storageBucket: 'graduationproject-81da5.appspot.com',
+    iosClientId: '433945835143-deen1vt6aesrmjmkc4oajvtf5k6isfgj.apps.googleusercontent.com',
     iosBundleId: 'com.example.patientapp',
   );
 }
