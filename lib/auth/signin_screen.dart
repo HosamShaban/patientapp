@@ -36,23 +36,31 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void login(email, password) async {
-    final Dio dio = Dio();
-    var response = await dio.post("$baseUrl/api/patient/login", data: {
-      "email": emailController.text.trim(),
-      "password": passwordController.text.trim()
-    });
-    print(response.data);
-    if (response.statusCode == 200) {
-      var data = jsonDecode(response.toString());
-      if (data.containsKey('token')) {
-        String token = data['token'];
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-        await prefs.setString('token', token);
-        print(data['token']);
-        print('Login successfully');
+    Dio dio = Dio();
+    try {
+      var response = await dio.post("$baseUrl/api/patient/login", data: {
+        "email": emailController.text.trim(),
+        "password": passwordController.text.trim()
+      });
+
+      if (response.statusCode == 200) {
+        var responseData = json.decode(response.toString());
+        var data = response.data;
+        var status = response.data['code'];
+        var message = response.data['message'];
+        var token = responseData['data']['token'];
+        var id = response.data['patient_id'];
+        print('Data: $data');
+        print("================");
+        print('Status: $status');
+        print('Message: $message');
+        print('id : $id');
+        print('token is : $token');
       } else {
-        print('Token not found in response');
+        print('Error retrieving data. Status code: ${response.statusCode}');
       }
+    } catch (error) {
+      print('Error: $error');
     }
   }
 
