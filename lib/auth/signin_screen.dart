@@ -31,9 +31,8 @@ class _LoginScreenState extends State<LoginScreen> {
   late bool newuser;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    check_user();
+    checkUser();
   }
 
   void login(email, password) async {
@@ -46,6 +45,9 @@ class _LoginScreenState extends State<LoginScreen> {
     if (response.statusCode == 200) {
       var data = jsonDecode(response.toString());
       if (data.containsKey('token')) {
+        String token = data['token'];
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        await prefs.setString('token', token);
         print(data['token']);
         print('Login successfully');
       } else {
@@ -85,15 +87,15 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
-  void check_user() async {
-    UserData = await SharedPreferences.getInstance();
-    newuser = (UserData.getBool('login') ?? true);
-
-    print(newuser);
-
-    if (newuser == false) {
+  void checkUser() async {
+    SharedPreferences userData = await SharedPreferences.getInstance();
+    bool isLoggedIn = userData.getBool('login') ?? false;
+    print(isLoggedIn);
+    if (isLoggedIn) {
       Navigator.push(
-          context, MaterialPageRoute(builder: (context) => PersonalPage()));
+        context,
+        MaterialPageRoute(builder: (context) => PersonalPage()),
+      );
     }
   }
 
