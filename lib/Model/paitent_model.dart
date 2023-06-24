@@ -1,25 +1,57 @@
-import 'dart:ffi';
-
+ 
 class PaitentModel {
-  String name;
-  String email;
-  String gender;
-  String phoneNom;
-  String age;
-  PaitentModel(
-      {required this.name,
-      required this.email,
-      required this.gender,
-      required this.age,
-      required this.phoneNom});
+  int? id;
+  int? userId;
+  String? name;
+  String? email;
+  String? phoneNo;
+  int? age;
+  String? image;
+  String? address;
+  String? birthdate;
+  String? gender;
+  String? diabeticType;
+  String? patientStatus;
+  String? deletedAt;
+  String? createdAt;
+  String? updatedAt;
+  String? patientBiography;
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data["name"] = name;
-    data["phone_No"] = phoneNom;
-    data['email'] = email;
-    data['sex'] = gender;
-    data['age'] = age;
-    return data;
+  PaitentModel({
+    this.id,
+    this.userId,
+    this.name,
+    this.email,
+    this.phoneNo,
+    this.age,
+    this.image,
+    this.address,
+    this.birthdate,
+    this.gender,
+    this.diabeticType,
+    this.patientStatus,
+    this.deletedAt,
+    this.createdAt,
+    this.updatedAt,
+    this.patientBiography,
+  });
+
+  PaitentModel.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    userId = json['user_id'];
+    name = json['name'];
+    email = json['email'];
+    phoneNo = json['phone_No'];
+    age = json['age'];
+    image = json['image'];
+    address = json['address'];
+    birthdate = json['birthdate'];
+    gender = json['gender'];
+    diabeticType = json['diabetic_type'];
+    patientStatus = json['patient_status'];
+    deletedAt = json['deleted_at'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+    patientBiography = json['patient_biography'];
   }
 }

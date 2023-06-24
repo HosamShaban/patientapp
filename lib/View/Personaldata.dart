@@ -1,5 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:patientapp/View/profile.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Personaldata extends StatefulWidget {
   @override
@@ -10,10 +12,29 @@ class _PersonaldataState extends State<Personaldata> {
   DateTime selectedDate = DateTime.now();
   TextEditingController namecontroller = TextEditingController();
   TextEditingController emailcontroller = TextEditingController();
-  TextEditingController passwordcontroller = TextEditingController();
   TextEditingController age = TextEditingController();
   TextEditingController phoneNumber = TextEditingController();
   final String baseUrl = "https://diabetes-2023.000webhostapp.com";
+  String selectval = "male";
+  Future<void> StoreUserData() async {
+    final Dio dio = Dio();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var token = prefs.getString('token');
+    dio.options.headers = {'Authorization': 'Bearer $token'};
+    var response = await dio.post("$baseUrl/api/patient/updateProfile", data: {
+      "name": namecontroller.text.trim(),
+      "age": age.text.trim(),
+      "email": emailcontroller.text.trim(),
+      "gender": selectval,
+      "phone_No": phoneNumber.text.trim()
+    });
+    print(response.data);
+  }
+
+  Future<void> checktoken() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    print(prefs.getString('token').toString());
+  }
 
   Future<void> selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -28,31 +49,6 @@ class _PersonaldataState extends State<Personaldata> {
     }
   }
 
-  Future<void> updateUser() async {
-    final Dio dio = Dio();
-    dio.options.followRedirects = false; // Disable automatic redirect following
-
-    try {
-      var response =
-          await dio.post("$baseUrl/api/patient/updateProfile", data: {
-        "name": namecontroller.toString(),
-        "email": emailcontroller.toString(),
-        "age": age.toString(),
-        "phone_No": phoneNumber.toString(),
-        "sex": selectedDate.toString()
-      });
-
-      if (response.statusCode == 302) {
-        var redirectUrl = response.headers['location']![0];
-      } else {
-        print(response.data);
-      }
-    } catch (e) {
-      print(e);
-    }
-  }
-
-  Object selectval = "ذكر";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -147,15 +143,14 @@ class _PersonaldataState extends State<Personaldata> {
                           children: [
                             DropdownButton(
                               items: <String>[
-                                'ذكر',
-                                'أنثى',
+                                'male',
+                                'female',
                               ].map<DropdownMenuItem<String>>((String value) {
                                 return DropdownMenuItem<String>(
                                   value: value,
                                   child: Text(value),
                                 );
                               }).toList(),
-                              hint: const Text('اختر'),
                               onChanged: (value) {
                                 setState(() {
                                   selectval = value!;
@@ -281,7 +276,7 @@ class _PersonaldataState extends State<Personaldata> {
                       style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xff407BFF)),
                       onPressed: () async {
-                        updateUser();
+                        StoreUserData();
                       },
                       child: const Text(
                         "حفظ",
@@ -289,7 +284,29 @@ class _PersonaldataState extends State<Personaldata> {
                             fontSize: 20, fontWeight: FontWeight.w500),
                       )),
                 ),
-              )
+              ),
+              const SizedBox(height: 25),
+              Center(
+                child: SizedBox(
+                  width: 311,
+                  height: 48,
+                  child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color(0xff407BFF)),
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const Profile()));
+                      },
+                      child: const Text(
+                        "استعراض",
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.w500),
+                      )),
+                ),
+              ),
+              const SizedBox(height: 25),
             ],
           ),
         ),

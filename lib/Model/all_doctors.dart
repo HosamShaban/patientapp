@@ -1,22 +1,55 @@
 import 'dart:ffi';
+import 'dart:convert';
 
 class AllDoctorsModel {
-  final int id;
-  late String name;
-  late String qualifications;
-  late Long phoneNom;
-  late String img;
-  late String address;
-  late int rating;
+  int? id;
+  String? name;
+  String? email;
+  String? password;
+  String? phoneNo;
+  String? qualifications;
+  String? address;
+  String? image;
+  String? rateing;
+  String? DateTime;
 
-  AllDoctorsModel(this.id, this.name, this.qualifications, this.address,
-      this.rating, this.phoneNom, this.img);
+  AllDoctorsModel(
+      {this.id,
+      this.name,
+      this.email,
+      this.password,
+      this.phoneNo,
+      this.qualifications,
+      this.address,
+      this.image,
+      this.rateing,
+      this.DateTime});
 
-  AllDoctorsModel.fromjson(Map<String, dynamic> json)
-      : id = json['id'] ?? 0,
-        name = json['name'] ?? '',
-        qualifications = json['qualifications'] ?? '',
-        phoneNom = json['phone_No'] ?? '',
-        address = json['address'] ?? '',
-        rating = json['rateing'] ?? '';
+  AllDoctorsModel.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    name = json['name'];
+    email = json['email'];
+    password = json['password'];
+    phoneNo = json['phone_No'];
+    qualifications = json['qualifications'];
+    address = json['address'];
+    image = json['image'];
+    rateing = json['rateing'];
+    DateTime = json['created_at'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['name'] = this.name;
+    data['email'] = this.email;
+    data['password'] = this.password;
+    data['phone_No'] = this.phoneNo;
+    data['qualifications'] = this.qualifications;
+    data['address'] = this.address;
+    data['image'] = this.image;
+    data['rateing'] = this.rateing;
+
+    return data;
+  }
 }

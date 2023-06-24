@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:patientapp/Consts/Defaultimages.dart';
 import 'package:patientapp/Consts/colors.dart';
+import 'package:patientapp/Model/paitent_model.dart';
 import 'package:patientapp/View/date_screen.dart';
 import 'package:patientapp/View/doctor_screen.dart';
 import 'package:patientapp/View/home_screen.dart';
@@ -8,15 +8,18 @@ import 'package:patientapp/View/measure_screen.dart';
 import 'package:patientapp/View/profile_screen.dart';
 import 'package:patientapp/controller/screenIndexProvider.dart';
 import 'package:patientapp/widget/tab_card.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class PersonalPage extends StatefulWidget {
   @override
   State<PersonalPage> createState() => _PersonalPageState();
+
 }
 
 class _PersonalPageState extends State<PersonalPage> {
   late final ScaffoldState scaffoldState;
+
 
   @override
   void initState() {
@@ -25,9 +28,7 @@ class _PersonalPageState extends State<PersonalPage> {
   }
 
   List<dynamic> screens = [
-    const HomeScreen(
-      email: 'example@example.com',
-    ),
+    const HomeScreen(),
     const DateScreen(),
     const DoctorScreen(),
     const ProfileScreen(),
@@ -40,7 +41,8 @@ class _PersonalPageState extends State<PersonalPage> {
     int currentScreenIndex = _screenindexprovider.tabFlag;
     return Scaffold(
       body: screens[currentScreenIndex],
-      bottomNavigationBar: Container(
+      bottomNavigationBar:
+      Container(
         height: 60,
         width: 300,
         decoration: BoxDecoration(
@@ -70,6 +72,7 @@ class _PersonalPageState extends State<PersonalPage> {
                   _screenindexprovider.tabFlag = 4;
                 });
               },
+
             ),
             TabCard(
               color: currentScreenIndex == 1
@@ -82,7 +85,9 @@ class _PersonalPageState extends State<PersonalPage> {
                   _screenindexprovider.tabFlag = 1;
                 });
               },
+
             ),
+
             TabCard(
               color: currentScreenIndex == 0
                   ? ConstColors.whiteFontColor
@@ -95,6 +100,7 @@ class _PersonalPageState extends State<PersonalPage> {
                 });
               },
             ),
+
             TabCard(
               color: currentScreenIndex == 2
                   ? ConstColors.whiteFontColor
@@ -106,6 +112,7 @@ class _PersonalPageState extends State<PersonalPage> {
                   _screenindexprovider.tabFlag = 2;
                 });
               },
+
             ),
             TabCard(
               color: currentScreenIndex == 3
@@ -118,6 +125,7 @@ class _PersonalPageState extends State<PersonalPage> {
                   _screenindexprovider.tabFlag = 3;
                 });
               },
+
             ),
           ],
         ),
@@ -125,3 +133,4 @@ class _PersonalPageState extends State<PersonalPage> {
     );
   }
 }
+

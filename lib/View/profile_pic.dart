@@ -78,7 +78,7 @@ class _ProfilePicState extends State<ProfilePic> {
           CircleAvatar(
             backgroundImage: _image != null
                 ? FileImage(File(_image!.path)) as ImageProvider<Object>
-                : AssetImage("assets/images/p.png"),
+                : const AssetImage("assets/images/p.png"),
           ),
           Positioned(
             right: -16,
@@ -93,7 +93,8 @@ class _ProfilePicState extends State<ProfilePic> {
                 onPressed: () {
                   _imgFromGallery();
                 },
-                icon: Icon(Icons.camera_alt, size: 22, color: Colors.black),
+                icon:
+                    const Icon(Icons.camera_alt, size: 22, color: Colors.black),
               ),
             ),
           ),
