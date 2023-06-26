@@ -1,13 +1,15 @@
 class Mesures {
-  late int Fasting;
-  late int creator;
-  late int random;
+  int? Fasting;
+  int? Creator;
+  int? Random;
+  String? DateTime;
 
-  Mesures(this.Fasting, this.creator, this.random);
+  Mesures(this.Fasting, this.Creator, this.Random, this.DateTime);
 
-  Mesures.fromjson(Map<String, dynamic> map) {
-    this.Fasting = map['Fasting'];
-    this.creator = map['creator'];
-    this.random = map['random'];
+  Mesures.fromJson(Map<String, dynamic> json) {
+    Fasting = json['Fasting'];
+    Creator = json['creator'];
+    Random = json['random'];
+    DateTime = json['created_at'];
   }
 }

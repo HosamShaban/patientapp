@@ -23,6 +23,11 @@ class MyApp extends StatelessWidget {
     return email != null;
   }
 
+  Future<String?> _getToken() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString('token');
+  }
+
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
@@ -35,20 +40,15 @@ class MyApp extends StatelessWidget {
             ChangeNotifierProvider(create: (context) => screenIndexProvider())
           ],
           child: MaterialApp(
-            home: FutureBuilder<bool>(
-              future: _checkEmailExists(),
+            home: FutureBuilder<String?>(
+              future: _getToken(),
               builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  if (snapshot.data!) {
-                    // Email exists, navigate to home screen
-                    return PersonalPage(); // Replace with your home screen widget
-                  } else {
-                    // Email does not exist, navigate to onboarding screen
-                    return const OnBoarding();
-                  }
-                } else {
-                  // Show a loading indicator while checking email existence
+                if (snapshot.connectionState == ConnectionState.waiting) {
                   return LoadingAnimationPage();
+                } else if (snapshot.hasData && snapshot.data != null) {
+                  return PersonalPage(); // Replace with your home screen widget
+                } else {
+                  return const OnBoarding();
                 }
               },
             ),

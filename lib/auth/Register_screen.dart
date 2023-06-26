@@ -1,4 +1,3 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -34,7 +33,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     _preferences = await SharedPreferences.getInstance();
   }
 
-  Future<void> Register() async {
+  Future<void> register() async {
     final Dio dio = Dio();
     var response = await dio.post("$baseUrl/api/patient/register", data: {
       "name": namecontroller.text.trim(),
@@ -326,12 +325,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             ),
                           ],
                         ),
-                        onPressed: () async => {Register()}),
+                        onPressed: () async => {register()}),
                   ),
                 ],
               ),
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

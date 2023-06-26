@@ -1,48 +1,60 @@
-import 'dart:convert';
+import 'dart:ui';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
-import 'package:patientapp/Model/all_doctors.dart';
-import 'package:patientapp/Model/doctors_model.dart';
-import 'package:patientapp/View/doctorprofile.dart';
-import 'package:patientapp/View/filter_view.dart';
-import 'package:patientapp/View/saerch_result.dart';
-import 'package:patientapp/controller/doctors_controller.dart';
-import 'package:patientapp/widget/doctors_card.dart';
 import 'package:flutter/material.dart';
+import 'package:patientapp/View/saerch_result.dart';
+import 'package:patientapp/View/saerch_result.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../controller/dio_helper.dart';
+import '../Model/all_doctors.dart';
+import 'doctorprofile.dart';
+import 'saerch_result.dart';
 
-class DoctorScreen extends StatefulWidget {
-  final GlobalKey<ScaffoldState>? scaffoldKey;
-  const DoctorScreen({super.key, this.scaffoldKey});
+class SearchResult extends StatefulWidget {
+  late String data;
+
+  SearchResult({required this.data, super.key});
 
   @override
-  State<DoctorScreen> createState() => _DoctorScreenState();
+  State<SearchResult> createState() => _SearchResultState();
 }
 
-class _DoctorScreenState extends State<DoctorScreen> {
-  final doctorController = DoctorsController();
-  String query = '';
-  String selectedFilter = 'All';
-  String baseUrl = "https://diabetes-2023.000webhostapp.com";
-  //TextEditingController search = TextEditingController();
-  late String search;
-  List<AllDoctorsModel> all_doctors = [];
+String baseUrl = "https://diabetes-2023.000webhostapp.com";
+List<AllDoctorsModel> search_doctors = [];
+
+class _SearchResultState extends State<SearchResult> {
+  String get search => widget.data;
+  bool showWidget = false;
+  void startTimer() {
+    Future.delayed(Duration(seconds: 5), () {
+      setState(() {
+        showWidget = true;
+      });
+    });
+  }
+
   @override
   void initState() {
-    FetchDoctorsFromApi();
-    //fetchDataWithToken();
+    Search();
+    startTimer();
     super.initState();
   }
 
-  void FetchDoctorsFromApi() async {
+  @override
+  void dispose() {
+    search_doctors.clear();
+    super.dispose();
+  }
+
+  Future Search() async {
     final Dio dio = Dio();
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var token = prefs.getString('token');
     try {
       dio.options.headers["Authorization"] = "Bearer $token";
-      var response = await dio.get("$baseUrl/api/patient/doctors");
+      var response =
+          await dio.get("$baseUrl/api/patient/searchDoctors?query=$search");
 
       print(response.statusCode);
       print(response.data);
@@ -52,12 +64,12 @@ class _DoctorScreenState extends State<DoctorScreen> {
         if (jsonData is List) {
           for (var doctorData in jsonData) {
             setState(() {
-              all_doctors.add(AllDoctorsModel.fromJson(doctorData));
+              search_doctors.add(AllDoctorsModel.fromJson(doctorData));
             });
           }
         } else if (jsonData is Map<String, dynamic>) {
           setState(() {
-            all_doctors.add(AllDoctorsModel.fromJson(jsonData));
+            search_doctors.add(AllDoctorsModel.fromJson(jsonData));
           });
         } else {
           // Handle other cases as needed
@@ -88,12 +100,12 @@ class _DoctorScreenState extends State<DoctorScreen> {
           ],
           backgroundColor: Colors.white,
           title: const Text(
-            " الاطباء",
+            "الاطباء",
             style: TextStyle(color: Colors.black, fontWeight: FontWeight.w700),
           ),
           centerTitle: true,
         ),
-        body: all_doctors.isEmpty
+        body: search_doctors.isEmpty
             ? Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -104,14 +116,26 @@ class _DoctorScreenState extends State<DoctorScreen> {
                         children: <Widget>[
                           Center(
                             child: Container(
-                              width: 150,
-                              height: 150,
+                              width: 170,
+                              height: 170,
                               child: CircularProgressIndicator(
                                 color: Colors.blueAccent,
                               ),
                             ),
                           ),
-                          Center(child: Text("انتظر قليلا ")),
+                          Center(
+                            child: showWidget
+                                ? Text(
+                                    'نأسف .. الطبيب غير مسجل',
+                                    style: TextStyle(color: Colors.red),
+                                  )
+                                : Center(
+                                    child: Container(
+                                      width: 150,
+                                      height: 150,
+                                    ),
+                                  ),
+                          ),
                         ],
                       ),
                     ),
@@ -120,52 +144,14 @@ class _DoctorScreenState extends State<DoctorScreen> {
               )
             : Column(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: Row(
-                      children: [
-                        InkWell(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => SearchResult(
-                                            data: search,
-                                          )));
-                            },
-                            child: Icon(Icons.search)),
-                        Expanded(
-                          child: Container(
-                            margin: const EdgeInsets.all(10),
-                            decoration: BoxDecoration(
-                              color: const Color(0xffD9D9D9),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: TextFormField(
-                              onChanged: (value) {
-                                search = value;
-                                // Search();
-                              },
-                              keyboardType: TextInputType.text,
-                              decoration: const InputDecoration(
-                                hintTextDirection: TextDirection.rtl,
-                                hintText: "  search ",
-                                border: InputBorder.none,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
                   Expanded(
                     child: ListView.builder(
                         scrollDirection: Axis.vertical,
-                        itemCount: all_doctors.length,
+                        itemCount: search_doctors.length,
                         itemBuilder: (context, index) {
                           return InkWell(
                             onTap: () {
-                              int id = all_doctors[index].id!;
+                              int id = search_doctors[index].id!;
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -174,7 +160,7 @@ class _DoctorScreenState extends State<DoctorScreen> {
                             },
                             child: Container(
                               padding: EdgeInsets.all(5),
-                              height: 150,
+                              height: 100,
                               margin: EdgeInsets.all(15),
                               decoration: BoxDecoration(
                                 color: const Color(0xffD9D9D9),
@@ -199,7 +185,7 @@ class _DoctorScreenState extends State<DoctorScreen> {
                                   children: [
                                     Expanded(
                                       child: Text(
-                                        all_doctors[index].name.toString(),
+                                        search_doctors[index].name.toString(),
                                         style: TextStyle(
                                             fontSize: 20,
                                             color: Colors.black,
@@ -209,9 +195,11 @@ class _DoctorScreenState extends State<DoctorScreen> {
                                     Row(
                                       children: [
                                         Text(
-                                          all_doctors[index].rateing.toString(),
+                                          search_doctors[index]
+                                              .rateing
+                                              .toString(),
                                           style: TextStyle(
-                                              fontSize: 15,
+                                              fontSize: 22,
                                               color: Colors.black,
                                               fontWeight: FontWeight.w500),
                                         ),
@@ -232,31 +220,29 @@ class _DoctorScreenState extends State<DoctorScreen> {
                                           MainAxisAlignment.start,
                                       children: [
                                         Icon(
-                                          Icons.location_on,
-                                          color: Colors.blue,
+                                          Icons.home,
+                                          color: Colors.black,
                                         ),
                                         SizedBox(width: 15),
                                         Text(
-                                          "Khan younes",
+                                          search_doctors[index]
+                                              .address
+                                              .toString(),
                                           style: TextStyle(
                                             fontSize: 17,
                                             color: Colors.black,
                                           ),
                                         ),
-                                      ],
-                                    ),
-                                    SizedBox(height: 10),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
+                                        SizedBox(width: 15),
                                         Icon(
                                           Icons.phone,
-                                          color: Colors.blue,
+                                          color: Colors.black,
                                         ),
                                         SizedBox(width: 15),
                                         Text(
-                                          "0568181703",
+                                          search_doctors[index]
+                                              .phoneNo
+                                              .toString(),
                                           style: TextStyle(
                                             fontSize: 17,
                                             color: Colors.black,
@@ -271,11 +257,13 @@ class _DoctorScreenState extends State<DoctorScreen> {
                                       children: [
                                         Icon(
                                           Icons.email,
-                                          color: Colors.blue,
+                                          color: Colors.black,
                                         ),
                                         SizedBox(width: 15),
                                         Text(
-                                          all_doctors[index].email.toString(),
+                                          search_doctors[index]
+                                              .email
+                                              .toString(),
                                           style: TextStyle(
                                             fontSize: 17,
                                             color: Colors.black,
@@ -292,41 +280,5 @@ class _DoctorScreenState extends State<DoctorScreen> {
                   ),
                 ],
               ));
-  }
-
-  void getMesurse() {
-    DioHelper.getData("doctors").then((value) {
-      var random = value.data;
-      print(random);
-      print(value.headers);
-    }).catchError((onError) {
-      print(onError.toString());
-    });
-  }
-
-  void fetchDataWithToken() async {
-    Dio dio = Dio(); // Create a Dio instance
-
-    String baseUrl = "https://diabetes-2023.000webhostapp.com";
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    var token = prefs.getString('token'); // Set the Authorization header
-    dio.options.headers["Authorization"] = "Bearer $token";
-    try {
-      Response response = await dio.get(
-          "$baseUrl/api/patient/doctors"); // Replace with your API endpoint
-
-      if (response.statusCode == 200) {
-        // Data fetched successfully
-        var data = response.data;
-        print(response.data);
-        // Process the data as needed
-      } else {
-        // Handle error
-        print("Request failed with status code: ${response.statusCode}");
-      }
-    } catch (e) {
-      // Handle Dio errors
-      print("Error: $e");
-    }
   }
 }

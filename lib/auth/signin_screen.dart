@@ -35,6 +35,19 @@ class _LoginScreenState extends State<LoginScreen> {
     checkUser();
   }
 
+  void checkUser() async {
+    SharedPreferences userData = await SharedPreferences.getInstance();
+    bool isLoggedIn = userData.getBool('login') ?? false;
+    String? email = userData.getString('email');
+
+    if (isLoggedIn && email != null) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => PersonalPage()),
+      );
+    }
+  }
+
   void login(email, password) async {
     Dio dio = Dio();
     try {
@@ -56,8 +69,17 @@ class _LoginScreenState extends State<LoginScreen> {
         print('Message: $message');
         print('id : $id');
         print('token is : $token');
-      } else {
-        print('Error retrieving data. Status code: ${response.statusCode}');
+
+        SharedPreferences userData = await SharedPreferences.getInstance();
+        userData.setString('email', email);
+        userData.setBool('login', true);
+        userData.setString('token', token);
+
+        // Email exists, navigate to home screen
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => PersonalPage()),
+        );
       }
     } catch (error) {
       print('Error: $error');
@@ -82,28 +104,30 @@ class _LoginScreenState extends State<LoginScreen> {
     return null;
   }
 
-  void _signInProcess(BuildContext context) {
+  Future<void> _signInProcess(BuildContext context) async {
     var validate = _formKey.currentState!.validate();
 
     if (validate) {
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => PersonalPage()));
-    } else {
+      login(emailController.text.trim(), passwordController.text.trim());
+    } else if (validate == false) {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('Error'),
+          content: const Text('Email not found'),
+          actions: [
+            MaterialButton(
+              child: const Text('OK'),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        ),
+      );
       setState(() {
         _autoValidate = true;
       });
-    }
-  }
-
-  void checkUser() async {
-    SharedPreferences userData = await SharedPreferences.getInstance();
-    bool isLoggedIn = userData.getBool('login') ?? false;
-    print(isLoggedIn);
-    if (isLoggedIn) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => PersonalPage()),
-      );
     }
   }
 
@@ -286,19 +310,12 @@ class _LoginScreenState extends State<LoginScreen> {
                           login(emailController.text.toString(),
                               passwordController.text.toString());
                           _signInProcess(context);
-                          UserData.setBool("login", false);
-                          UserData.setString(
-                              "email", emailController.text.toString());
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => PersonalPage()));
                         }),
                   ),
                 ],
               ),
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

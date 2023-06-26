@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pdfview/flutter_pdfview.dart';
@@ -19,6 +20,19 @@ class Medicaldata extends StatefulWidget {
 class _MedicaldataState extends State<Medicaldata> {
   String Diabetictype = "one";
   late PersonalModel patient;
+  final String baseUrl = "https://diabetes-2023.000webhostapp.com";
+
+  Future<void> StoreUserData() async {
+    final Dio dio = Dio();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var token = prefs.getString('token');
+    dio.options.headers = {'Authorization': 'Bearer $token'};
+    var response = await dio.post("$baseUrl/api/patient/updateProfile", data: {
+      "diabetic_type": Diabetictype,
+    });
+
+    print(response.data);
+  }
 
   void yourFunctionName() {
     patient = PersonalModel(
@@ -32,24 +46,6 @@ class _MedicaldataState extends State<Medicaldata> {
   bool _fileAdded = false;
   int _pageNumber = 1;
   PDFViewController? _pdfViewController;
-  SharedPreferences? _prefs;
-
-  @override
-  void initState() {
-    super.initState();
-    _initSharedPreferences();
-  }
-
-  _initSharedPreferences() async {
-    _prefs = await SharedPreferences.getInstance();
-    String? filePath = _prefs?.getString('pdfFilePath');
-    if (filePath != null) {
-      setState(() {
-        _pdfFile = File(filePath);
-        _fileAdded = true;
-      });
-    }
-  }
 
   Future<void> _pickFile() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
@@ -61,17 +57,36 @@ class _MedicaldataState extends State<Medicaldata> {
       setState(() {
         _pdfFile = File(result.files.single.path!);
         _fileAdded = true;
-        _saveFilePath(_pdfFile!.path);
       });
     }
   }
 
-  _saveFilePath(String filePath) async {
-    _prefs?.setString('pdfFilePath', filePath);
+  void _removeFile() {
+    setState(() {
+      _pdfFile = null;
+      _fileAdded = false;
+    });
   }
 
-  _removeFilePath() {
-    _prefs?.remove('pdfFilePath');
+  Future uploadFileToApi() async {
+    final Dio dio = Dio();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var token = prefs.getString('token');
+    dio.options.headers = {'Authorization': 'Bearer $token'};
+    if (_pdfFile != null) {
+      FormData formData = FormData.fromMap({
+        'attachment': await MultipartFile.fromFile(
+          _pdfFile!.path,
+        ),
+        'fileName': _pdfFile!.path.split('/').last,
+      });
+
+      var response = await dio.post(
+        "$baseUrl/api/patient/storeAttachments",
+        data: formData,
+      );
+      print(response.data);
+    }
   }
 
   @override
@@ -104,16 +119,13 @@ class _MedicaldataState extends State<Medicaldata> {
           child: Column(
             children: [
               Container(
-                  margin: const EdgeInsets.only(left: 230, top: 25),
+                  margin: const EdgeInsets.only(left: 230, top: 23),
                   child: const Text(
                     "نوع السكري",
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
                   )),
-              const SizedBox(
-                height: 10,
-              ),
               Container(
-                margin: const EdgeInsets.only(left: 120),
+                margin: const EdgeInsets.only(left: 110),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -148,7 +160,7 @@ class _MedicaldataState extends State<Medicaldata> {
                 ),
               ),
               Container(
-                margin: const EdgeInsets.only(left: 120),
+                margin: const EdgeInsets.only(left: 110),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -181,11 +193,8 @@ class _MedicaldataState extends State<Medicaldata> {
                   ],
                 ),
               ),
-              const SizedBox(
-                height: 30,
-              ),
               Container(
-                margin: EdgeInsets.only(left: 170),
+                margin: EdgeInsets.only(left: 160),
                 child: const Text(
                   "أوصف حالتك للطبيب",
                   style: TextStyle(
@@ -214,7 +223,7 @@ class _MedicaldataState extends State<Medicaldata> {
                 ),
               ),
               const SizedBox(
-                height: 25,
+                height: 20,
               ),
               Container(
                 margin: const EdgeInsets.only(left: 220),
@@ -233,7 +242,7 @@ class _MedicaldataState extends State<Medicaldata> {
                     size: 28,
                   ),
                   onPressed: () {
-                    _removeFilePath();
+                    _removeFile();
                   },
                 ),
                 title: Container(
@@ -345,6 +354,30 @@ class _MedicaldataState extends State<Medicaldata> {
                 ),
               ),
               const SizedBox(height: 10),
+              Container(
+                width: 100,
+                child: MaterialButton(
+                  height: 50,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8.0)),
+                  color: ConstColors.primaryColor,
+                  child: const Center(
+                    child: Padding(
+                      padding: EdgeInsets.only(left: 10),
+                      child: Text(
+                        "حفظ",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20),
+                      ),
+                    ),
+                  ),
+                  onPressed: () {
+                    uploadFileToApi();
+                  },
+                ),
+              ),
             ],
           ),
         ),

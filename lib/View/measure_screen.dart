@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SugarMeasurement extends StatefulWidget {
   const SugarMeasurement({Key? key}) : super(key: key);
@@ -16,11 +17,14 @@ class _SugarMeasurementState extends State<SugarMeasurement> {
 
   Future<void> StoreMesurments() async {
     final Dio dio = Dio();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var token = prefs.getString('token');
+    dio.options.headers = {'Authorization': 'Bearer $token'};
     var response =
         await dio.post("$baseUrl/api/patient/storeMeasurement", data: {
-      "Fasting": Fastingcontroller.toString(),
-      "creator": creatorcontroller.toString(),
-      "random": randomcontroller.toString(),
+      "Fasting": Fastingcontroller.text.trim(),
+      "creator": creatorcontroller.text.trim(),
+      "random": randomcontroller.text.trim(),
     });
     print(response.data);
   }
