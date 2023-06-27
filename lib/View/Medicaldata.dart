@@ -44,8 +44,6 @@ class _MedicaldataState extends State<Medicaldata> {
 
   File? _pdfFile;
   bool _fileAdded = false;
-  int _pageNumber = 1;
-  PDFViewController? _pdfViewController;
 
   Future<void> _pickFile() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
@@ -68,15 +66,20 @@ class _MedicaldataState extends State<Medicaldata> {
     });
   }
 
-  Future uploadFileToApi() async {
+  Future<void> uploadFileToApi() async {
     final Dio dio = Dio();
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    var token = prefs.getString('token');
-    dio.options.headers = {'Authorization': 'Bearer $token'};
+    String? token = prefs.getString('token');
+    dio.options.headers = {
+      'Authorization': 'Bearer $token',
+      "Content-Type": "multipart/form-data"
+    };
+
     if (_pdfFile != null) {
       FormData formData = FormData.fromMap({
         'attachment': await MultipartFile.fromFile(
           _pdfFile!.path,
+          filename: _pdfFile!.path.split('/').last,
         ),
         'fileName': _pdfFile!.path.split('/').last,
       });
@@ -114,272 +117,266 @@ class _MedicaldataState extends State<Medicaldata> {
         ),
         centerTitle: true,
       ),
-      body: Container(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              Container(
-                  margin: const EdgeInsets.only(left: 230, top: 23),
-                  child: const Text(
-                    "نوع السكري",
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
-                  )),
-              Container(
-                margin: const EdgeInsets.only(left: 110),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    const Text("النوع الثاني",
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.w500)),
-                    Radio(
-                      activeColor: Colors.black,
-                      value: "second",
-                      groupValue: Diabetictype,
-                      onChanged: (value) {
-                        setState(() {
-                          Diabetictype = value.toString();
-                        });
-                      },
-                    ),
-                    const Text("النوع الأول",
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.w500)),
-                    Radio(
-                      activeColor: Colors.black,
-                      value: "first",
-                      groupValue: Diabetictype,
-                      onChanged: (value) {
-                        setState(() {
-                          Diabetictype = value.toString();
-                        });
-                      },
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                margin: const EdgeInsets.only(left: 110),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text("لا أعرف",
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.w500)),
-                    Radio(
-                      activeColor: Colors.black,
-                      value: "dont know",
-                      groupValue: Diabetictype,
-                      onChanged: (value) {
-                        setState(() {
-                          Diabetictype = value.toString();
-                        });
-                      },
-                    ),
-                    const Text("سكري الحمل",
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.w500)),
-                    Radio(
-                      activeColor: Colors.black,
-                      value: "Pregnancy",
-                      groupValue: Diabetictype,
-                      onChanged: (value) {
-                        setState(() {
-                          Diabetictype = value.toString();
-                        });
-                      },
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                margin: EdgeInsets.only(left: 160),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Container(
+                margin: const EdgeInsets.only(left: 230, top: 23),
                 child: const Text(
-                  "أوصف حالتك للطبيب",
-                  style: TextStyle(
-                      color: Color(0xff000000),
-                      fontSize: 20,
-                      fontWeight: FontWeight.w500),
-                ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Container(
-                padding: const EdgeInsets.only(right: 15),
-                decoration: BoxDecoration(
-                    color: const Color(0xffEAEAEA),
-                    borderRadius: BorderRadius.circular(12.0)),
-                width: 327,
-                height: 108,
-                child: TextFormField(
-                  maxLines: 10,
-                  decoration: const InputDecoration(
-                    hintText: "اشرح للطبيب حالتك أو استفسارك باختصار",
-                    hintTextDirection: TextDirection.rtl,
-                    border: InputBorder.none,
+                  "نوع السكري",
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+                )),
+            Container(
+              margin: const EdgeInsets.only(left: 110),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const Text("النوع الثاني",
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
+                  Radio(
+                    activeColor: Colors.black,
+                    value: "second",
+                    groupValue: Diabetictype,
+                    onChanged: (value) {
+                      setState(() {
+                        Diabetictype = value.toString();
+                      });
+                    },
                   ),
-                ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Container(
-                margin: const EdgeInsets.only(left: 220),
-                child: const Text(
-                  "المرفقات",
-                  style: TextStyle(
-                      color: Color(0xff000000),
-                      fontSize: 20,
-                      fontWeight: FontWeight.w500),
-                ),
-              ),
-              ListTile(
-                leading: IconButton(
-                  icon: const Icon(
-                    Icons.delete_forever_outlined,
-                    size: 28,
+                  const Text("النوع الأول",
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
+                  Radio(
+                    activeColor: Colors.black,
+                    value: "first",
+                    groupValue: Diabetictype,
+                    onChanged: (value) {
+                      setState(() {
+                        Diabetictype = value.toString();
+                      });
+                    },
                   ),
-                  onPressed: () {
-                    _removeFile();
-                  },
-                ),
-                title: Container(
-                  margin: const EdgeInsets.only(left: 75),
-                  child: Text(_pdfFile != null
-                      ? _pdfFile!.path.split('/').last
-                      : 'ملف حالة المريض .pdf'),
-                ),
-                subtitle: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Text(_fileAdded ? 'تم اضافة الملف بنجاح' : ''),
-                    if (_fileAdded)
-                      const Icon(
-                        Icons.done,
-                        size: 12,
-                      ),
-                  ],
-                ),
-                trailing: _pdfFile != null
-                    ? Container(
-                        width: 72,
-                        height: 72,
-                        decoration: BoxDecoration(
-                          color: const Color(0xffEAEAEA),
-                          borderRadius: BorderRadius.circular(12.0),
-                        ),
-                        child: PDFView(
-                          filePath: _pdfFile!.path,
-                          onViewCreated: (PDFViewController viewController) {
-                            _pdfViewController = viewController;
-                          },
-                          onPageChanged: (page, total) {
-                            setState(() {
-                              _pageNumber = page!;
-                            });
-                          },
-                        ),
-                      )
-                    : Container(
-                        width: 72,
-                        height: 72,
-                        decoration: BoxDecoration(
-                          color: const Color(0xffEAEAEA),
-                          borderRadius: BorderRadius.circular(12.0),
-                        ),
-                      ),
+                ],
               ),
-              const SizedBox(height: 25),
-              InkWell(
-                onTap: _pickFile,
-                child: Container(
-                  width: 327,
-                  height: 48,
-                  decoration: BoxDecoration(
-                    color: const Color(0xffEAEAEA),
-                    border: Border.all(
-                      color: const Color(0xFF000000),
-                      width: 1.0,
-                      style: BorderStyle.solid,
+            ),
+            Container(
+              margin: const EdgeInsets.only(left: 110),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text("لا أعرف",
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
+                  Radio(
+                    activeColor: Colors.black,
+                    value: "dont know",
+                    groupValue: Diabetictype,
+                    onChanged: (value) {
+                      setState(() {
+                        Diabetictype = value.toString();
+                      });
+                    },
+                  ),
+                  const Text("سكري الحمل",
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
+                  Radio(
+                    activeColor: Colors.black,
+                    value: "Pregnancy",
+                    groupValue: Diabetictype,
+                    onChanged: (value) {
+                      setState(() {
+                        Diabetictype = value.toString();
+                      });
+                    },
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.only(left: 160),
+              child: const Text(
+                "أوصف حالتك للطبيب",
+                style: TextStyle(
+                    color: Color(0xff000000),
+                    fontSize: 20,
+                    fontWeight: FontWeight.w500),
+              ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Container(
+              padding: const EdgeInsets.only(right: 15),
+              decoration: BoxDecoration(
+                  color: const Color(0xffEAEAEA),
+                  borderRadius: BorderRadius.circular(12.0)),
+              width: 327,
+              height: 108,
+              child: TextFormField(
+                maxLines: 10,
+                decoration: const InputDecoration(
+                  hintText: "اشرح للطبيب حالتك أو استفسارك باختصار",
+                  hintTextDirection: TextDirection.rtl,
+                  border: InputBorder.none,
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            Container(
+              margin: const EdgeInsets.only(left: 220),
+              child: const Text(
+                "المرفقات",
+                style: TextStyle(
+                    color: Color(0xff000000),
+                    fontSize: 20,
+                    fontWeight: FontWeight.w500),
+              ),
+            ),
+            ListTile(
+              leading: IconButton(
+                icon: const Icon(
+                  Icons.delete_forever_outlined,
+                  size: 28,
+                ),
+                onPressed: () {
+                  _removeFile();
+                },
+              ),
+              title: Container(
+                margin: const EdgeInsets.only(left: 75),
+                child: Text(_pdfFile != null
+                    ? _pdfFile!.path.split('/').last
+                    : 'ملف حالة المريض .pdf'),
+              ),
+              subtitle: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Text(_fileAdded ? 'تم اضافة الملف بنجاح' : ''),
+                  if (_fileAdded)
+                    const Icon(
+                      Icons.done,
+                      size: 12,
                     ),
-                    borderRadius: BorderRadius.circular(12.0),
-                  ),
-                  child: const Center(
-                    child: Text(
-                      "اضافة ملف",
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                ),
+                ],
               ),
-              const SizedBox(height: 25),
-              Container(
-                margin: const EdgeInsets.only(top: 15.0),
-                padding: const EdgeInsets.only(left: 20.0, right: 20.0),
-                child: Row(
-                  children: <Widget>[
-                    Expanded(
-                      child: MaterialButton(
-                        height: 50,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8.0)),
-                        color: ConstColors.primaryColor,
-                        child: const Center(
-                          child: Padding(
-                            padding: EdgeInsets.only(left: 10),
-                            child: Text(
-                              "السيرة المرضية",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20),
-                            ),
-                          ),
-                        ),
-                        onPressed: () => {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => Biography())),
+              trailing: _pdfFile != null
+                  ? Container(
+                      width: 72,
+                      height: 72,
+                      decoration: BoxDecoration(
+                        color: const Color(0xffEAEAEA),
+                        borderRadius: BorderRadius.circular(12.0),
+                      ),
+                      child: PDFView(
+                        filePath: _pdfFile!.path,
+                        onViewCreated: (PDFViewController viewController) {},
+                        onPageChanged: (page, total) {
+                          setState(() {});
                         },
                       ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 10),
-              Container(
-                width: 100,
-                child: MaterialButton(
-                  height: 50,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8.0)),
-                  color: ConstColors.primaryColor,
-                  child: const Center(
-                    child: Padding(
-                      padding: EdgeInsets.only(left: 10),
-                      child: Text(
-                        "حفظ",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20),
+                    )
+                  : Container(
+                      width: 72,
+                      height: 72,
+                      decoration: BoxDecoration(
+                        color: const Color(0xffEAEAEA),
+                        borderRadius: BorderRadius.circular(12.0),
                       ),
                     ),
+            ),
+            const SizedBox(height: 25),
+            InkWell(
+              onTap: _pickFile,
+              child: Container(
+                width: 327,
+                height: 48,
+                decoration: BoxDecoration(
+                  color: const Color(0xffEAEAEA),
+                  border: Border.all(
+                    color: const Color(0xFF000000),
+                    width: 1.0,
+                    style: BorderStyle.solid,
                   ),
-                  onPressed: () {
-                    uploadFileToApi();
-                  },
+                  borderRadius: BorderRadius.circular(12.0),
+                ),
+                child: const Center(
+                  child: Text(
+                    "اضافة ملف",
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
                 ),
               ),
-            ],
-          ),
+            ),
+            const SizedBox(height: 25),
+            Container(
+              margin: const EdgeInsets.only(top: 15.0),
+              padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+              child: Row(
+                children: <Widget>[
+                  Expanded(
+                    child: MaterialButton(
+                      height: 50,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8.0)),
+                      color: ConstColors.primaryColor,
+                      child: const Center(
+                        child: Padding(
+                          padding: EdgeInsets.only(left: 10),
+                          child: Text(
+                            "السيرة المرضية",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20),
+                          ),
+                        ),
+                      ),
+                      onPressed: () => {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Biography())),
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 10),
+            SizedBox(
+              width: 100,
+              child: MaterialButton(
+                height: 50,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8.0)),
+                color: ConstColors.primaryColor,
+                child: const Center(
+                  child: Padding(
+                    padding: EdgeInsets.only(left: 10),
+                    child: Text(
+                      "حفظ",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20),
+                    ),
+                  ),
+                ),
+                onPressed: () {
+                  uploadFileToApi();
+                },
+              ),
+            ),
+          ],
         ),
       ),
     );

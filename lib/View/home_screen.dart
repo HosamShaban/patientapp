@@ -1,9 +1,7 @@
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:patientapp/View/booking.dart';
 import 'package:patientapp/controller/home_controller.dart';
-import 'package:patientapp/widget/home_card.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Model/mesure.dart';
@@ -27,7 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
   ];
   bool showWidget = false;
   void startTimer() {
-    Future.delayed(Duration(seconds: 5), () {
+    Future.delayed(const Duration(seconds: 5), () {
       setState(() {
         showWidget = true;
       });
@@ -108,14 +106,14 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(height: 5),
+                    const SizedBox(height: 5),
                     SingleChildScrollView(
                       physics: const BouncingScrollPhysics(),
                       scrollDirection: Axis.horizontal,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          SizedBox(width: 5),
+                          const SizedBox(width: 5),
                           Container(
                             height: 200,
                             width: 360,
@@ -126,7 +124,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ),
                           ),
-                          SizedBox(width: 5),
+                          const SizedBox(width: 5),
                           Container(
                             height: 200,
                             width: 360,
@@ -137,7 +135,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ),
                           ),
-                          SizedBox(width: 5),
+                          const SizedBox(width: 5),
                           Container(
                             height: 200,
                             width: 360,
@@ -155,7 +153,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       height: 20,
                     ),
                     Container(
-                      padding: EdgeInsets.all(5),
+                      padding: const EdgeInsets.all(5),
                       decoration: BoxDecoration(
                         color: const Color(0xffD9D9D9),
                         borderRadius: BorderRadius.circular(12),
@@ -180,7 +178,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 color: const Color(0xff407BFF),
                                 borderRadius: BorderRadius.circular(10),
                               ),
-                              child: Center(
+                              child: const Center(
                                   child: Text(
                                 "القراءات السابقة",
                                 style: TextStyle(
@@ -206,14 +204,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     width: 155,
                                                     height: 155,
                                                     child:
-                                                        CircularProgressIndicator(
+                                                        const CircularProgressIndicator(
                                                       color: Colors.blueAccent,
                                                     ),
                                                   ),
                                                 ),
                                                 Center(
                                                   child: showWidget
-                                                      ? Text(
+                                                      ? const Text(
                                                           'ليس لديك اي قراءات ',
                                                           style: TextStyle(
                                                               color:
@@ -239,9 +237,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                         return InkWell(
                                           onTap: () {},
                                           child: Container(
-                                            padding: EdgeInsets.all(5),
+                                            padding: const EdgeInsets.all(5),
                                             height: 70,
-                                            margin: EdgeInsets.all(15),
+                                            margin: const EdgeInsets.all(15),
                                             decoration: BoxDecoration(
                                               color: const Color(0xffD9D9D9),
                                               borderRadius:
@@ -257,11 +255,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                               ],
                                             ),
                                             child: ListTile(
-                                              trailing: Expanded(
+                                              trailing: const Expanded(
                                                 child: CircleAvatar(
                                                     radius: 20,
                                                     backgroundColor:
-                                                        const Color(0xff407BFF),
+                                                        Color(0xff407BFF),
                                                     foregroundImage: AssetImage(
                                                         "assets/images/measure.png")),
                                               ),
@@ -273,14 +271,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                                           .DateTime
                                                           .toString()
                                                           .substring(0, 19),
-                                                      style: TextStyle(
+                                                      style: const TextStyle(
                                                           fontSize: 15,
                                                           color: Colors.black,
                                                           fontWeight:
                                                               FontWeight.w500),
                                                     ),
-                                                    SizedBox(width: 10),
-                                                    Icon(
+                                                    const SizedBox(width: 10),
+                                                    const Icon(
                                                       Icons.timer,
                                                       color: Colors.black,
                                                     )
@@ -289,7 +287,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                               ),
                                               subtitle: Column(
                                                 children: [
-                                                  SizedBox(height: 10),
+                                                  const SizedBox(height: 10),
                                                   Row(
                                                     mainAxisAlignment:
                                                         MainAxisAlignment
@@ -300,7 +298,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                             all_doctors[index]
                                                                 .Creator
                                                                 .toString(),
-                                                        style: TextStyle(
+                                                        style: const TextStyle(
                                                             fontSize: 15,
                                                             color: Colors.black,
                                                             fontWeight:
@@ -312,7 +310,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                             all_doctors[index]
                                                                 .Fasting
                                                                 .toString(),
-                                                        style: TextStyle(
+                                                        style: const TextStyle(
                                                             fontSize: 15,
                                                             color: Colors.black,
                                                             fontWeight:
@@ -324,7 +322,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                             all_doctors[index]
                                                                 .Random
                                                                 .toString(),
-                                                        style: TextStyle(
+                                                        style: const TextStyle(
                                                           fontSize: 15,
                                                           fontWeight:
                                                               FontWeight.w500,
