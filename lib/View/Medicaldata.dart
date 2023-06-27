@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
@@ -69,7 +70,8 @@ class _MedicaldataState extends State<Medicaldata> {
   Future<void> uploadFileToApi() async {
     final Dio dio = Dio();
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? token = prefs.getString('token');
+    var token = prefs.getString('token');
+
     dio.options.headers = {
       'Authorization': 'Bearer $token',
       "Content-Type": "multipart/form-data"
@@ -88,7 +90,18 @@ class _MedicaldataState extends State<Medicaldata> {
         "$baseUrl/api/patient/storeAttachments",
         data: formData,
       );
-      print(response.data);
+      var responseData = json.decode(response.toString());
+      var data = response.data;
+      var status = response.data['code'];
+      var message = response.data['message'];
+      var token = responseData['data']['token'];
+      var id = response.data['patient_id'];
+      print('Data: $data');
+      print("================");
+      print('Status: $status');
+      print('Message: $message');
+      print('id : $id');
+      print('token is : $token');
     }
   }
 
