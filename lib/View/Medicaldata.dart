@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
@@ -90,18 +89,6 @@ class _MedicaldataState extends State<Medicaldata> {
         "$baseUrl/api/patient/storeAttachments",
         data: formData,
       );
-      var responseData = json.decode(response.toString());
-      var data = response.data;
-      var status = response.data['code'];
-      var message = response.data['message'];
-      var token = responseData['data']['token'];
-      var id = response.data['patient_id'];
-      print('Data: $data');
-      print("================");
-      print('Status: $status');
-      print('Message: $message');
-      print('id : $id');
-      print('token is : $token');
     }
   }
 

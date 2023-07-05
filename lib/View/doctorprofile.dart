@@ -1,9 +1,6 @@
-import 'dart:ffi';
-
 import 'package:dio/dio.dart';
-import 'package:patientapp/Model/doctors_model.dart';
-import 'package:patientapp/View/booking.dart';
 import 'package:flutter/material.dart';
+import 'package:patientapp/View/booking.dart';
 import 'package:patientapp/View/reating.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

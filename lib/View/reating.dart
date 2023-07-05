@@ -14,6 +14,7 @@ final String baseUrl = "https://diabetes-2023.000webhostapp.com";
 
 class _ReatingDoctorState extends State<ReatingDoctor> {
   double stars = 1;
+
   Future<void> RatingDoctor() async {
     final Dio dio = Dio();
     SharedPreferences prefs = await SharedPreferences.getInstance();
