@@ -11,7 +11,7 @@ class MyReviews extends StatefulWidget {
 }
 
 class _MyReviewsState extends State<MyReviews> {
-  final String baseUrl = "https://diabete-23.000webhostapp.com";
+  final String baseUrl = "https://diabetes-23.000webhostapp.com";
   // ignore: non_constant_identifier_names
   Map<String, dynamic> reviews = {};
   bool showWidget = false;

@@ -1,10 +1,7 @@
-import 'dart:ffi';
-
 import 'package:dio/dio.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:patientapp/Model/doctors_model.dart';
-import 'package:patientapp/View/booking.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:patientapp/View/booking.dart';
 import 'package:patientapp/View/doctor_appoitments.dart';
 import 'package:patientapp/View/reating.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -20,7 +17,7 @@ class doctorProfile extends StatefulWidget {
 }
 
 class _doctorProfileState extends State<doctorProfile> {
-  final String baseUrl = "https://diabete-23.000webhostapp.com";
+  final String baseUrl = "https://diabetes-23.000webhostapp.com";
   List<AllDoctorsModel> all_doctors = [];
 
   // ignore: unnecessary_cast

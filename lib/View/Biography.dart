@@ -1,7 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:patientapp/Model/Personaldata_model.dart';
-import 'package:patientapp/View/Biography2.dart';
-import 'package:patientapp/View/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -14,7 +11,7 @@ class Biography extends StatefulWidget {
 
 class _BiographyState extends State<Biography> {
   Map<String, dynamic> bio = {};
-  final String baseUrl = "https://diabete-23.000webhostapp.com";
+  final String baseUrl = "https://diabetes-23.000webhostapp.com";
 
   void FetchPatintDataFromApi() async {
     final Dio dio = Dio();

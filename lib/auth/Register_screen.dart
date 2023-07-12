@@ -16,7 +16,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   TextEditingController emailcontroller = TextEditingController();
   TextEditingController passwordcontroller = TextEditingController();
   TextEditingController confirmpasswordcontroller = TextEditingController();
-  final String baseUrl = "https://diabete-23.000webhostapp.com";
+  final String baseUrl = "https://diabetes-23.000webhostapp.com";
   String? passwordError;
   final _formKey = GlobalKey<FormState>();
   bool _autoValidate = false;

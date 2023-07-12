@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:patientapp/controller/dio_helper.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Model/all_doctors.dart';
@@ -137,7 +136,7 @@ class _ShowMesuresState extends State<ShowMesures> {
   Future getDoctors() async {
     Dio dio = Dio(); // Create a Dio instance
 
-    String baseUrl = "https://diabetes-2023.000webhostapp.com";
+    String baseUrl = "https://diabetes-23.000webhostapp.com";
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var token = prefs.getString('token'); // Set the Authorization header
     dio.options.headers["Authorization"] = "Bearer $token";

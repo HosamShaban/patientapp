@@ -1,7 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:patientapp/Consts/colors.dart';
-import 'package:patientapp/controller/date_controller.dart';
-import 'package:patientapp/widget/date_card.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -21,7 +18,7 @@ class _DateScreenState extends State<DateScreen> {
   final doctorController = DoctorsController();
   String query = '';
   String selectedFilter = 'All';
-  final String baseUrl = "https://diabete-23.000webhostapp.com";
+  final String baseUrl = "https://diabetes-23.000webhostapp.com";
   List<AppointmentsModel> appoitments = [];
   @override
   void initState() {

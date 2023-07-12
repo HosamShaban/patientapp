@@ -5,8 +5,6 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'package:patientapp/Model/Personaldata_model.dart';
-import 'package:patientapp/View/Biography.dart';
-import 'package:patientapp/View/show_mid_data.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -22,7 +20,7 @@ class complaint extends StatefulWidget {
 class _MedicaldataState extends State<complaint> {
   String Diabetictype = "Type 1 Diabetes";
   late PersonalModel patient;
-  final String baseUrl = "https://diabete-23.000webhostapp.com";
+  final String baseUrl = "https://diabetes-23.000webhostapp.com";
   String selectval = "male";
 
   Future<void> StoreUserMedicalData() async {

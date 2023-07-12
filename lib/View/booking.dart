@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -33,7 +32,7 @@ class _AppointmentBookingState extends State<AppointmentBooking> {
 
   final _formKey = GlobalKey<FormState>();
 
-  final String baseUrl = "https://diabete-23.000webhostapp.com";
+  final String baseUrl = "https://diabetes-23.000webhostapp.com";
   TextEditingController nameController = TextEditingController();
   TextEditingController dayController = TextEditingController();
   TextEditingController dateController = TextEditingController();

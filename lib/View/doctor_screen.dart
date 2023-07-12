@@ -1,14 +1,9 @@
-import 'dart:convert';
-
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:patientapp/Model/all_doctors.dart';
-import 'package:patientapp/Model/doctors_model.dart';
 import 'package:patientapp/View/doctorprofile.dart';
-import 'package:patientapp/View/filter_view.dart';
 import 'package:patientapp/View/saerch_result.dart';
 import 'package:patientapp/controller/doctors_controller.dart';
-import 'package:patientapp/widget/doctors_card.dart';
-import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../controller/dio_helper.dart';
@@ -25,7 +20,7 @@ class _DoctorScreenState extends State<DoctorScreen> {
   final doctorController = DoctorsController();
   String query = '';
   String selectedFilter = 'All';
-  final String baseUrl = "https://diabete-23.000webhostapp.com";
+  final String baseUrl = "https://diabetes-23.000webhostapp.com";
   //TextEditingController search = TextEditingController();
   late String search;
   List<AllDoctorsModel> all_doctors = [];

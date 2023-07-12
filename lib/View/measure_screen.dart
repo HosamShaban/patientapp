@@ -13,7 +13,7 @@ class _SugarMeasurementState extends State<SugarMeasurement> {
   TextEditingController Fastingcontroller = TextEditingController();
   TextEditingController creatorcontroller = TextEditingController();
   TextEditingController randomcontroller = TextEditingController();
-  final String baseUrl = "https://diabete-23.000webhostapp.com";
+  final String baseUrl = "https://diabetes-23.000webhostapp.com";
 
   Future<void> StoreMesurments() async {
     final Dio dio = Dio();

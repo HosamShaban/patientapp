@@ -3,10 +3,6 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../Model/all_doctors.dart';
-import 'booking.dart';
-import 'doctor_appoitments.dart';
-
 class DoctorAppoitments extends StatefulWidget {
   int id;
   String name;
@@ -18,7 +14,7 @@ class DoctorAppoitments extends StatefulWidget {
 }
 
 class _DoctorAppoitmentsState extends State<DoctorAppoitments> {
-  final String baseUrl = "https://diabete-23.000webhostapp.com";
+  final String baseUrl = "https://diabetes-23.000webhostapp.com";
   // ignore: non_constant_identifier_names
   Map<String, dynamic> all_doctors = {};
 

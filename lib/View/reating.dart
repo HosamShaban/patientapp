@@ -10,7 +10,7 @@ class ReatingDoctor extends StatefulWidget {
   State<ReatingDoctor> createState() => _ReatingDoctorState();
 }
 
-String baseUrl = "https://diabete-23.000webhostapp.com";
+String baseUrl = "https://diabetes-23.000webhostapp.com";
 
 class _ReatingDoctorState extends State<ReatingDoctor> {
   double stars = 1;

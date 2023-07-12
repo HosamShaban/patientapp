@@ -25,7 +25,7 @@ class _LoginScreenState extends State<LoginScreen> {
   bool _passwordVisible = false;
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  final String baseUrl = "https://diabete-23.000webhostapp.com";
+  final String baseUrl = "https://diabetes-23.000webhostapp.com";
   final _formKey = GlobalKey<FormState>();
   bool _autoValidate = false;
   static String token = "";

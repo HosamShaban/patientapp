@@ -4,7 +4,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../Model/all_doctors.dart';
-import 'doctor_appoitments.dart';
 
 class ReviewsDetails extends StatefulWidget {
   String date;
@@ -33,7 +32,7 @@ class _ReviewsDetailsState extends State<ReviewsDetails> {
   String get date => widget.date;
   String get day => widget.day;
 
-  final String baseUrl = "https://diabete-23.000webhostapp.com";
+  final String baseUrl = "https://diabetes-23.000webhostapp.com";
   List<AllDoctorsModel> all_doctors = [];
   void FetchDoctorsFromApi() async {
     final Dio dio = Dio();

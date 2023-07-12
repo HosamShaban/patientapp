@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:patientapp/Model/medical_patient_data.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Consts/colors.dart';
@@ -15,7 +14,7 @@ class ShowMedicalData extends StatefulWidget {
 
 class _ShowMedicalDataState extends State<ShowMedicalData> {
   Map<String, dynamic> responseData = {};
-  final String baseUrl = "https://diabete-23.000webhostapp.com";
+  final String baseUrl = "https://diabetes-23.000webhostapp.com";
 
   void FetchPatintDataFromApi() async {
     final Dio dio = Dio();

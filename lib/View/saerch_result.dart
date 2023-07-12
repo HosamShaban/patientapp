@@ -1,15 +1,9 @@
-import 'dart:ui';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:patientapp/View/saerch_result.dart';
-import 'package:patientapp/View/saerch_result.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Model/all_doctors.dart';
 import 'doctorprofile.dart';
-import 'saerch_result.dart';
 
 class SearchResult extends StatefulWidget {
   late String data;
@@ -20,7 +14,7 @@ class SearchResult extends StatefulWidget {
   State<SearchResult> createState() => _SearchResultState();
 }
 
-String baseUrl = "https://diabete-23.000webhostapp.com";
+String baseUrl = "https://diabetes-23.000webhostapp.com";
 List<AllDoctorsModel> search_doctors = [];
 
 class _SearchResultState extends State<SearchResult> {

@@ -2,7 +2,6 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-
 import 'package:patientapp/controller/home_controller.dart';
 import 'package:patientapp/onboarding.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -38,7 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
   String? token;
   final CarouselController carouselController = CarouselController();
   int currentIndex = 0;
-  final String baseUrl = "https://diabete-23.000webhostapp.com";
+  final String baseUrl = "https://diabetes-23.000webhostapp.com";
   void showMeasurements() async {
     final Dio dio = Dio();
     SharedPreferences prefs = await SharedPreferences.getInstance();

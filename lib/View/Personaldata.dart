@@ -17,7 +17,7 @@ class _PersonaldataState extends State<Personaldata> {
   // ignore: non_constant_identifier_names
   TextEditingController Address = TextEditingController();
 
-  final String baseUrl = "https://diabete-23.000webhostapp.com";
+  final String baseUrl = "https://diabetes-23.000webhostapp.com";
   String selectval = "male";
   Future<void> StoreUserData() async {
     final Dio dio = Dio();

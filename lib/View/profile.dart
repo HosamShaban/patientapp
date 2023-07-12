@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 import '../Consts/colors.dart';
 import '../Model/paitent_model.dart';
 import 'Personaldata.dart';
@@ -12,7 +13,7 @@ class Profile extends StatefulWidget {
   State<Profile> createState() => _ProfileState();
 }
 
-final String baseUrl = "https://diabete-23.000webhostapp.com";
+const String baseUrl = "https://diabetes-23.000webhostapp.com";
 List<PaitentModel> paitent = [];
 Map<String, dynamic> responseData = {};
 

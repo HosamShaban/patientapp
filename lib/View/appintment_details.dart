@@ -1,12 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:patientapp/View/reating.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../Model/all_doctors.dart';
 import '../Model/appointments.dart';
-import 'booking.dart';
 import 'doctor_appoitments.dart';
 
 class AppointmentDetails extends StatefulWidget {
@@ -38,7 +36,7 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
   String get date => widget.date as String;
   String get day => widget.day as String;
 
-  final String baseUrl = "https://diabete-23.000webhostapp.com";
+  final String baseUrl = "https://diabetes-23.000webhostapp.com";
   List<AllDoctorsModel> all_doctors = [];
   List<AppointmentsModel> mesure = [];
   void FetchDoctorsFromApi() async {
@@ -469,8 +467,8 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                             ),
                             onPressed: () {
                               String nom = all_doctors[0].phoneNo.toString();
-                              final Uri whatsapp =
-                                  Uri.parse('https://wa.me/$nom');
+                              final Uri whatsapp = Uri.parse(
+                                  'https://api.whatsapp.com/send?phone=%2B970568181');
                               launchUrl(whatsapp);
                             },
                             child: Row(
