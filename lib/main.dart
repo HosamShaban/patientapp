@@ -1,11 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:patientapp/controller/firebase/controllers/fb_notificatons.dart';
+import 'package:patientapp/View/personal_screen.dart';
 import 'package:patientapp/controller/screenIndexProvider.dart';
-import 'package:patientapp/firebase_options.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'View/splash.dart';
 import 'controller/dio_helper.dart';
@@ -13,22 +12,15 @@ import 'controller/dio_helper.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   DioHelper.init();
-  await firebaseModule();
+
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
-firebaseModule() async {
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-
-  FbNotifications fb = FbNotifications();
-  await fb.requestNotificationPermissions();
-  await fb.initializeForegroundNotificationForAndroid();
-  await FbNotifications.initNotifications();
-  fb.manageNotificationAction();
-  print('object');
-  print(await FirebaseMessaging.instance.getToken());
+Future<String?> _getToken() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  return prefs.getString('token');
 }
 
 class MyApp extends StatelessWidget {
@@ -46,7 +38,18 @@ class MyApp extends StatelessWidget {
             ChangeNotifierProvider(create: (context) => screenIndexProvider())
           ],
           child: MaterialApp(
-            home: const SplashScreen(),
+            home: FutureBuilder<String?>(
+              future: _getToken(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const SplashScreen();
+                } else if (snapshot.hasData && snapshot.data != null) {
+                  return PersonalPage(); // Replace with your home screen widget
+                } else {
+                  return const SplashScreen();
+                }
+              },
+            ),
             debugShowCheckedModeBanner: false,
             theme: ThemeData(primarySwatch: Colors.blue, fontFamily: 'Tajawal'),
           ),
