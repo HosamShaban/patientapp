@@ -95,7 +95,7 @@ class _AppointmentBookingState extends State<AppointmentBooking> {
           ),
         ],
         backgroundColor: Colors.white,
-        title: Text(
+        title: const Text(
           " حجز موعد مع الطبيب",
           style: TextStyle(color: Colors.black, fontWeight: FontWeight.w700),
         ),
@@ -119,7 +119,7 @@ class _AppointmentBookingState extends State<AppointmentBooking> {
                             color: const Color(0xff407BFF),
                             fontWeight: FontWeight.w700),
                       ),
-                      SizedBox(height: 15),
+                      const SizedBox(height: 15),
                       const Text(
                         "اسم الطبيب",
                         style: TextStyle(
@@ -142,7 +142,7 @@ class _AppointmentBookingState extends State<AppointmentBooking> {
                           keyboardType: TextInputType.text,
                           decoration: InputDecoration(
                             hintText: name.toString(),
-                            hintStyle: TextStyle(color: Colors.black),
+                            hintStyle: const TextStyle(color: Colors.black),
                             hintTextDirection: TextDirection.rtl,
                             border: InputBorder.none,
                           ),
