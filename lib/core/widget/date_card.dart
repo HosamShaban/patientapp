@@ -1,4 +1,4 @@
-import 'package:patientapp/Consts/colors.dart';
+import 'package:patientapp/core/resources/colors.dart';
 import 'package:flutter/material.dart';
 
 class DateCard extends StatelessWidget {
