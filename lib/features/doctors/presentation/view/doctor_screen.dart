@@ -1,12 +1,12 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:patientapp/Model/all_doctors.dart';
-import 'package:patientapp/View/doctorprofile.dart';
-import 'package:patientapp/View/saerch_result.dart';
-import 'package:patientapp/controller/doctors_controller.dart';
+import 'package:patientapp/features/booking/presentation/view/doctorprofile.dart';
+import 'package:patientapp/features/doctors/domain/model/all_doctors.dart';
+import 'package:patientapp/features/doctors/presentation/controller/doctors_controller.dart';
+import 'package:patientapp/features/doctors/presentation/controller/saerch_result.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../controller/dio_helper.dart';
+import '../../../../core/network/dio_helper.dart';
 
 class DoctorScreen extends StatefulWidget {
   final GlobalKey<ScaffoldState>? scaffoldKey;
@@ -21,7 +21,6 @@ class _DoctorScreenState extends State<DoctorScreen> {
   String query = '';
   String selectedFilter = 'All';
   final String baseUrl = "https://diabetes-23.000webhostapp.com";
-  //TextEditingController search = TextEditingController();
   late String search;
   List<AllDoctorsModel> all_doctors = [];
   @override
@@ -217,8 +216,7 @@ class _DoctorScreenState extends State<DoctorScreen> {
                                   children: [
                                     Expanded(
                                       child: Text(
-                                        "Dr Name : " +
-                                            all_doctors[index].name.toString(),
+                                        "Dr Name : ${all_doctors[index].name}",
                                         style: const TextStyle(
                                             fontSize: 19,
                                             color: Colors.white,
@@ -282,7 +280,6 @@ class _DoctorScreenState extends State<DoctorScreen> {
 
       if (response.statusCode == 200) {
         // Data fetched successfully
-        var data = response.data;
         print(response.data);
         // Process the data as needed
       } else {
