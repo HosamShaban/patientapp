@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:patientapp/core/resources/Defaultimages.dart';
 
 class FaildLogin extends StatelessWidget {
   const FaildLogin({super.key});
@@ -10,20 +11,20 @@ class FaildLogin extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset("assets/images/faild.png"),
-            Text(
+            Image.asset(DefaultImages.faild),
+            const Text(
               "",
               style: TextStyle(fontSize: 30, color: Colors.red),
             ),
-            Text(
+            const Text(
               "فشل تسجيل دخولك",
               style: TextStyle(fontSize: 20, color: Colors.red),
             ),
-            Text(
+            const Text(
               "فشل تسجيل دخولك",
               style: TextStyle(fontSize: 20, color: Colors.red),
             ),
-            Text(
+            const Text(
               "فشل تسجيل دخولك",
               style: TextStyle(fontSize: 20, color: Colors.red),
             ),

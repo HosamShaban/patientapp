@@ -1,9 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:patientapp/controller/dio_helper.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../Model/all_doctors.dart';
+import '../../domain/model/all_doctors.dart';
 
 class ShowMesures extends StatefulWidget {
   const ShowMesures({super.key});
@@ -85,8 +84,8 @@ class _ShowMesuresState extends State<ShowMesures> {
                   return ListTile(
                     leading: Row(
                       children: [
-                        CircleAvatar(backgroundImage: AssetImage("")),
-                        SizedBox(width: 5),
+                        const CircleAvatar(backgroundImage: AssetImage("")),
+                        const SizedBox(width: 5),
                         Text(all_doctors[index].name.toString())
                       ],
                     ),
@@ -94,9 +93,9 @@ class _ShowMesuresState extends State<ShowMesures> {
                     title: Text(all_doctors[index].qualifications.toString()),
                     subtitle: Row(
                       children: [
-                        Icon(Icons.home),
+                        const Icon(Icons.home),
                         Text(all_doctors[index].address.toString()),
-                        Icon(Icons.phone),
+                        const Icon(Icons.phone),
                         Text(all_doctors[index].phoneNo.toString()),
                       ],
                     ),
