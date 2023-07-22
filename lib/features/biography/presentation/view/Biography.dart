@@ -1,11 +1,8 @@
 import 'package:dio/dio.dart';
-import 'package:patientapp/Model/Personaldata_model.dart';
-import 'package:patientapp/View/Biography2.dart';
-import 'package:patientapp/View/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../Consts/colors.dart';
+import '../../../../core/resources/colors.dart';
 
 class Biography extends StatefulWidget {
   @override
@@ -90,71 +87,12 @@ class _BiographyState extends State<Biography> {
                     child: ListTile(
                       title: Column(
                         children: [
-                          SizedBox(height: 20),
-                          /*   Container(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Container(
-                                  child: Text(
-                                    bio['data']['name'].toString(),
-                                    style: const TextStyle(
-                                        fontSize: 16, color: Colors.white),
-                                  ),
-                                ),
-                                Text(
-                                  " / الاسم",
-                                  style: TextStyle(
-                                      fontSize: 17, color: Colors.white),
-                                ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(height: 10),
-                          Container(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Container(
-                                  child: Text(
-                                    bio['data']['age'].toString(),
-                                    style: const TextStyle(
-                                        fontSize: 16, color: Colors.white),
-                                  ),
-                                ),
-                                Text(
-                                  " / العمر",
-                                  style: TextStyle(
-                                      fontSize: 17, color: Colors.white),
-                                ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(height: 10),
-                          Container(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Container(
-                                  child: Text(
-                                    bio['data']['diabetic_type'].toString(),
-                                    style: const TextStyle(
-                                        fontSize: 16, color: Colors.white),
-                                  ),
-                                ),
-                                Text(
-                                  " / نوع السكري",
-                                  style: TextStyle(
-                                      fontSize: 17, color: Colors.white),
-                                ),
-                              ],
-                            ),
-                          ),*/
+                          const SizedBox(height: 20),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
                               Container(
-                                margin: EdgeInsets.only(left: 190),
+                                margin: const EdgeInsets.only(left: 190),
                                 child: const Text(
                                   " : التشخيص",
                                   style: TextStyle(
@@ -163,34 +101,34 @@ class _BiographyState extends State<Biography> {
                               ),
                             ],
                           ),
-                          SizedBox(height: 10),
+                          const SizedBox(height: 10),
                           Text(
                             ' ${Bio['diagnostics']}',
                             textAlign: TextAlign.end,
                             style: const TextStyle(
                                 fontSize: 17, color: Colors.white),
                           ),
-                          SizedBox(height: 10),
+                          const SizedBox(height: 10),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
                               Container(
-                                child: Text(
+                                child: const Text(
                                   ": العلاج",
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                       fontSize: 20, color: Colors.white),
                                 ),
                               ),
                             ],
                           ),
-                          SizedBox(height: 10),
+                          const SizedBox(height: 10),
                           Text(
                             ' ${Bio['medications']}',
                             textAlign: TextAlign.end,
                             style: const TextStyle(
                                 fontSize: 17, color: Colors.white),
                           ),
-                          SizedBox(height: 10),
+                          const SizedBox(height: 10),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
@@ -207,7 +145,7 @@ class _BiographyState extends State<Biography> {
                               ),
                             ],
                           ),
-                          SizedBox(height: 10),
+                          const SizedBox(height: 10),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
@@ -217,14 +155,14 @@ class _BiographyState extends State<Biography> {
                                 style: const TextStyle(
                                     fontSize: 17, color: Colors.white),
                               ),
-                              SizedBox(width: 10),
-                              Icon(
+                              const SizedBox(width: 10),
+                              const Icon(
                                 Icons.timer,
                                 color: Colors.white,
                               )
                             ],
                           ),
-                          SizedBox(height: 10),
+                          const SizedBox(height: 10),
                         ],
                       ),
                     ),

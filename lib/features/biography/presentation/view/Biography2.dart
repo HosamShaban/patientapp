@@ -1,5 +1,3 @@
-import 'package:patientapp/View/Biography.dart';
-import 'package:patientapp/View/profile_screen.dart';
 import 'package:flutter/material.dart';
 
 class Biography2 extends StatelessWidget {
@@ -24,7 +22,7 @@ class Biography2 extends StatelessWidget {
           ),
         ],
         backgroundColor: Colors.white,
-        title:const Text(
+        title: const Text(
           "السيرة المرضية",
           style: TextStyle(color: Colors.black, fontWeight: FontWeight.w700),
         ),
@@ -42,7 +40,7 @@ class Biography2 extends StatelessWidget {
                   borderRadius: BorderRadius.circular(12.0)),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: const[
+                children: const [
                   Text(
                     "15/3/2022",
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.w300),
