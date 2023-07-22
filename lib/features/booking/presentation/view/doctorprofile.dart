@@ -1,12 +1,13 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:patientapp/View/booking.dart';
-import 'package:patientapp/View/doctor_appoitments.dart';
+import 'package:patientapp/core/resources/Defaultimages.dart';
+import 'package:patientapp/features/appointment/presentation/view/doctor_appoitments.dart';
+import 'package:patientapp/features/booking/presentation/view/booking.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../Model/all_doctors.dart';
+import '../../../doctors/domain/model/all_doctors.dart';
 
 class doctorProfile extends StatefulWidget {
   late int id;
@@ -69,7 +70,7 @@ class _doctorProfileState extends State<doctorProfile> {
         leading: Container(
           margin: const EdgeInsets.only(left: 30),
           child: InkWell(
-            child: Image.asset("assets/images/whats.png"),
+            child: Image.asset(DefaultImages.whats),
             onTap: () {
               String nom = '+972569747558';
               String whatsApp =
@@ -133,8 +134,7 @@ class _doctorProfileState extends State<doctorProfile> {
                   const Center(
                     child: CircleAvatar(
                       radius: 50.0,
-                      backgroundImage:
-                          AssetImage('assets/images/doctor(2).png'),
+                      backgroundImage: AssetImage(DefaultImages.d2),
                     ),
                   ),
                   const SizedBox(height: 10),
