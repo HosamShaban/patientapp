@@ -4,13 +4,12 @@ import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pdfview/flutter_pdfview.dart';
-import 'package:patientapp/Model/Personaldata_model.dart';
-import 'package:patientapp/View/Biography.dart';
-import 'package:patientapp/View/show_mid_data.dart';
+import 'package:patientapp/core/resources/Defaultimages.dart';
+import 'package:patientapp/features/edit_profile/domain/model/Personaldata_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../Consts/colors.dart';
+import '../../../../core/resources/colors.dart';
 
 class complaint extends StatefulWidget {
   const complaint({Key? key}) : super(key: key);
@@ -116,13 +115,13 @@ class _MedicaldataState extends State<complaint> {
               const Center(
                 child: CircleAvatar(
                   radius: 50.0,
-                  backgroundImage: AssetImage('assets/images/doctor(2).png'),
+                  backgroundImage: AssetImage(DefaultImages.d2),
                 ),
               ),
               const SizedBox(height: 10),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: [
+                children: const [
                   Icon(
                     Icons.verified,
                     size: 15,
@@ -140,7 +139,7 @@ class _MedicaldataState extends State<complaint> {
               ),
               const SizedBox(height: 15),
               Container(
-                margin: EdgeInsets.only(left: 200),
+                margin: const EdgeInsets.only(left: 200),
                 child: const Text(
                   "أوصف حالتك للطبيب",
                   style: TextStyle(
@@ -296,7 +295,7 @@ class _MedicaldataState extends State<complaint> {
                   ],
                 ),
               ),
-              SizedBox(height: 15),
+              const SizedBox(height: 15),
               Container(
                 margin: const EdgeInsets.only(top: 15.0),
                 padding: const EdgeInsets.only(left: 20.0, right: 20.0),
@@ -316,7 +315,7 @@ class _MedicaldataState extends State<complaint> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: const [
-                            Image(image: AssetImage("assets/images/whats.png")),
+                            Image(image: AssetImage(DefaultImages.whats)),
                             SizedBox(width: 10),
                             Text(
                               'تحدث مع الطبيب',
@@ -336,7 +335,7 @@ class _MedicaldataState extends State<complaint> {
                 margin: const EdgeInsets.only(top: 15.0),
                 padding: const EdgeInsets.only(left: 20.0, right: 20.0),
               ),
-              SizedBox(height: 50),
+              const SizedBox(height: 50),
             ],
           ),
         ),
