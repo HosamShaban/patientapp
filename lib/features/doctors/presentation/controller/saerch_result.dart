@@ -1,15 +1,8 @@
-import 'dart:ui';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:patientapp/View/saerch_result.dart';
-import 'package:patientapp/View/saerch_result.dart';
+import 'package:patientapp/features/booking/presentation/view/doctorprofile.dart';
+import 'package:patientapp/features/doctors/domain/model/all_doctors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import '../Model/all_doctors.dart';
-import 'doctorprofile.dart';
-import 'saerch_result.dart';
 
 class SearchResult extends StatefulWidget {
   late String data;
@@ -27,7 +20,7 @@ class _SearchResultState extends State<SearchResult> {
   String get search => widget.data;
   bool showWidget = false;
   void startTimer() {
-    Future.delayed(Duration(seconds: 5), () {
+    Future.delayed(const Duration(seconds: 5), () {
       setState(() {
         showWidget = true;
       });
@@ -118,14 +111,14 @@ class _SearchResultState extends State<SearchResult> {
                             child: Container(
                               width: 170,
                               height: 170,
-                              child: CircularProgressIndicator(
+                              child: const CircularProgressIndicator(
                                 color: Colors.blueAccent,
                               ),
                             ),
                           ),
                           Center(
                             child: showWidget
-                                ? Text(
+                                ? const Text(
                                     'نأسف .. الطبيب غير مسجل',
                                     style: TextStyle(color: Colors.red),
                                   )
@@ -159,9 +152,9 @@ class _SearchResultState extends State<SearchResult> {
                                           doctorProfile(id: id)));
                             },
                             child: Container(
-                              padding: EdgeInsets.all(5),
+                              padding: const EdgeInsets.all(5),
                               height: 70,
-                              margin: EdgeInsets.all(15),
+                              margin: const EdgeInsets.all(15),
                               decoration: BoxDecoration(
                                 color: Colors.blue,
                                 borderRadius: BorderRadius.circular(12),
@@ -175,7 +168,7 @@ class _SearchResultState extends State<SearchResult> {
                                 ],
                               ),
                               child: ListTile(
-                                trailing: Icon(
+                                trailing: const Icon(
                                   Icons.arrow_forward_ios,
                                   color: Colors.white,
                                 ),
@@ -186,7 +179,7 @@ class _SearchResultState extends State<SearchResult> {
                                     Expanded(
                                       child: Text(
                                         search_doctors[index].name.toString(),
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             fontSize: 20,
                                             color: Colors.white,
                                             fontWeight: FontWeight.w500),
@@ -196,11 +189,11 @@ class _SearchResultState extends State<SearchResult> {
                                 ),
                                 subtitle: Column(
                                   children: [
-                                    SizedBox(height: 5),
+                                    const SizedBox(height: 5),
                                     Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.start,
-                                      children: [
+                                      children: const [
                                         Icon(
                                           Icons.location_on,
                                           color: Colors.white,

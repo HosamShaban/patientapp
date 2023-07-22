@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:patientapp/View/profile.dart';
+import 'package:patientapp/features/edit_profile/presentation/view/profile.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Personaldata extends StatefulWidget {
@@ -236,42 +236,7 @@ class _PersonaldataState extends State<Personaldata> {
                   ],
                 ),
               ),
-              /*  const SizedBox(height: 15),
-              Center(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    const Text(
-                      "البريد الالكتروني",
-                      style: TextStyle(
-                          color: Color(0xff000000),
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Container(
-                      padding: const EdgeInsets.only(right: 10),
-                      decoration: BoxDecoration(
-                          color: const Color(0xffEAEAEA),
-                          borderRadius: BorderRadius.circular(12.0)),
-                      width: 311,
-                      height: 48,
-                      child: TextFormField(
-                        controller: emailcontroller,
-                        keyboardType: TextInputType.emailAddress,
-                        decoration: const InputDecoration(
-                          hintText: "example@gmail.com",
-                          hintTextDirection: TextDirection.rtl,
-                          border: InputBorder.none,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),*/
-              SizedBox(height: 15),
+              const SizedBox(height: 15),
               Center(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.end,

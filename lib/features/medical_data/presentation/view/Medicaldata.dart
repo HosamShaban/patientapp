@@ -4,7 +4,8 @@ import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pdfview/flutter_pdfview.dart';
-import 'package:patientapp/Model/Personaldata_model.dart';
+import 'package:patientapp/core/resources/Defaultimages.dart';
+import 'package:patientapp/features/edit_profile/domain/model/Personaldata_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Medicaldata extends StatefulWidget {
@@ -113,7 +114,7 @@ class _MedicaldataState extends State<Medicaldata> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                child: Image.asset("assets/images/up.png"),
+                child: Image.asset(DefaultImages.upload),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
@@ -196,12 +197,12 @@ class _MedicaldataState extends State<Medicaldata> {
                         onPressed: () async {
                           uploadFileToApi();
                         },
-                        icon: Icon(
+                        icon: const Icon(
                           Icons.upload,
                           color: Color.fromARGB(255, 241, 3, 3),
                         )),
                     Container(
-                      margin: EdgeInsets.only(right: 20),
+                      margin: const EdgeInsets.only(right: 20),
                       width: 270,
                       height: 48,
                       decoration: BoxDecoration(
@@ -227,39 +228,7 @@ class _MedicaldataState extends State<Medicaldata> {
                   ],
                 ),
               ),
-              /* Container(
-                margin: const EdgeInsets.only(top: 15.0),
-                padding: const EdgeInsets.only(left: 20.0, right: 20.0),
-                child: Row(
-                  children: <Widget>[
-                    Expanded(
-                      child: MaterialButton(
-                        height: 50,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8.0)),
-                        color: ConstColors.primaryColor,
-                        child: const Center(
-                          child: Padding(
-                            padding: EdgeInsets.only(left: 10),
-                            child: Text(
-                              "رفع الملف",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20),
-                            ),
-                          ),
-                        ),
-                        onPressed: () async {
-                          uploadFileToApi();
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-              ),*/
-
-              SizedBox(height: 50),
+              const SizedBox(height: 50),
             ],
           ),
         ),

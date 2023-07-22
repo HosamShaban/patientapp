@@ -2,11 +2,12 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:patientapp/controller/home_controller.dart';
-import 'package:patientapp/onboarding.dart';
+import 'package:patientapp/core/resources/Defaultimages.dart';
+import 'package:patientapp/features/home/presentation/controller/home_controller.dart';
+import 'package:patientapp/features/out_boarding/presentation/view/onboarding.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../Model/mesure.dart';
+import '../../../measure/domain/model/mesure.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -27,7 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
   ];
   bool showWidget = false;
   void startTimer() {
-    Future.delayed(Duration(seconds: 10), () {
+    Future.delayed(const Duration(seconds: 10), () {
       setState(() {
         showWidget = true;
       });
@@ -162,9 +163,8 @@ class _HomeScreenState extends State<HomeScreen> {
                               width: 360,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
-                                image: DecorationImage(
-                                  image:
-                                      AssetImage('assets/images/pho1 (2).png'),
+                                image: const DecorationImage(
+                                  image: AssetImage(DefaultImages.sliderHome1),
                                   fit: BoxFit.cover,
                                 ),
                               ),
@@ -175,9 +175,8 @@ class _HomeScreenState extends State<HomeScreen> {
                               width: 360,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
-                                image: DecorationImage(
-                                  image:
-                                      AssetImage('assets/images/pho2 (2).png'),
+                                image: const DecorationImage(
+                                  image: AssetImage(DefaultImages.sliderHome2),
                                   fit: BoxFit.cover,
                                 ),
                               ),
@@ -188,9 +187,8 @@ class _HomeScreenState extends State<HomeScreen> {
                               width: 360,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
-                                image: DecorationImage(
-                                  image:
-                                      AssetImage('assets/images/pho3 (2).png'),
+                                image: const DecorationImage(
+                                  image: AssetImage(DefaultImages.sliderHome3),
                                   fit: BoxFit.cover,
                                 ),
                               ),
@@ -205,7 +203,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: Padding(
                           padding: const EdgeInsets.all(10),
                           child: Container(
-                            margin: EdgeInsets.only(left: 10, right: 10),
+                            margin: const EdgeInsets.only(left: 10, right: 10),
                             height: 30,
                             decoration: BoxDecoration(
                               color: const Color(0xff407BFF),
@@ -295,7 +293,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             decoration: BoxDecoration(
                                               borderRadius:
                                                   BorderRadius.circular(12),
-                                              color: Color.fromARGB(
+                                              color: const Color.fromARGB(
                                                   255, 138, 138, 141),
                                             ),
                                             child: ListTile(
@@ -306,7 +304,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 children: [
                                                   Text(
                                                     "Fating : ${mesures[index].Fasting}",
-                                                    style: TextStyle(
+                                                    style: const TextStyle(
                                                         fontSize: 16,
                                                         color: Colors.white,
                                                         fontWeight:
@@ -314,7 +312,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   ),
                                                   Text(
                                                     " Creator : ${mesures[index].Creator}",
-                                                    style: TextStyle(
+                                                    style: const TextStyle(
                                                         fontSize: 16,
                                                         color: Colors.white,
                                                         fontWeight:
@@ -322,7 +320,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   ),
                                                   Text(
                                                     " Random : ${mesures[index].Random}",
-                                                    style: TextStyle(
+                                                    style: const TextStyle(
                                                         fontSize: 16,
                                                         color: Colors.white,
                                                         fontWeight:
@@ -337,14 +335,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   Text(
                                                     '${mesures[index].DateTime}'
                                                         .substring(11, 16),
-                                                    style: TextStyle(
+                                                    style: const TextStyle(
                                                         fontSize: 17,
                                                         color: Colors.white),
                                                   ),
-                                                  SizedBox(
+                                                  const SizedBox(
                                                     width: 5,
                                                   ),
-                                                  Text(
+                                                  const Text(
                                                     "في",
                                                     style: TextStyle(
                                                         fontSize: 15,
@@ -352,16 +350,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                                         fontWeight:
                                                             FontWeight.bold),
                                                   ),
-                                                  SizedBox(width: 10),
+                                                  const SizedBox(width: 10),
                                                   Text(
                                                     '${mesures[index].DateTime}'
                                                         .substring(0, 10),
-                                                    style: TextStyle(
+                                                    style: const TextStyle(
                                                         fontSize: 17,
                                                         color: Colors.white),
                                                   ),
-                                                  SizedBox(width: 5),
-                                                  Text(
+                                                  const SizedBox(width: 5),
+                                                  const Text(
                                                     " تاريخ الادخال",
                                                     style: TextStyle(
                                                         fontSize: 15,
@@ -380,7 +378,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ],
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 50,
                       )
                     ],
@@ -407,8 +405,8 @@ class _HomeScreenState extends State<HomeScreen> {
       if (response.statusCode == 200) {
         print(response.data);
 
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => OnBoarding()));
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => const OnBoarding()));
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             backgroundColor: Colors.red,

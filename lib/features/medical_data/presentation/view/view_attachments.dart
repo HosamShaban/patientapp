@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../Consts/colors.dart';
+import '../../../../core/resources/colors.dart';
 
 class ViewMyAttachments extends StatefulWidget {
   const ViewMyAttachments({super.key});
@@ -90,23 +90,13 @@ class _ViewMyAttachmentsState extends State<ViewMyAttachments> {
                     ),
                     child: InkWell(
                       onTap: () async {
+                        // ignore: deprecated_member_use
                         launch('$fileurl/${Bio['filepath']}');
-                        /*
-                        String file =
-                            'https://docs.google.com/gview?embedded=true&url=$fileurl/${Bio['filepath']}';
-
-                        print(file);
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => ViewFike(
-                                      path: file,
-                                    )));*/
                       },
                       child: ListTile(
                         title: Column(
                           children: [
-                            SizedBox(height: 10),
+                            const SizedBox(height: 10),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
@@ -167,12 +157,12 @@ class _ViewMyAttachmentsState extends State<ViewMyAttachments> {
                                                     color: Colors.white),
                                               ))).show();
                                     },
-                                    icon: Icon(
+                                    icon: const Icon(
                                       Icons.delete,
                                       color: Colors.white,
                                     )),
                                 Container(
-                                  margin: EdgeInsets.only(left: 170),
+                                  margin: const EdgeInsets.only(left: 170),
                                   child: const Text(
                                     " : اسم الملف",
                                     style: TextStyle(
@@ -181,7 +171,7 @@ class _ViewMyAttachmentsState extends State<ViewMyAttachments> {
                                 ),
                               ],
                             ),
-                            SizedBox(height: 10),
+                            const SizedBox(height: 10),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
@@ -193,7 +183,7 @@ class _ViewMyAttachmentsState extends State<ViewMyAttachments> {
                                 ),
                               ],
                             ),
-                            SizedBox(height: 10),
+                            const SizedBox(height: 10),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
@@ -208,7 +198,7 @@ class _ViewMyAttachmentsState extends State<ViewMyAttachments> {
                                   style: TextStyle(
                                       fontSize: 17, color: Colors.white),
                                 ),
-                                SizedBox(width: 10),
+                                const SizedBox(width: 10),
                                 Text(
                                   ' ${Bio['created_at']}'.substring(0, 11),
                                   textAlign: TextAlign.start,
@@ -222,8 +212,8 @@ class _ViewMyAttachmentsState extends State<ViewMyAttachments> {
                                 ),
                               ],
                             ),
-                            SizedBox(height: 10),
-                            SizedBox(height: 10),
+                            const SizedBox(height: 10),
+                            const SizedBox(height: 10),
                           ],
                         ),
                       ),

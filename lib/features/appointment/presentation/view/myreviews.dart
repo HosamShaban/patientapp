@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:patientapp/View/reviews_details.dart';
+import 'package:patientapp/features/appointment/presentation/view/reviews_details.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MyReviews extends StatefulWidget {
@@ -16,7 +16,7 @@ class _MyReviewsState extends State<MyReviews> {
   Map<String, dynamic> reviews = {};
   bool showWidget = false;
   void startTimer() {
-    Future.delayed(Duration(seconds: 10), () {
+    Future.delayed(const Duration(seconds: 10), () {
       setState(() {
         showWidget = true;
       });
@@ -94,9 +94,9 @@ class _MyReviewsState extends State<MyReviews> {
                 itemBuilder: (context, index) {
                   final Reviews = reviews['data']['reviews'][index];
                   return Container(
-                    padding: EdgeInsets.all(5),
+                    padding: const EdgeInsets.all(5),
                     height: 60,
-                    margin: EdgeInsets.all(15),
+                    margin: const EdgeInsets.all(15),
                     decoration: BoxDecoration(
                       color: Colors.green,
                       borderRadius: BorderRadius.circular(12),
@@ -127,14 +127,14 @@ class _MyReviewsState extends State<MyReviews> {
                           children: [
                             Text(
                               'Day : ${Reviews['review_day']}',
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontSize: 17,
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold),
                             ),
                           ],
                         ),
-                        trailing: Icon(
+                        trailing: const Icon(
                           Icons.arrow_forward_ios,
                           color: Colors.white,
                         ),

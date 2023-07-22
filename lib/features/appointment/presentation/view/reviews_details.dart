@@ -1,10 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:patientapp/View/reating.dart';
+import 'package:patientapp/core/resources/Defaultimages.dart';
+import 'package:patientapp/features/doctors/domain/model/all_doctors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-import '../Model/all_doctors.dart';
 
 class ReviewsDetails extends StatefulWidget {
   String date;
@@ -135,30 +134,12 @@ class _ReviewsDetailsState extends State<ReviewsDetails> {
                       borderRadius: BorderRadius.circular(10),
                       color: const Color(0xffD9D9D9),
                     ),
-                    child: Image.asset("assets/images/red.png"),
+                    child: Image.asset(DefaultImages.review),
                   ),
                   const SizedBox(height: 10),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Container(
-                          margin: const EdgeInsets.only(left: 10),
-                          child: TextButton(
-                              onPressed: () {
-                                int id = all_doctors[0].id as int;
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            ReatingDoctor(id)));
-                              },
-                              child: const Text(
-                                "تقييم الطبيب ",
-                                style: TextStyle(
-                                    color: Colors.blue,
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.bold),
-                              ))),
                       Container(
                         margin: const EdgeInsets.only(right: 10),
                         child: const Text(
@@ -364,9 +345,7 @@ class _ReviewsDetailsState extends State<ReviewsDetails> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: const [
-                                Image(
-                                    image:
-                                        AssetImage("assets/images/whats.png")),
+                                Image(image: AssetImage(DefaultImages.whats)),
                                 SizedBox(width: 10),
                                 Text(
                                   'تحدث مع الطبيب',

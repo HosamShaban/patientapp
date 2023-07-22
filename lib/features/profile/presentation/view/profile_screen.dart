@@ -1,10 +1,9 @@
-import 'package:patientapp/View/Biography.dart';
-import 'package:patientapp/View/profile.dart';
 import 'package:flutter/material.dart';
-import 'package:patientapp/View/show_mid_data.dart';
-import 'package:patientapp/View/tabs.dart';
-import '../Consts/colors.dart';
-import 'bio.dart';
+import 'package:patientapp/features/edit_profile/presentation/view/profile.dart';
+import 'package:patientapp/features/medical_data/presentation/controller/show_mid_data.dart';
+
+import '../../../../core/resources/colors.dart';
+import '../../../biography/presentation/view/bio.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({

@@ -1,22 +1,25 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:patientapp/View/edit_email.dart';
-import 'package:patientapp/View/profile_screen.dart';
+import 'package:patientapp/core/resources/Defaultimages.dart';
+import 'package:patientapp/features/edit_profile/presentation/controller/edid_status.dart';
+import 'package:patientapp/features/edit_profile/presentation/controller/edit_age.dart';
+import 'package:patientapp/features/edit_profile/presentation/controller/edit_gender.dart';
+import 'package:patientapp/features/edit_profile/presentation/controller/edit_name.dart';
+import 'package:patientapp/features/edit_profile/presentation/controller/edit_type.dart';
+import 'package:patientapp/features/profile/presentation/view/profile_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'edit_address.dart';
-import 'edit_ageB.dart';
-import 'edit_nameB.dart';
-import 'edit_phone.dart';
+import '../../../../core/resources/colors.dart';
+import '../view/Medicaldata.dart';
 
-class Profile extends StatefulWidget {
-  const Profile({super.key});
+class ShowMedicalData extends StatefulWidget {
+  const ShowMedicalData({super.key});
 
   @override
-  State<Profile> createState() => _ProfileState();
+  State<ShowMedicalData> createState() => _ShowMedicalDataState();
 }
 
-class _ProfileState extends State<Profile> {
+class _ShowMedicalDataState extends State<ShowMedicalData> {
   Map<String, dynamic> responseData = {};
   final String baseUrl = "https://diabetes-23.000webhostapp.com";
 
@@ -76,7 +79,7 @@ class _ProfileState extends State<Profile> {
         ],
         backgroundColor: Colors.white,
         title: const Text(
-          "بياناتك الشخصية",
+          "بياناتك الطبية",
           style: TextStyle(color: Colors.black, fontWeight: FontWeight.w700),
         ),
         centerTitle: true,
@@ -104,7 +107,7 @@ class _ProfileState extends State<Profile> {
                           borderRadius: BorderRadius.circular(12.0)),
                       width: 311,
                       height: 220,
-                      child: Image.asset("assets/images/pro.png"),
+                      child: Image.asset(DefaultImages.onBoarding2),
                     ),
                     const SizedBox(height: 30),
                     Row(
@@ -133,7 +136,7 @@ class _ProfileState extends State<Profile> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => EditNameB()));
+                                      builder: (context) => EditName()));
                             },
                             icon: const Icon(
                               Icons.edit,
@@ -167,7 +170,7 @@ class _ProfileState extends State<Profile> {
                         Container(
                           margin: const EdgeInsets.only(right: 15),
                           child: const Text(
-                            "الايميل",
+                            "الجنس",
                             style: TextStyle(
                                 color: Color(0xff000000),
                                 fontSize: 16,
@@ -187,20 +190,7 @@ class _ProfileState extends State<Profile> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => EditEmail()));
-                              /* ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  backgroundColor: Colors.red,
-                                  content: Text(
-                                    'لايمكنك تعديل الايميل',
-                                    style: TextStyle(
-                                      fontFamily: 'Tajawal',
-                                      fontSize: 20,
-                                    ),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ),
-                              );*/
+                                      builder: (context) => EditGender()));
                             },
                             icon: const Icon(
                               Icons.edit,
@@ -216,7 +206,7 @@ class _ProfileState extends State<Profile> {
                           height: 48,
                           child: Center(
                             child: Text(
-                                ' ${responseData['data']['email'] ?? 'N/D'}',
+                                ' ${responseData['data']['gender'] ?? 'N/D'}',
                                 style: const TextStyle(
                                     fontSize: 20,
                                     color: Colors.black,
@@ -234,7 +224,7 @@ class _ProfileState extends State<Profile> {
                         Container(
                           margin: const EdgeInsets.only(right: 15),
                           child: const Text(
-                            "رقم الجوال",
+                            "نوع السكر",
                             style: TextStyle(
                                 color: Color(0xff000000),
                                 fontSize: 16,
@@ -254,7 +244,7 @@ class _ProfileState extends State<Profile> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => EditPhoneNom()));
+                                      builder: (context) => EditType()));
                             },
                             icon: const Icon(
                               Icons.edit,
@@ -270,7 +260,7 @@ class _ProfileState extends State<Profile> {
                           height: 48,
                           child: Center(
                             child: Text(
-                                ' ${responseData['data']['phone_No'] ?? 'N/D'}',
+                                ' ${responseData['data']['diabetic_type'] ?? 'N/D'}',
                                 style: const TextStyle(
                                     fontSize: 20,
                                     color: Colors.black,
@@ -339,7 +329,7 @@ class _ProfileState extends State<Profile> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => EditAgeB()));
+                                      builder: (context) => EditAge()));
                             },
                             icon: const Icon(
                               Icons.edit,
@@ -373,7 +363,7 @@ class _ProfileState extends State<Profile> {
                         Container(
                           margin: const EdgeInsets.only(right: 15),
                           child: const Text(
-                            "العنوان",
+                            "حالتك الصحية",
                             style: TextStyle(
                                 color: Color(0xff000000),
                                 fontSize: 16,
@@ -393,7 +383,7 @@ class _ProfileState extends State<Profile> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => EditAdress()));
+                                      builder: (context) => EditStatus()));
                             },
                             icon: const Icon(
                               Icons.edit,
@@ -408,7 +398,7 @@ class _ProfileState extends State<Profile> {
                           width: 260,
                           child: Center(
                             child: Text(
-                                ' ${responseData['data']['address'] ?? 'N/D'}',
+                                ' ${responseData['data']['patient_status'] ?? 'N/D'}',
                                 textAlign: TextAlign.right,
                                 style: const TextStyle(
                                     fontSize: 20,
@@ -421,9 +411,8 @@ class _ProfileState extends State<Profile> {
                     const SizedBox(
                       height: 30,
                     ),
-                    /*Container(
-                      margin: const EdgeInsets.only(top: 15.0),
-                      padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+                    Container(
+                      padding: const EdgeInsets.only(left: 45.0, right: 45.0),
                       child: Row(
                         children: <Widget>[
                           Expanded(
@@ -438,19 +427,19 @@ class _ProfileState extends State<Profile> {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => Medicaldata()));
+                                        builder: (context) =>
+                                            const Medicaldata()));
                               },
                               child: Row(
                                 children: const [
                                   Icon(
-                                    Icons.edit,
+                                    Icons.upload_file,
                                     color: Colors.white,
                                   ),
-                                  SizedBox(width: 80),
                                   Expanded(
                                       child: Center(
                                     child: Text(
-                                      'تعديل',
+                                      'اضافة مرفقات',
                                       style: TextStyle(
                                           color: Colors.white,
                                           fontWeight: FontWeight.bold,
@@ -463,7 +452,7 @@ class _ProfileState extends State<Profile> {
                           ),
                         ],
                       ),
-                    ),*/
+                    ),
                     const SizedBox(height: 30),
                   ],
                 ),

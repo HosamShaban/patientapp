@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:patientapp/core/resources/Defaultimages.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SugarMeasurement extends StatefulWidget {
@@ -70,9 +71,9 @@ class _SugarMeasurementState extends State<SugarMeasurement> {
                       borderRadius: BorderRadius.circular(12.0)),
                   width: 311,
                   height: 220,
-                  child: Image.asset("assets/images/photo4.jpeg"),
+                  child: Image.asset(DefaultImages.onBoarding3),
                 ),
-                SizedBox(height: 40),
+                const SizedBox(height: 40),
                 Container(
                   padding: const EdgeInsets.all(15),
                   width: 327,

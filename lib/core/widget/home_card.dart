@@ -1,5 +1,5 @@
-import 'package:patientapp/Consts/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:patientapp/core/resources/colors.dart';
 
 class HomeCard extends StatelessWidget {
   final String title;
