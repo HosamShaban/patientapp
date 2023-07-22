@@ -1,13 +1,14 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:patientapp/View/personal_screen.dart';
-import 'package:patientapp/controller/screenIndexProvider.dart';
+import 'package:patientapp/config/constants.dart';
+import 'package:patientapp/features/main/presentation/controller/screenIndexProvider.dart';
+import 'package:patientapp/features/main/presentation/view/main_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'View/splash.dart';
-import 'controller/dio_helper.dart';
+import 'core/network/dio_helper.dart';
+import 'features/splash/presentation/view/splash.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,9 +30,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize: const Size(392.72727272727275, 781.0909090909091),
-      minTextAdapt: true,
       splitScreenMode: true,
+      minTextAdapt: true,
+      designSize: const Size(
+        Constants.deviceWidth,
+        Constants.deviceHeight,
+      ),
       builder: (context, child) {
         return MultiProvider(
           providers: [
@@ -44,7 +48,7 @@ class MyApp extends StatelessWidget {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const SplashScreen();
                 } else if (snapshot.hasData && snapshot.data != null) {
-                  return PersonalPage(); // Replace with your home screen widget
+                  return MainScreen(); // Replace with your home screen widget
                 } else {
                   return const SplashScreen();
                 }
