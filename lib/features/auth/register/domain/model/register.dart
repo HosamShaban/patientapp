@@ -1,14 +1,12 @@
-import 'dart:ffi';
-
-class Resgister {
+class Register {
   late int id;
   late String name;
   late String email;
   late String password;
 
-  Resgister(this.id, this.name, this.email, this.password);
+  Register(this.id, this.name, this.email, this.password);
 
-  Resgister.fromjson(Map<String, dynamic> map) {
+  Register.fromjson(Map<String, dynamic> map) {
     this.id = map['id'];
     this.name = map['name'];
     this.email = map['email'];
