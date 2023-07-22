@@ -141,7 +141,7 @@ class _ReviewsDetailsState extends State<ReviewsDetails> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Container(
-                        margin: const EdgeInsets.only(right: 10),
+                        margin: const EdgeInsets.only(left: 220),
                         child: const Text(
                           "تفاصيل المراجعة",
                           style: TextStyle(
