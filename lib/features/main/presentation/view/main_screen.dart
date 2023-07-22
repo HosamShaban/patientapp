@@ -1,22 +1,21 @@
-import 'package:patientapp/Consts/Defaultimages.dart';
-import 'package:patientapp/Consts/colors.dart';
-
-import 'package:patientapp/View/doctor_screen.dart';
-import 'package:patientapp/View/home_screen.dart';
-import 'package:patientapp/View/measure_screen.dart';
-import 'package:patientapp/View/profile_screen.dart';
-import 'package:patientapp/View/tabs.dart';
-import 'package:patientapp/controller/screenIndexProvider.dart';
-import 'package:patientapp/widget/tab_card.dart';
 import 'package:flutter/material.dart';
+import 'package:patientapp/core/resources/Defaultimages.dart';
+import 'package:patientapp/core/resources/colors.dart';
+import 'package:patientapp/core/widget/tab_card.dart';
+import 'package:patientapp/features/appointment/presentation/view/tabs.dart';
+import 'package:patientapp/features/doctors/presentation/view/doctor_screen.dart';
+import 'package:patientapp/features/home/presentation/view/home_screen.dart';
+import 'package:patientapp/features/main/presentation/controller/screenIndexProvider.dart';
+import 'package:patientapp/features/measure/presentation/view/measure_screen.dart';
+import 'package:patientapp/features/profile/presentation/view/profile_screen.dart';
 import 'package:provider/provider.dart';
 
-class PersonalPage extends StatefulWidget {
+class MainScreen extends StatefulWidget {
   @override
-  State<PersonalPage> createState() => _PersonalPageState();
+  State<MainScreen> createState() => _MainScreenState();
 }
 
-class _PersonalPageState extends State<PersonalPage> {
+class _MainScreenState extends State<MainScreen> {
   late final ScaffoldState scaffoldState;
 
   @override
