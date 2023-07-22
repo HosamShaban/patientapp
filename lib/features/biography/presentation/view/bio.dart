@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:patientapp/View/Biography.dart';
-import 'package:patientapp/View/profile_screen.dart';
-import 'package:patientapp/View/view_attachments.dart';
+import 'package:patientapp/features/biography/presentation/view/Biography.dart';
+import 'package:patientapp/features/medical_data/presentation/view/view_attachments.dart';
+import 'package:patientapp/features/profile/presentation/view/profile_screen.dart';
 
 class BioTabBar extends StatelessWidget {
   const BioTabBar({super.key});
@@ -35,7 +35,7 @@ class BioTabBar extends StatelessWidget {
             style: TextStyle(color: Colors.black, fontWeight: FontWeight.w700),
           ),
           centerTitle: true,
-          bottom: TabBar(tabs: [
+          bottom: const TabBar(tabs: [
             Tab(
               child: Text(
                 "سجل التشخيصات",
@@ -52,7 +52,7 @@ class BioTabBar extends StatelessWidget {
             ),
           ]),
         ),
-        body: TabBarView(children: [Biography(), ViewMyAttachments()]),
+        body: TabBarView(children: [Biography(), const ViewMyAttachments()]),
       ),
     );
   }
