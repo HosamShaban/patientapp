@@ -1,32 +1,33 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:patientapp/View/profile_screen.dart';
-import 'package:patientapp/View/show_mid_data.dart';
+import 'package:patientapp/core/resources/Defaultimages.dart';
+import 'package:patientapp/core/resources/colors.dart';
+import 'package:patientapp/features/medical_data/presentation/controller/show_mid_data.dart';
+import 'package:patientapp/features/profile/presentation/view/profile_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../Consts/colors.dart';
-
-class EditGender extends StatefulWidget {
-  EditGender({super.key});
+class EditType extends StatefulWidget {
+  EditType({super.key});
 
   @override
-  State<EditGender> createState() => _EditGenderState();
+  State<EditType> createState() => _EditTypeState();
 }
 
-class _EditGenderState extends State<EditGender> {
+class _EditTypeState extends State<EditType> {
   TextEditingController namecontroller = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
   final String baseUrl = "https://diabetes-23.000webhostapp.com";
-  String selectval = "male";
+  String Diabetictype = "Type 1 Diabetes";
 
   Future<void> StoreUserData() async {
     final Dio dio = Dio();
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var token = prefs.getString('token');
     dio.options.headers = {'Authorization': 'Bearer $token'};
-    var response = await dio.post("$baseUrl/api/patient/updateProfile",
-        data: {"gender": selectval});
+    var response = await dio.post("$baseUrl/api/patient/updateProfile", data: {
+      "diabetic_type": Diabetictype,
+    });
     print(response.data);
   }
 
@@ -37,8 +38,10 @@ class _EditGenderState extends State<EditGender> {
         actions: [
           GestureDetector(
             onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => ProfileScreen()));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const ProfileScreen()));
             },
             child: Container(
               padding: const EdgeInsets.only(right: 5),
@@ -65,15 +68,15 @@ class _EditGenderState extends State<EditGender> {
               children: [
                 Container(
                     height: 300,
-                    margin: EdgeInsets.all(30),
-                    child: Image.asset("assets/images/mid.png")),
+                    margin: const EdgeInsets.all(30),
+                    child: Image.asset(DefaultImages.edit)),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Container(
-                      margin: EdgeInsets.only(right: 30),
-                      child: Text(
-                        "الجنس",
+                      margin: const EdgeInsets.only(right: 30),
+                      child: const Text(
+                        "نوع السكري",
                         style: TextStyle(
                             color: Color(0xff000000),
                             fontSize: 16,
@@ -82,38 +85,78 @@ class _EditGenderState extends State<EditGender> {
                     ),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Container(
-                    padding: const EdgeInsets.only(right: 10),
-                    decoration: BoxDecoration(
-                        color: const Color(0xffEAEAEA),
-                        borderRadius: BorderRadius.circular(12.0)),
-                    width: 311,
-                    height: 48,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        DropdownButton(
-                          hint: Text("اختر"),
-                          items: <String>[
-                            'male',
-                            'female',
-                          ].map<DropdownMenuItem<String>>((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(value),
-                            );
-                          }).toList(),
-                          onChanged: (value) {
-                            setState(() {
-                              selectval = value!;
-                            });
-                          },
-                        ),
-                      ],
-                    )),
+                  margin: const EdgeInsets.only(left: 110),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      const Text("النوع الثاني",
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.w500)),
+                      Radio(
+                        activeColor: Colors.black,
+                        value: "Type 2 Diabetes",
+                        groupValue: Diabetictype,
+                        onChanged: (value) {
+                          setState(() {
+                            Diabetictype = value.toString();
+                          });
+                        },
+                      ),
+                      const Text("النوع الأول",
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.w500)),
+                      Radio(
+                        activeColor: Colors.black,
+                        value: "Type 1 Diabetes",
+                        groupValue: Diabetictype,
+                        onChanged: (value) {
+                          setState(() {
+                            Diabetictype = value.toString();
+                          });
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  margin: const EdgeInsets.only(left: 110),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text("لا أعرف",
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.w500)),
+                      Radio(
+                        activeColor: Colors.black,
+                        value: "unknown",
+                        groupValue: Diabetictype,
+                        onChanged: (value) {
+                          setState(() {
+                            Diabetictype = value.toString();
+                          });
+                        },
+                      ),
+                      const Text("سكري الحمل",
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.w500)),
+                      Radio(
+                        activeColor: Colors.black,
+                        value: "Gestational diabetes",
+                        groupValue: Diabetictype,
+                        onChanged: (value) {
+                          setState(() {
+                            Diabetictype = value.toString();
+                          });
+                        },
+                      ),
+                    ],
+                  ),
+                ),
                 const SizedBox(height: 15),
                 Container(
                   margin: const EdgeInsets.only(top: 15.0),
@@ -159,7 +202,7 @@ class _EditGenderState extends State<EditGender> {
                     ],
                   ),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 15),
                 Container(
                   padding: const EdgeInsets.only(left: 20.0, right: 20.0),
                   child: Row(
@@ -186,7 +229,8 @@ class _EditGenderState extends State<EditGender> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => ShowMedicalData()));
+                                    builder: (context) =>
+                                        const ShowMedicalData()));
                           },
                         ),
                       ),

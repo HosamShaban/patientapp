@@ -1,34 +1,32 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:patientapp/View/profile.dart';
-import 'package:patientapp/View/profile_screen.dart';
-import 'package:patientapp/View/show_mid_data.dart';
+import 'package:patientapp/core/resources/Defaultimages.dart';
+import 'package:patientapp/core/resources/colors.dart';
+import 'package:patientapp/features/medical_data/presentation/controller/show_mid_data.dart';
+import 'package:patientapp/features/profile/presentation/view/profile_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../Consts/colors.dart';
-
-class EditAgeB extends StatefulWidget {
-  EditAgeB({super.key});
+class EditGender extends StatefulWidget {
+  EditGender({super.key});
 
   @override
-  State<EditAgeB> createState() => _EditAgeBState();
+  State<EditGender> createState() => _EditGenderState();
 }
 
-class _EditAgeBState extends State<EditAgeB> {
+class _EditGenderState extends State<EditGender> {
   TextEditingController namecontroller = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
   final String baseUrl = "https://diabetes-23.000webhostapp.com";
-  TextEditingController age = TextEditingController();
+  String selectval = "male";
 
   Future<void> StoreUserData() async {
     final Dio dio = Dio();
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var token = prefs.getString('token');
     dio.options.headers = {'Authorization': 'Bearer $token'};
-    var response = await dio.post("$baseUrl/api/patient/updateProfile", data: {
-      "age": age.text.trim(),
-    });
+    var response = await dio.post("$baseUrl/api/patient/updateProfile",
+        data: {"gender": selectval});
     print(response.data);
   }
 
@@ -39,8 +37,10 @@ class _EditAgeBState extends State<EditAgeB> {
         actions: [
           GestureDetector(
             onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => ProfileScreen()));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const ProfileScreen()));
             },
             child: Container(
               padding: const EdgeInsets.only(right: 5),
@@ -67,15 +67,15 @@ class _EditAgeBState extends State<EditAgeB> {
               children: [
                 Container(
                     height: 300,
-                    margin: EdgeInsets.all(30),
-                    child: Image.asset("assets/images/edit.png")),
+                    margin: const EdgeInsets.all(30),
+                    child: Image.asset(DefaultImages.mid)),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Container(
-                      margin: EdgeInsets.only(right: 30),
-                      child: Text(
-                        " العمر",
+                      margin: const EdgeInsets.only(right: 30),
+                      child: const Text(
+                        "الجنس",
                         style: TextStyle(
                             color: Color(0xff000000),
                             fontSize: 16,
@@ -84,32 +84,38 @@ class _EditAgeBState extends State<EditAgeB> {
                     ),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Container(
-                  padding: const EdgeInsets.only(right: 10),
-                  decoration: BoxDecoration(
-                      color: const Color(0xffEAEAEA),
-                      borderRadius: BorderRadius.circular(12.0)),
-                  width: 311,
-                  height: 48,
-                  child: TextFormField(
-                    controller: age,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'هذا الحقل مطلوب';
-                      }
-                      return null;
-                    },
-                    keyboardType: TextInputType.number,
-                    decoration: const InputDecoration(
-                      hintText: "40",
-                      hintTextDirection: TextDirection.rtl,
-                      border: InputBorder.none,
-                    ),
-                  ),
-                ),
+                    padding: const EdgeInsets.only(right: 10),
+                    decoration: BoxDecoration(
+                        color: const Color(0xffEAEAEA),
+                        borderRadius: BorderRadius.circular(12.0)),
+                    width: 311,
+                    height: 48,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        DropdownButton(
+                          hint: const Text("اختر"),
+                          items: <String>[
+                            'male',
+                            'female',
+                          ].map<DropdownMenuItem<String>>((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value),
+                            );
+                          }).toList(),
+                          onChanged: (value) {
+                            setState(() {
+                              selectval = value!;
+                            });
+                          },
+                        ),
+                      ],
+                    )),
                 const SizedBox(height: 15),
                 Container(
                   margin: const EdgeInsets.only(top: 15.0),
@@ -135,43 +141,27 @@ class _EditAgeBState extends State<EditAgeB> {
                             ),
                           ),
                           onPressed: () {
-                            if (_formKey.currentState!.validate()) {
-                              StoreUserData();
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  backgroundColor: Colors.green,
-                                  content: Text(
-                                    'تم تحديث بياناتك',
-                                    style: TextStyle(
-                                      fontFamily: 'Tajawal',
-                                      fontSize: 20,
-                                    ),
-                                    textAlign: TextAlign.center,
+                            StoreUserData();
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                backgroundColor: Colors.green,
+                                content: Text(
+                                  'تم تحديث بياناتك',
+                                  style: TextStyle(
+                                    fontFamily: 'Tajawal',
+                                    fontSize: 20,
                                   ),
+                                  textAlign: TextAlign.center,
                                 ),
-                              );
-                            } else {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  backgroundColor: Colors.red,
-                                  content: Text(
-                                    'فشل تحديث بياناتك',
-                                    style: TextStyle(
-                                      fontFamily: 'Tajawal',
-                                      fontSize: 20,
-                                    ),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ),
-                              );
-                            }
+                              ),
+                            );
                           },
                         ),
                       ),
                     ],
                   ),
                 ),
-                SizedBox(height: 15),
+                const SizedBox(height: 10),
                 Container(
                   padding: const EdgeInsets.only(left: 20.0, right: 20.0),
                   child: Row(
@@ -198,7 +188,8 @@ class _EditAgeBState extends State<EditAgeB> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => Profile()));
+                                    builder: (context) =>
+                                        const ShowMedicalData()));
                           },
                         ),
                       ),

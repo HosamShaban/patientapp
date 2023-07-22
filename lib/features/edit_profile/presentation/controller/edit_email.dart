@@ -1,23 +1,24 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:patientapp/View/profile_screen.dart';
-import 'package:patientapp/View/show_mid_data.dart';
+import 'package:patientapp/core/resources/Defaultimages.dart';
+import 'package:patientapp/core/resources/colors.dart';
+import 'package:patientapp/features/edit_profile/presentation/view/profile.dart';
+import 'package:patientapp/features/profile/presentation/view/profile_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../Consts/colors.dart';
-
-class EditName extends StatefulWidget {
-  EditName({super.key});
+class EditEmail extends StatefulWidget {
+  EditEmail({super.key});
 
   @override
-  State<EditName> createState() => _EditNameState();
+  State<EditEmail> createState() => _EditEmailState();
 }
 
-class _EditNameState extends State<EditName> {
+class _EditEmailState extends State<EditEmail> {
   TextEditingController namecontroller = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
   final String baseUrl = "https://diabetes-23.000webhostapp.com";
+  TextEditingController age = TextEditingController();
 
   Future<void> StoreUserData() async {
     final Dio dio = Dio();
@@ -25,7 +26,7 @@ class _EditNameState extends State<EditName> {
     var token = prefs.getString('token');
     dio.options.headers = {'Authorization': 'Bearer $token'};
     var response = await dio.post("$baseUrl/api/patient/updateProfile", data: {
-      "name": namecontroller.text.trim(),
+      "email": age.text.trim(),
     });
     print(response.data);
   }
@@ -37,8 +38,10 @@ class _EditNameState extends State<EditName> {
         actions: [
           GestureDetector(
             onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => ProfileScreen()));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const ProfileScreen()));
             },
             child: Container(
               padding: const EdgeInsets.only(right: 5),
@@ -65,15 +68,15 @@ class _EditNameState extends State<EditName> {
               children: [
                 Container(
                     height: 300,
-                    margin: EdgeInsets.all(30),
-                    child: Image.asset("assets/images/mid.png")),
+                    margin: const EdgeInsets.all(30),
+                    child: Image.asset(DefaultImages.edit)),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Container(
-                      margin: EdgeInsets.only(right: 30),
-                      child: Text(
-                        "الاسم",
+                      margin: const EdgeInsets.only(right: 30),
+                      child: const Text(
+                        " الايميل",
                         style: TextStyle(
                             color: Color(0xff000000),
                             fontSize: 16,
@@ -82,7 +85,7 @@ class _EditNameState extends State<EditName> {
                     ),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Container(
@@ -90,21 +93,19 @@ class _EditNameState extends State<EditName> {
                   decoration: BoxDecoration(
                       color: const Color(0xffEAEAEA),
                       borderRadius: BorderRadius.circular(12.0)),
-                  width: 330,
+                  width: 311,
                   height: 48,
                   child: TextFormField(
-                    controller: namecontroller,
+                    controller: age,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'هذا الحقل مطلوب';
                       }
                       return null;
                     },
-                    textAlign: TextAlign.right,
-                    textDirection: TextDirection.rtl,
-                    keyboardType: TextInputType.text,
+                    keyboardType: TextInputType.number,
                     decoration: const InputDecoration(
-                      hintText: "أدخل الاسم كاملا",
+                      hintText: "example@gmail.com",
                       hintTextDirection: TextDirection.rtl,
                       border: InputBorder.none,
                     ),
@@ -171,7 +172,7 @@ class _EditNameState extends State<EditName> {
                     ],
                   ),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 15),
                 Container(
                   padding: const EdgeInsets.only(left: 20.0, right: 20.0),
                   child: Row(
@@ -198,7 +199,7 @@ class _EditNameState extends State<EditName> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => ShowMedicalData()));
+                                    builder: (context) => const Profile()));
                           },
                         ),
                       ),

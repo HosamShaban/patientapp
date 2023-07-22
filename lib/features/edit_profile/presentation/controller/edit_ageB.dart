@@ -1,19 +1,20 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:patientapp/View/profile.dart';
-import 'package:patientapp/View/profile_screen.dart';
+import 'package:patientapp/core/resources/Defaultimages.dart';
+import 'package:patientapp/features/edit_profile/presentation/view/profile.dart';
+import 'package:patientapp/features/profile/presentation/view/profile_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../Consts/colors.dart';
+import '../../../../core/resources/colors.dart';
 
-class EditAdress extends StatefulWidget {
-  EditAdress({super.key});
+class EditAgeB extends StatefulWidget {
+  EditAgeB({super.key});
 
   @override
-  State<EditAdress> createState() => _EditAdressState();
+  State<EditAgeB> createState() => _EditAgeBState();
 }
 
-class _EditAdressState extends State<EditAdress> {
+class _EditAgeBState extends State<EditAgeB> {
   TextEditingController namecontroller = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
@@ -26,7 +27,7 @@ class _EditAdressState extends State<EditAdress> {
     var token = prefs.getString('token');
     dio.options.headers = {'Authorization': 'Bearer $token'};
     var response = await dio.post("$baseUrl/api/patient/updateProfile", data: {
-      "address": age.text.trim(),
+      "age": age.text.trim(),
     });
     print(response.data);
   }
@@ -69,14 +70,14 @@ class _EditAdressState extends State<EditAdress> {
                 Container(
                     height: 300,
                     margin: const EdgeInsets.all(30),
-                    child: Image.asset("assets/images/edit.png")),
+                    child: Image.asset(DefaultImages.edit)),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Container(
                       margin: const EdgeInsets.only(right: 30),
                       child: const Text(
-                        " العنوان",
+                        " العمر",
                         style: TextStyle(
                             color: Color(0xff000000),
                             fontSize: 16,
@@ -89,24 +90,23 @@ class _EditAdressState extends State<EditAdress> {
                   height: 10,
                 ),
                 Container(
-                  padding: const EdgeInsets.all(10),
+                  padding: const EdgeInsets.only(right: 10),
                   decoration: BoxDecoration(
                       color: const Color(0xffEAEAEA),
                       borderRadius: BorderRadius.circular(12.0)),
-                  width: 330,
+                  width: 311,
+                  height: 48,
                   child: TextFormField(
                     controller: age,
-                    maxLines: 4,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'هذا الحقل مطلوب';
                       }
                       return null;
                     },
-                    keyboardType: TextInputType.text,
+                    keyboardType: TextInputType.number,
                     decoration: const InputDecoration(
-                      hintText:
-                          "غزة - الرمال الجنوبي - بجوار الجامعة الاسلامية",
+                      hintText: "40",
                       hintTextDirection: TextDirection.rtl,
                       border: InputBorder.none,
                     ),
@@ -114,6 +114,7 @@ class _EditAdressState extends State<EditAdress> {
                 ),
                 const SizedBox(height: 15),
                 Container(
+                  margin: const EdgeInsets.only(top: 15.0),
                   padding: const EdgeInsets.only(left: 20.0, right: 20.0),
                   child: Row(
                     children: <Widget>[
@@ -172,7 +173,7 @@ class _EditAdressState extends State<EditAdress> {
                     ],
                   ),
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: 15),
                 Container(
                   padding: const EdgeInsets.only(left: 20.0, right: 20.0),
                   child: Row(

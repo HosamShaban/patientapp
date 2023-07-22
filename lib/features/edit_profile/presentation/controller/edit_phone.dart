@@ -1,11 +1,11 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:patientapp/View/profile.dart';
-import 'package:patientapp/View/profile_screen.dart';
-import 'package:patientapp/View/show_mid_data.dart';
+import 'package:patientapp/core/resources/Defaultimages.dart';
+import 'package:patientapp/features/edit_profile/presentation/view/profile.dart';
+import 'package:patientapp/features/profile/presentation/view/profile_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../Consts/colors.dart';
+import '../../../../core/resources/colors.dart';
 
 class EditPhoneNom extends StatefulWidget {
   EditPhoneNom({super.key});
@@ -39,8 +39,10 @@ class _EditPhoneNomState extends State<EditPhoneNom> {
         actions: [
           GestureDetector(
             onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => ProfileScreen()));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const ProfileScreen()));
             },
             child: Container(
               padding: const EdgeInsets.only(right: 5),
@@ -67,14 +69,14 @@ class _EditPhoneNomState extends State<EditPhoneNom> {
               children: [
                 Container(
                     height: 300,
-                    margin: EdgeInsets.all(30),
-                    child: Image.asset("assets/images/edit.png")),
+                    margin: const EdgeInsets.all(30),
+                    child: Image.asset(DefaultImages.edit)),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Container(
-                      margin: EdgeInsets.only(right: 30),
-                      child: Text(
+                      margin: const EdgeInsets.only(right: 30),
+                      child: const Text(
                         "رقم الجوال",
                         style: TextStyle(
                             color: Color(0xff000000),
@@ -84,7 +86,7 @@ class _EditPhoneNomState extends State<EditPhoneNom> {
                     ),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Container(
@@ -170,7 +172,7 @@ class _EditPhoneNomState extends State<EditPhoneNom> {
                     ],
                   ),
                 ),
-                SizedBox(height: 15),
+                const SizedBox(height: 15),
                 Container(
                   padding: const EdgeInsets.only(left: 20.0, right: 20.0),
                   child: Row(

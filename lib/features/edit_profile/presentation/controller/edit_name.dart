@@ -1,20 +1,20 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:patientapp/View/profile.dart';
-import 'package:patientapp/View/profile_screen.dart';
-import 'package:patientapp/View/show_mid_data.dart';
+import 'package:patientapp/core/resources/Defaultimages.dart';
+import 'package:patientapp/features/medical_data/presentation/controller/show_mid_data.dart';
+import 'package:patientapp/features/profile/presentation/view/profile_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../Consts/colors.dart';
+import '../../../../core/resources/colors.dart';
 
-class EditNameB extends StatefulWidget {
-  EditNameB({super.key});
+class EditName extends StatefulWidget {
+  EditName({super.key});
 
   @override
-  State<EditNameB> createState() => _EditNameBState();
+  State<EditName> createState() => _EditNameState();
 }
 
-class _EditNameBState extends State<EditNameB> {
+class _EditNameState extends State<EditName> {
   TextEditingController namecontroller = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
@@ -38,8 +38,10 @@ class _EditNameBState extends State<EditNameB> {
         actions: [
           GestureDetector(
             onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => ProfileScreen()));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const ProfileScreen()));
             },
             child: Container(
               padding: const EdgeInsets.only(right: 5),
@@ -66,14 +68,14 @@ class _EditNameBState extends State<EditNameB> {
               children: [
                 Container(
                     height: 300,
-                    margin: EdgeInsets.all(30),
-                    child: Image.asset("assets/images/edit.png")),
+                    margin: const EdgeInsets.all(30),
+                    child: Image.asset(DefaultImages.edit)),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Container(
-                      margin: EdgeInsets.only(right: 30),
-                      child: Text(
+                      margin: const EdgeInsets.only(right: 30),
+                      child: const Text(
                         "الاسم",
                         style: TextStyle(
                             color: Color(0xff000000),
@@ -83,7 +85,7 @@ class _EditNameBState extends State<EditNameB> {
                     ),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Container(
@@ -172,7 +174,7 @@ class _EditNameBState extends State<EditNameB> {
                     ],
                   ),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 Container(
                   padding: const EdgeInsets.only(left: 20.0, right: 20.0),
                   child: Row(
@@ -199,7 +201,8 @@ class _EditNameBState extends State<EditNameB> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => Profile()));
+                                    builder: (context) =>
+                                        const ShowMedicalData()));
                           },
                         ),
                       ),
