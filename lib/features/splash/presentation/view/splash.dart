@@ -1,7 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:patientapp/onboarding.dart';
+import 'package:patientapp/core/resources/Defaultimages.dart';
+import 'package:patientapp/features/out_boarding/presentation/view/onboarding.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -28,7 +29,7 @@ class _SplashScreenState extends State<SplashScreen> {
         child: Container(
             color: Colors.white,
             child: const Image(
-              image: AssetImage("assets/images/logo.png"),
+              image: AssetImage(DefaultImages.logo),
             )),
       ),
     );
