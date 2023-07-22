@@ -1,11 +1,12 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:patientapp/core/resources/Defaultimages.dart';
+import 'package:patientapp/features/appointment/presentation/view/doctor_appoitments.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../Model/all_doctors.dart';
-import '../Model/appointments.dart';
-import 'doctor_appoitments.dart';
+import '../../../doctors/domain/model/all_doctors.dart';
+import '../../domain/model/appointments.dart';
 
 class AppointmentDetails extends StatefulWidget {
   var id;
@@ -39,6 +40,7 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
   final String baseUrl = "https://diabetes-23.000webhostapp.com";
   List<AllDoctorsModel> all_doctors = [];
   List<AppointmentsModel> mesure = [];
+
   void FetchDoctorsFromApi() async {
     final Dio dio = Dio();
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -121,7 +123,7 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                             ),
                           ),
                         ),
-                        const Center(child: Text("انتظر قليلا ")),
+                        const Center(child: Text("انتظر قليلا")),
                       ],
                     ),
                   ),
@@ -137,8 +139,7 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                   const Center(
                     child: CircleAvatar(
                       radius: 50.0,
-                      backgroundImage:
-                          AssetImage('assets/images/doctor(2).png'),
+                      backgroundImage: AssetImage(DefaultImages.d2),
                     ),
                   ),
                   const SizedBox(height: 10),
@@ -481,9 +482,7 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: const [
-                                Image(
-                                    image:
-                                        AssetImage("assets/images/whats.png")),
+                                Image(image: AssetImage(DefaultImages.whats)),
                                 SizedBox(width: 10),
                                 Text(
                                   'تحدث مع الطبيب',
