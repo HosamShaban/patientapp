@@ -1,10 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:patientapp/features/doctors/presentation/controller/doctors_controller.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../Model/appointments.dart';
-import '../controller/dio_helper.dart';
-import '../controller/doctors_controller.dart';
+import '../../../../core/network/dio_helper.dart';
+import '../../domain/model/appointments.dart';
 import 'appintment_details.dart';
 
 class DateScreen extends StatefulWidget {
