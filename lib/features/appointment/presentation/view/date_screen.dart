@@ -60,7 +60,6 @@ class _DateScreenState extends State<DateScreen> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     appoitments.clear();
     super.dispose();
   }
@@ -169,54 +168,6 @@ class _DateScreenState extends State<DateScreen> {
                             ),
                           ],
                         ),
-                        /* subtitle: Column(
-                          children: [
-                            SizedBox(height: 5),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Icon(
-                                  Icons.date_range,
-                                  color: Colors.black,
-                                ),
-                                SizedBox(width: 10),
-                                Text(
-                                  appoitments[index].bookingDay.toString(),
-                                  style: TextStyle(
-                                    fontSize: 17,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                                SizedBox(width: 20),
-                                Text(
-                                  appoitments[index].bookingDate.toString(),
-                                  style: TextStyle(
-                                    fontSize: 17,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            SizedBox(height: 10),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Icon(
-                                  Icons.timelapse,
-                                  color: Colors.black,
-                                ),
-                                SizedBox(width: 10),
-                                Text(
-                                  appoitments[index].bookingTime.toString(),
-                                  style: TextStyle(
-                                    fontSize: 17,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                              ],
-                            )
-                          ],
-                        ),*/
                       ),
                     ),
                   );
@@ -234,27 +185,21 @@ class _DateScreenState extends State<DateScreen> {
   }
 
   void fetchDataWithToken() async {
-    Dio dio = Dio(); // Create a Dio instance
+    Dio dio = Dio();
 
     String baseUrl = "https://diabetes-2023.000webhostapp.com";
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    var token = prefs.getString('token'); // Set the Authorization header
+    var token = prefs.getString('token');
     dio.options.headers["Authorization"] = "Bearer $token";
     try {
-      Response response = await dio.get(
-          "$baseUrl/api/patient/doctors"); // Replace with your API endpoint
+      Response response = await dio.get("$baseUrl/api/patient/doctors");
 
       if (response.statusCode == 200) {
-        // Data fetched successfully
-        var data = response.data;
         print(response.data);
-        // Process the data as needed
       } else {
-        // Handle error
         print("Request failed with status code: ${response.statusCode}");
       }
     } catch (e) {
-      // Handle Dio errors
       print("Error: $e");
     }
   }

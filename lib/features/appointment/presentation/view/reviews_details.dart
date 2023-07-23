@@ -8,13 +8,11 @@ import 'package:url_launcher/url_launcher.dart';
 class ReviewsDetails extends StatefulWidget {
   String date;
   String time;
-  // ignore: non_constant_identifier_names
   int doctor_id;
   String day;
 
   ReviewsDetails({
     super.key,
-    // ignore: non_constant_identifier_names
     required this.doctor_id,
     required this.date,
     required this.time,
@@ -26,7 +24,6 @@ class ReviewsDetails extends StatefulWidget {
 }
 
 class _ReviewsDetailsState extends State<ReviewsDetails> {
-  // ignore: non_constant_identifier_names
   int get doctor_id => widget.doctor_id;
   String get time => widget.time;
   String get date => widget.date;

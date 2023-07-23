@@ -22,10 +22,7 @@ class _MyReviewsState extends State<MyReviews> {
       });
     });
   }
-  // ignore: unnecessary_cast
-  // ignore: non_constant_identifier_names
 
-  // ignore: non_constant_identifier_names
   void FetchMesuresFromApi() async {
     final Dio dio = Dio();
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -50,7 +47,6 @@ class _MyReviewsState extends State<MyReviews> {
   void initState() {
     FetchMesuresFromApi();
     startTimer();
-    //fetchDataWithToken();
     super.initState();
   }
 
